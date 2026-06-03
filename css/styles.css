@@ -1,0 +1,425 @@
+/* ============================================================
+   Corredor Biológico — Línea Base Interactiva
+   UAO × ASOCAÑA | Proyecto 890K
+   ============================================================ */
+
+/* ── Variables ──────────────────────────────────────────────── */
+:root {
+  --uao-blue:        #003B7E;
+  --asocana-green:   #2e7d32;
+  --bg-dark:         #0f1419;
+  --bg-panel:        #171e27;
+  --bg-card:         #1e2936;
+  --bg-card-hover:   #243041;
+  --border:          rgba(255,255,255,0.08);
+  --border-light:    rgba(255,255,255,0.04);
+  --text-primary:    #e8ecf0;
+  --text-secondary:  #8fa3b8;
+  --text-muted:      #5a7085;
+  --accent:          #29b6f6;
+  --success:         #4caf50;
+  --warning:         #ff9800;
+  --danger:          #e05e5e;
+  --header-h:        56px;
+  --sidebar-w:       262px;
+  --radius:          8px;
+  --radius-sm:       5px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+body { display: flex; flex-direction: column; }
+
+h1, .tramo-num, .section-title, .logo-name {
+  font-family: 'Syne', sans-serif;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.site-header {
+  height: var(--header-h);
+  min-height: var(--header-h);
+  background: linear-gradient(90deg, var(--uao-blue) 0%, #0a2040 50%, var(--asocana-green) 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+  z-index: 200;
+}
+
+.logo-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.logo-name {
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.logo-sub {
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.header-divider {
+  width: 1px;
+  height: 34px;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.phase-badge {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+}
+.header-center h1 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+.header-subtitle {
+  font-size: 9px;
+  color: rgba(255,255,255,0.4);
+}
+
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.app-layout {
+  flex: 1;
+  height: calc(100vh - var(--header-h));
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+.sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+.sidebar-section {
+  padding: 13px 13px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-section:last-child { border-bottom: none; }
+
+.section-title {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--text-muted);
+  margin-bottom: 9px;
+  font-weight: 700;
+}
+
+/* ── Botones tramo ──────────────────────────────────────────── */
+.tramo-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.tramo-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  padding: 6px 8px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  text-align: left;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.3;
+}
+.tramo-btn .tramo-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.tramo-btn:hover        { background: var(--bg-card-hover); border-color: var(--accent); }
+.tramo-btn.active       { background: rgba(41,182,246,0.1); border-color: var(--accent); color: var(--accent); }
+.tramo-btn.active .tramo-num { color: var(--accent); }
+
+/* ── Botones de mapa base ───────────────────────────────────── */
+.basemap-buttons {
+  display: flex;
+  gap: 5px;
+}
+.basemap-btn {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  padding: 6px 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.basemap-btn:hover  { background: var(--bg-card-hover); color: var(--text-primary); }
+.basemap-btn.active { background: rgba(41,182,246,0.1); border-color: var(--accent); color: var(--accent); }
+
+/* ── Items de capa ──────────────────────────────────────────── */
+.layer-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 4px;
+  border-radius: var(--radius-sm);
+  transition: background 0.12s;
+}
+.layer-item:hover { background: var(--bg-card); }
+
+.layer-item input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.layer-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.layer-label {
+  flex: 1;
+  color: var(--text-secondary);
+  font-size: 11.5px;
+}
+.layer-count {
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg-dark);
+  border-radius: 10px;
+  padding: 1px 6px;
+}
+.layer-badge {
+  font-size: 9px;
+  background: rgba(255,152,0,0.12);
+  border: 1px solid rgba(255,152,0,0.25);
+  color: var(--warning);
+  border-radius: 10px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+/* ── Leyenda ─────────────────────────────────────────────────── */
+#legend {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.legend-line {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.legend-note {
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 5px;
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
+/* ── Mapa ────────────────────────────────────────────────────── */
+.map-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Indicador de carga ─────────────────────────────────────── */
+.map-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15,20,25,0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 24px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Panel de información de feature ────────────────────────── */
+.info-panel {
+  position: absolute;
+  bottom: 40px;
+  left: 12px;
+  min-width: 230px;
+  max-width: 300px;
+  background: rgba(23,30,39,0.95);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  z-index: 50;
+  display: none;
+  backdrop-filter: blur(6px);
+}
+.info-panel.visible { display: block; }
+
+.info-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 2px;
+}
+.info-close:hover { color: var(--text-primary); }
+
+.info-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-right: 20px;
+  line-height: 1.3;
+}
+
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table td {
+  padding: 3px 0;
+  font-size: 11px;
+  vertical-align: top;
+}
+.info-table td:first-child {
+  color: var(--text-muted);
+  width: 42%;
+  padding-right: 8px;
+}
+.info-table td:last-child { color: var(--text-secondary); }
+
+/* ── Atribución personalizada ───────────────────────────────── */
+.map-attribution-custom {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15,20,25,0.75);
+  color: var(--text-muted);
+  font-size: 9px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* ── MapLibre GL — overrides de tema oscuro ─────────────────── */
+.maplibregl-ctrl-group {
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+}
+.maplibregl-ctrl-group button {
+  background-color: transparent !important;
+  color: var(--text-secondary) !important;
+  border-bottom-color: var(--border) !important;
+}
+.maplibregl-ctrl-group button:hover {
+  background-color: var(--bg-card-hover) !important;
+  color: var(--text-primary) !important;
+}
+.maplibregl-ctrl-attrib {
+  background: rgba(15,20,25,0.75) !important;
+  color: var(--text-muted) !important;
+  font-size: 9px !important;
+}
+.maplibregl-ctrl-attrib a { color: var(--accent) !important; }
+.maplibregl-ctrl-attrib-button { color: var(--text-muted) !important; }
+
+.maplibregl-canvas { outline: none; }

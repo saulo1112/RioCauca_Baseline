@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corredor Biológico — Línea Base | UAO × ASOCAÑA</title>
+
+  <!-- MapLibre GL JS -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos locales -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────────────── -->
+<header class="site-header">
+
+  <div class="logo-block">
+    <span class="logo-name">UAO</span>
+    <span class="logo-sub">Univ. Autónoma de Occidente</span>
+  </div>
+
+  <div class="header-divider"></div>
+
+  <div class="logo-block">
+    <span class="logo-name">ASOCAÑA</span>
+    <span class="logo-sub">Sector azucarero colombiano</span>
+  </div>
+
+  <div class="header-center">
+    <span class="phase-badge">Proyecto 890K · Fase I · Diagnóstico</span>
+    <h1>Corredor Biológico — Línea Base Interactiva</h1>
+    <span class="header-subtitle">Río Cauca: Pan de Azúcar → La Virginia · Valle Geográfico del Cauca</span>
+  </div>
+
+
+</header>
+
+<!-- ── Cuerpo principal ─────────────────────────────────────────────── -->
+<main class="app-layout">
+
+  <!-- ── Sidebar izquierda ─────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <!-- Selector de tramos -->
+    <div class="sidebar-section">
+      <div class="section-title">Navegación</div>
+      <div class="tramo-buttons">
+        <button class="tramo-btn active" data-tramo="all">
+          <span class="tramo-num">∀</span>
+          Corredor completo
+        </button>
+        <button class="tramo-btn" data-tramo="1">
+          <span class="tramo-num">T1</span>
+          Salvajina — Hormiguero
+        </button>
+        <button class="tramo-btn" data-tramo="2">
+          <span class="tramo-num">T2</span>
+          Hormiguero — Mediacanoa
+        </button>
+        <button class="tramo-btn" data-tramo="3">
+          <span class="tramo-num">T3</span>
+          Mediacanoa — Anacaro
+        </button>
+      </div>
+    </div>
+
+    <!-- Selector de mapa base -->
+    <div class="sidebar-section">
+      <div class="section-title">Mapa base</div>
+      <div class="basemap-buttons">
+        <button class="basemap-btn active" data-basemap="positron">Claro</button>
+        <button class="basemap-btn"        data-basemap="satellite">Satélite</button>
+      </div>
+    </div>
+
+    <!-- Capas del mapa -->
+    <div class="sidebar-section">
+      <div class="section-title">Capas</div>
+
+      <div class="layer-item">
+        <input type="checkbox" id="lyr-rios" checked>
+        <div class="layer-swatch" style="background:linear-gradient(135deg,#004DA8 50%,#0A93FC 50%)"></div>
+        <span class="layer-label">Ríos (Cauca + Tributarios)</span>
+        <span class="layer-count">60</span>
+      </div>
+
+      <div class="layer-item">
+        <input type="checkbox" id="lyr-buffer" checked>
+        <div class="layer-swatch" style="background:rgba(0,100,255,0.25);border:1px solid #6E6E6E"></div>
+        <span class="layer-label">Zona de Estudio</span>
+        <span class="layer-count">16</span>
+      </div>
+
+      <div class="layer-item">
+        <input type="checkbox" id="lyr-hectareas">
+        <div class="layer-swatch" style="background:#FBC4BB"></div>
+        <span class="layer-label">Caña de Azúcar</span>
+        <span class="layer-count">900</span>
+      </div>
+
+
+    </div>
+
+    <!-- Leyenda -->
+    <div class="sidebar-section" id="section-legend">
+      <div class="section-title">Leyenda</div>
+      <div id="legend">
+        <div class="legend-item">
+          <div class="legend-line" style="background:#004DA8;height:3px"></div>
+          <span>Río Cauca (43 segmentos)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="background:#0A93FC"></div>
+          <span>Tributarios (17 ríos)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:rgba(0,100,255,0.15);border:1px solid #6E6E6E"></div>
+          <span>Zona de estudio (700 m buffer)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#FBC4BB"></div>
+          <span>Caña de azúcar</span>
+        </div>
+        <div class="legend-note">Fuentes: IDEAM · Proyecto Corredor Río Cauca</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── Mapa ─────────────────────────────────────────────────────── -->
+  <div class="map-container">
+    <div id="map"></div>
+
+    <!-- Indicador de carga -->
+    <div id="map-loading" class="map-loading">
+      <div class="loading-spinner"></div>
+      <span>Cargando capas…</span>
+    </div>
+
+    <!-- Panel de información de feature seleccionado -->
+    <div id="info-panel" class="info-panel">
+      <button id="info-close" class="info-close" title="Cerrar">✕</button>
+      <div id="info-title" class="info-title">—</div>
+      <table class="info-table">
+        <tbody id="info-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Atribución personalizada -->
+    <div class="map-attribution-custom">
+      WGS84 (EPSG:4326) · Fuentes: IDEAM, CVC, CARDER · Coordenadas aprox.
+    </div>
+  </div>
+
+</main>
+
+<!-- ── MapLibre GL JS ────────────────────────────────────────────────── -->
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+<!-- Módulo principal (ES module) -->
+<script type="module" src="src/main.js"></script>
+
+</body>
+</html>

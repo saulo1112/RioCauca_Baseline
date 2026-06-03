@@ -1,0 +1,131 @@
+{
+  "version": 8,
+  "sprite": "",
+  "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  "sources": {
+    "vtpk": {
+      "type": "vector",
+      "url": "pmtiles://public/tiles/mapa_base.pmtiles",
+      "attribution": "UAO · ASOCAÑA · CVC · CARDER"
+    }
+  },
+  "layers": [
+    {
+      "id": "Buffer Río Cauca",
+      "type": "fill",
+      "source": "vtpk",
+      "source-layer": "Buffer Río Cauca",
+      "layout": {},
+      "paint": {
+        "fill-color": "rgba(0,100,255,0.37)",
+        "fill-outline-color": "#6E6E6E"
+      }
+    },
+    {
+      "id": "Buffer zona plana",
+      "type": "fill",
+      "source": "vtpk",
+      "source-layer": "Buffer zona plana",
+      "layout": {},
+      "paint": {
+        "fill-color": "rgba(0,100,255,0.37)",
+        "fill-outline-color": "#6E6E6E"
+      }
+    },
+    {
+      "id": "Hectáreas de caña de azúcar",
+      "type": "fill",
+      "source": "vtpk",
+      "source-layer": "Hectáreas de caña de azúcar",
+      "layout": {},
+      "paint": {
+        "fill-color": "#FBC4BB"
+      }
+    },
+    {
+      "id": "Caña de azúcar del Río Cauca",
+      "type": "fill",
+      "source": "vtpk",
+      "source-layer": "Caña de azúcar del Río Cauca",
+      "layout": {},
+      "paint": {
+        "fill-color": "#FBC4BB"
+      }
+    },
+    {
+      "id": "Rio Cauca",
+      "type": "line",
+      "source": "vtpk",
+      "source-layer": "Rio Cauca",
+      "layout": {
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": "#004DA8",
+        "line-width": 1.33333
+      }
+    },
+    {
+      "id": "Tributarios del río Cauca",
+      "type": "line",
+      "source": "vtpk",
+      "source-layer": "Tributarios del río Cauca",
+      "layout": {
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": "#0A93FC",
+        "line-width": 1.33333
+      }
+    },
+    {
+      "id": "Rio Cauca/label/Default",
+      "type": "symbol",
+      "source": "vtpk",
+      "source-layer": "Rio Cauca/label",
+      "minzoom": 9.2086,
+      "layout": {
+        "symbol-placement": "line",
+        "symbol-spacing": 1000,
+        "text-font": [
+          "Open Sans Regular"
+        ],
+        "text-size": 16,
+        "text-anchor": "bottom",
+        "text-offset": [
+          0,
+          -0.0833333
+        ],
+        "text-field": "{_name}",
+        "text-optional": true
+      },
+      "paint": {
+        "text-color": "#005CE6"
+      }
+    },
+    {
+      "id": "Tributarios del río Cauca/label/Class 1",
+      "type": "symbol",
+      "source": "vtpk",
+      "source-layer": "Tributarios del río Cauca/label",
+      "layout": {
+        "symbol-placement": "line",
+        "symbol-spacing": 1000,
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-size": 13.3333,
+        "text-anchor": "bottom",
+        "text-offset": [
+          0,
+          -0.283465
+        ],
+        "text-field": "{_name}",
+        "text-optional": true
+      },
+      "paint": {
+        "text-color": "#002673"
+      }
+    }
+  ]
+}

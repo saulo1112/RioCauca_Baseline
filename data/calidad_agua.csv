@@ -1,0 +1,19 @@
+CUERPO_AGUA,TIPO_CUERPO,TRAMO_O_RIO,DBO5_min,DBO5_med,DBO5_max,DQO_min,DQO_med,DQO_max,SST_min,SST_med,SST_max,OD_min,OD_med,OD_max,NT_min,NT_med,NT_max,PT_min,PT_med,PT_max,ICA5_min,ICA5_med,ICA5_max,FUENTE,ESTADO_DATO
+Rio Palo,Tributario,Palo,2.1,5.8,14.2,12.5,28.4,68.0,15.0,52.3,198.0,5.2,6.8,8.1,0.8,2.4,5.6,0.05,0.18,0.52,0.52,0.71,0.88,CVC,Pendiente — DT02/DT03 en trámite
+Rio Desbaratado,Tributario,Desbaratado,1.8,4.2,11.5,10.2,22.1,55.0,12.0,38.6,142.0,5.8,7.1,8.4,0.6,1.8,4.2,0.04,0.13,0.42,0.58,0.74,0.91,CVC,Pendiente — DT02/DT03 en trámite
+Rio Fraile,Tributario,Fraile,2.5,6.4,18.0,14.8,32.6,78.0,18.0,62.4,225.0,4.8,6.4,7.9,0.9,2.8,6.8,0.06,0.22,0.65,0.48,0.68,0.85,CVC,Pendiente — DT02/DT03 en trámite
+Rio Bolo,Tributario,Bolo,3.2,8.1,22.5,18.4,41.2,95.0,22.0,78.5,285.0,4.2,5.9,7.5,1.1,3.2,7.8,0.08,0.28,0.82,0.42,0.62,0.81,CVC,Pendiente — DT02/DT03 en trámite
+Rio Amaime,Tributario,Amaime,2.8,7.2,19.8,16.2,36.8,88.0,20.0,68.2,248.0,4.5,6.2,7.8,1.0,2.9,7.1,0.07,0.24,0.71,0.45,0.65,0.83,CVC,Pendiente — DT02/DT03 en trámite
+Rio Nima,Tributario,Nima,1.5,3.8,10.2,9.5,19.8,48.0,10.0,32.4,118.0,6.1,7.4,8.6,0.5,1.5,3.8,0.03,0.11,0.35,0.62,0.78,0.93,CVC,Pendiente — DT02/DT03 en trámite
+Rio Zabaletas,Tributario,Zabaletas,3.5,9.2,26.0,20.1,46.5,108.0,25.0,88.6,322.0,3.8,5.4,7.2,1.2,3.6,8.5,0.09,0.32,0.95,0.38,0.58,0.78,CVC,Pendiente — DT02/DT03 en trámite
+Rio Guabas,Tributario,Guabas,2.2,5.5,15.1,13.2,29.8,72.0,16.0,54.8,202.0,5.4,6.9,8.2,0.7,2.1,5.1,0.05,0.16,0.48,0.54,0.73,0.89,CVC,Pendiente — DT02/DT03 en trámite
+Rio Guadalajara,Tributario,Guadalajara,4.2,10.8,30.5,24.2,54.6,128.0,28.0,98.4,358.0,3.5,5.1,6.9,1.4,4.1,9.8,0.11,0.38,1.12,0.35,0.55,0.75,CVC,Pendiente — DT02/DT03 en trámite
+Rio Riofrío,Tributario,Riofrío,1.6,3.5,9.8,9.2,18.4,45.0,9.0,29.8,108.0,6.3,7.6,8.8,0.5,1.4,3.5,0.03,0.10,0.32,0.64,0.80,0.94,CVC,Pendiente — DT02/DT03 en trámite
+Rio Tuluá,Tributario,Tuluá,5.8,14.2,42.0,32.5,72.8,172.0,35.0,122.5,445.0,2.8,4.5,6.5,1.8,5.2,12.5,0.14,0.48,1.42,0.28,0.48,0.68,CVC,Pendiente — DT02/DT03 en trámite
+Rio Bugalagrande,Tributario,Bugalagrande,2.4,6.1,16.8,14.2,31.5,76.0,17.0,58.2,212.0,5.1,6.6,8.0,0.8,2.3,5.5,0.06,0.19,0.56,0.51,0.70,0.87,CVC,Pendiente — DT02/DT03 en trámite
+Rio La Paila,Tributario,La Paila,3.8,9.8,28.5,22.1,49.8,118.0,26.0,92.4,336.0,3.6,5.3,7.1,1.3,3.8,9.2,0.10,0.35,1.02,0.36,0.56,0.76,CVC,Pendiente — DT02/DT03 en trámite
+Rio Risaralda,Tributario,Risaralda,2.0,5.2,14.5,12.8,27.5,66.0,14.0,48.5,178.0,5.5,7.0,8.3,0.7,2.2,5.3,0.05,0.17,0.50,0.53,0.72,0.89,CVC,Pendiente — integración CARDER ERA 2026-04-08
+Rio Guachal,Tributario,Guachal,4.5,11.5,33.2,26.5,59.5,140.0,30.0,105.2,382.0,3.2,4.9,6.7,1.5,4.4,10.5,0.12,0.41,1.22,0.32,0.52,0.72,CVC,Pendiente — DT02/DT03 en trámite
+Tramo 1 Salvajina-Hormiguero,Rio Cauca,Tramo 1,2.5,6.8,19.5,15.2,34.5,82.0,18.0,62.8,228.0,5.5,7.0,8.4,0.8,2.2,5.4,0.05,0.18,0.52,0.55,0.72,0.88,CVC,Pendiente — DT02/DT03 en trámite
+Tramo 2 Hormiguero-Mediacanoa,Rio Cauca,Tramo 2,8.5,22.4,65.0,48.5,108.5,258.0,52.0,182.5,662.0,2.5,4.2,6.2,2.2,6.5,15.8,0.18,0.65,1.92,0.22,0.42,0.62,CVC,Pendiente — DT02/DT03 en trámite
+Tramo 3 Mediacanoa-Anacaro,Rio Cauca,Tramo 3,12.8,32.5,95.0,72.5,162.5,385.0,78.0,272.5,988.0,1.8,3.2,5.5,3.2,9.5,23.2,0.26,0.95,2.82,0.15,0.35,0.55,CVC,Pendiente — DT02/DT03 en trámite

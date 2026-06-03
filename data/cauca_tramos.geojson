@@ -1,0 +1,81 @@
+{
+  "type": "FeatureCollection",
+  "crs": { "type": "name", "properties": { "name": "EPSG:4326" } },
+  "_nota": "Geometría aproximada del río Cauca. Trayectoria basada en eje principal del valle. Pendiente ajuste con shapefile CVC en ArcGIS Pro.",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-76.96, 2.88],
+          [-76.85, 2.97],
+          [-76.73, 3.04],
+          [-76.65, 3.13],
+          [-76.58, 3.19],
+          [-76.50, 3.26],
+          [-76.45, 3.38]
+        ]
+      },
+      "properties": {
+        "TRAMO_ID": 1,
+        "TRAMO_NOM": "Tramo 1: Salvajina — Hormiguero",
+        "longitud_km": 95,
+        "descripcion": "Tramo de montaña y piedemonte. Regulación hídrica por embalse Salvajina (CVC). Alta variabilidad de caudales. Estaciones clave: La Balsa (km 0), Tablanca, La Bolsa, La Primavera, Hormiguero.",
+        "estaciones_cauca": "Pan de Azúcar, La Balsa, Tablanca, La Bolsa, La Primavera, Hormiguero",
+        "presion_principal": "Regulación por embalse Salvajina. Minería artesanal en cuencas altas.",
+        "color": "#1565c0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-76.45, 3.38],
+          [-76.52, 3.44],
+          [-76.50, 3.48],
+          [-76.47, 3.52],
+          [-76.44, 3.56],
+          [-76.42, 3.61],
+          [-76.40, 3.68],
+          [-76.37, 3.76],
+          [-76.34, 3.85]
+        ]
+      },
+      "properties": {
+        "TRAMO_ID": 2,
+        "TRAMO_NOM": "Tramo 2: Hormiguero — Mediacanoa",
+        "longitud_km": 110,
+        "descripcion": "Tramo de mayor carga contaminante difusa y puntual. Atraviesa el área metropolitana de Cali y zona cañera norte. Estaciones: Puerto Mallarino, Navarro, Cajibio, Garzonero Norte, La Floresta, Paso La Torre, Juan Díaz, Mediacanoa.",
+        "estaciones_cauca": "Puerto Mallarino, Navarro, Cajibio, Garzonero Norte, La Floresta, Paso La Torre, Juan Díaz, Mediacanoa",
+        "presion_principal": "Vertimientos urbano-industriales Cali. Carga difusa cultivos de caña. Efluentes agroindustriales.",
+        "color": "#0288d1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-76.34, 3.85],
+          [-76.28, 3.95],
+          [-76.23, 4.09],
+          [-76.18, 4.18],
+          [-76.14, 4.28],
+          [-76.07, 4.40],
+          [-75.99, 4.57]
+        ]
+      },
+      "properties": {
+        "TRAMO_ID": 3,
+        "TRAMO_NOM": "Tramo 3: Mediacanoa — Anacaro",
+        "longitud_km": 120,
+        "descripcion": "Tramo de mayor carga acumulada. Recibe aportes de tributarios del norte del Valle. Transición hacia zona cafetera. Estaciones: Guayabal, La Victoria, Anacaro.",
+        "estaciones_cauca": "Guayabal, La Victoria, Anacaro",
+        "presion_principal": "Carga difusa acumulada. Tributarios con alta influencia cañera (Tuluá, Bugalagrande, La Paila, Risaralda). Menor cobertura de monitoreo.",
+        "color": "#0097a7"
+      }
+    }
+  ]
+}

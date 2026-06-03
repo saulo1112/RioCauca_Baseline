@@ -1,0 +1,602 @@
+{
+  "type": "FeatureCollection",
+  "crs": { "type": "name", "properties": { "name": "EPSG:4326" } },
+  "_nota": "Coordenadas WGS84 aproximadas — pendiente verificación en ArcGIS Pro con sistema MAGNA-SIRGAS Origen Único (CVC).",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.96, 2.88] },
+      "properties": {
+        "NOMBRE": "Pan de Azúcar",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 1,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": false,
+        "LAT": 2.88, "LON": -76.96,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Sin datos de caudal disponibles en la plataforma"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.85, 2.97] },
+      "properties": {
+        "NOMBRE": "La Balsa",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 1,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 2.97, "LON": -76.85,
+        "ABSCISA_KM": 0,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Estación de cabecera — km 0 del perfil longitudinal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.73, 3.04] },
+      "properties": {
+        "NOMBRE": "Tablanca",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 1,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.04, "LON": -76.73,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Abscisado PMC pendiente de confirmación"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.66, 3.13] },
+      "properties": {
+        "NOMBRE": "La Bolsa",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 1,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.13, "LON": -76.66,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.59, 3.19] },
+      "properties": {
+        "NOMBRE": "La Primavera",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 1,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.19, "LON": -76.59,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Abscisado PMC pendiente de confirmación"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.45, 3.38] },
+      "properties": {
+        "NOMBRE": "Hormiguero",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 1,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.38, "LON": -76.45,
+        "ABSCISA_KM": 50,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Estación de referencia — cierre Tramo 1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.52, 3.44] },
+      "properties": {
+        "NOMBRE": "Puerto Mallarino",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.44, "LON": -76.52,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Sector norte Cali"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.50, 3.48] },
+      "properties": {
+        "NOMBRE": "Navarro",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.48, "LON": -76.50,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Sin datos de caudal disponibles en la plataforma"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.47, 3.52] },
+      "properties": {
+        "NOMBRE": "Cajibio",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.52, "LON": -76.47,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.44, 3.56] },
+      "properties": {
+        "NOMBRE": "Garzonero Norte",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.56, "LON": -76.44,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.42, 3.61] },
+      "properties": {
+        "NOMBRE": "La Floresta",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.61, "LON": -76.42,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.40, 3.68] },
+      "properties": {
+        "NOMBRE": "Paso La Torre",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.68, "LON": -76.40,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.37, 3.76] },
+      "properties": {
+        "NOMBRE": "Juan Díaz",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.76, "LON": -76.37,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.34, 3.85] },
+      "properties": {
+        "NOMBRE": "Mediacanoa",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.85, "LON": -76.34,
+        "ABSCISA_KM": 145,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Estación de referencia hidrológica — cierre Tramo 2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.23, 4.09] },
+      "properties": {
+        "NOMBRE": "Guayabal",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 3,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 4.09, "LON": -76.23,
+        "ABSCISA_KM": 270,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Datos hasta 2022"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.14, 4.28] },
+      "properties": {
+        "NOMBRE": "La Victoria",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 3,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 4.28, "LON": -76.14,
+        "ABSCISA_KM": 290,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-75.99, 4.57] },
+      "properties": {
+        "NOMBRE": "Anacaro",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 3,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 4.57, "LON": -75.99,
+        "ABSCISA_KM": 340,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Estación de cierre — sector Obando, Valle del Cauca"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.38, 3.44] },
+      "properties": {
+        "NOMBRE": "Juanchito",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Suspendida",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.44, "LON": -76.38,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Suspendida hasta 2017 — informe disponible en sistema"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.43, 3.53] },
+      "properties": {
+        "NOMBRE": "Garzonero Sur",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Suspendida",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.53, "LON": -76.43,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Suspendida 2023 — informe disponible en sistema"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.36, 3.72] },
+      "properties": {
+        "NOMBRE": "Puerto Pedrero",
+        "NOM1_DRENA": "Cauca",
+        "TRAMO_ID": 2,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Suspendida",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.72, "LON": -76.36,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Suspendida desde 2017 — informe disponible en sistema"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.02, 3.02] },
+      "properties": {
+        "NOMBRE": "Rio Palo — Bocatoma",
+        "NOM1_DRENA": "Palo",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.02, "LON": -76.02,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Datos hasta 2024"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.57, 3.02] },
+      "properties": {
+        "NOMBRE": "Rio Desbaratado — Ortigal",
+        "NOM1_DRENA": "Desbaratado",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Suspendida",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.02, "LON": -76.57,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Suspendida hasta 2023 — informe disponible en sistema"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.42, 3.15] },
+      "properties": {
+        "NOMBRE": "Rio Fraile — La Industria",
+        "NOM1_DRENA": "Fraile",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.15, "LON": -76.42,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.36, 3.20] },
+      "properties": {
+        "NOMBRE": "Rio Bolo — Los Minchos",
+        "NOM1_DRENA": "Bolo",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.20, "LON": -76.36,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Datos hasta 2023"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.17, 3.48] },
+      "properties": {
+        "NOMBRE": "Rio Amaime — Amaime",
+        "NOM1_DRENA": "Amaime",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.48, "LON": -76.17,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": "Datos hasta 2023"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.23, 3.37] },
+      "properties": {
+        "NOMBRE": "Rio Nima — (pendiente)",
+        "NOM1_DRENA": "Nima",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.37, "LON": -76.23,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "Pendiente",
+        "NOTAS": "Pendiente — no se encontró informe en la plataforma"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.50, 3.32] },
+      "properties": {
+        "NOMBRE": "Rio Zabaletas — (sin información)",
+        "NOM1_DRENA": "Zabaletas",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Suspendida",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.32, "LON": -76.50,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "Pendiente",
+        "NOTAS": "Sin información disponible en el sistema actual"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.26, 3.76] },
+      "properties": {
+        "NOMBRE": "Rio Guabas — Puente Piedra",
+        "NOM1_DRENA": "Guabas",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.76, "LON": -76.26,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.20, 3.88] },
+      "properties": {
+        "NOMBRE": "Rio Guadalajara — El Vergel",
+        "NOM1_DRENA": "Guadalajara",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.88, "LON": -76.20,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.17, 3.98] },
+      "properties": {
+        "NOMBRE": "Rio Riofrío — Salónica",
+        "NOM1_DRENA": "Riofrío",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 3.98, "LON": -76.17,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.12, 4.08] },
+      "properties": {
+        "NOMBRE": "Rio Tuluá — Mateguadua",
+        "NOM1_DRENA": "Tuluá",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 4.08, "LON": -76.12,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.06, 4.22] },
+      "properties": {
+        "NOMBRE": "Rio Bugalagrande — El Placer",
+        "NOM1_DRENA": "Bugalagrande",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 4.22, "LON": -76.06,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-75.99, 4.38] },
+      "properties": {
+        "NOMBRE": "Rio La Paila — La Sorpresa",
+        "NOM1_DRENA": "La Paila",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": true,
+        "LAT": 4.38, "LON": -75.99,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "MAGNA-SIRGAS Origen Único (aprox.)",
+        "NOTAS": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-75.92, 4.55] },
+      "properties": {
+        "NOMBRE": "Rio Risaralda — (pendiente estación CVC)",
+        "NOM1_DRENA": "Risaralda",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Activa",
+        "DATOS_CAUDAL": false,
+        "LAT": 4.55, "LON": -75.92,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "Pendiente",
+        "NOTAS": "Datos CARDER disponibles — integración en DT02/DT03"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.48, 3.51] },
+      "properties": {
+        "NOMBRE": "Rio Guachal — (pendiente)",
+        "NOM1_DRENA": "Guachal",
+        "TRAMO_ID": null,
+        "TIPO": "Hidrométrica",
+        "ENTIDAD": "CVC",
+        "ESTADO": "Suspendida",
+        "DATOS_CAUDAL": false,
+        "LAT": 3.51, "LON": -76.48,
+        "ABSCISA_KM": null,
+        "COORD_SISTEMA": "Pendiente",
+        "NOTAS": "Pendiente — no se encontró informe en la plataforma"
+      }
+    }
+  ]
+}
