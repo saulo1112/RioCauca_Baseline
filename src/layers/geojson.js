@@ -13,6 +13,10 @@
 
 import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
+/* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
+ * que el navegador descarte la caché y descargue la versión más reciente. */
+const BUILD_VERSION = '1.1';
+
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
   'buffer-zona':  'data/cartografia/Buffer_Zona_de_Estudio.geojson',
@@ -36,7 +40,12 @@ export const CLICKABLE_LAYERS = [
   'tributarios-line',
 ];
 
-let _hectareasReady = false;
+let _hectareasReady  = false;
+let _hectareasTotalHa = 0;   // suma de SUM_AREA_HA de todos los registros
+
+/* Devuelve el total de hectáreas de caña una vez que el GeoJSON fue cargado.
+ * Usado por InfoPanel para calcular la participación porcentual por río. */
+export function getHectareasTotalHa() { return _hectareasTotalHa; }
 
 /* ── Carga principal ─────────────────────────────────────────────────── */
 export async function loadGeoJSONLayers(map) {
@@ -75,16 +84,22 @@ export async function loadGeoJSONLayers(map) {
 /* ── Carga diferida de Hectareas_CZ ─────────────────────────────────── */
 async function _loadHectareasBackground(map) {
   try {
-    const resp = await fetch(PATHS['hectareas-cz']);
+    const resp = await fetch(`${PATHS['hectareas-cz']}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+
+    /* Calcular el total del corredor para porcentajes en el popup */
+    _hectareasTotalHa = geojson.features.reduce(
+      (sum, f) => sum + (f.properties?.SUM_AREA_HA ?? 0), 0,
+    );
 
     if (!map.getSource('hectareas-cz')) {
       map.addSource('hectareas-cz', { type: 'geojson', data: geojson });
     }
     _addHectareasLayers(map);
     _hectareasReady = true;
-    console.log('[geojson] Hectareas CZ lista:', geojson.features.length, 'entidades');
+    console.log('[geojson] Hectareas CZ lista:', geojson.features.length,
+      'entidades | total corredor:', _hectareasTotalHa.toFixed(2), 'ha');
   } catch (err) {
     console.error('[geojson] Error cargando Hectareas CZ:', err);
   }
@@ -99,7 +114,7 @@ export async function ensureHectareasLoaded(map) {
 /* ── Helper: fetch + addSource ───────────────────────────────────────── */
 async function _loadSource(map, sourceId, sourceOpts = {}) {
   try {
-    const resp = await fetch(PATHS[sourceId]);
+    const resp = await fetch(`${PATHS[sourceId]}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
 

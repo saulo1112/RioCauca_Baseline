@@ -1,7 +1,16 @@
 /* InfoPanel.js — Popup de atributos al hacer click en capas GeoJSON */
 
-import { CLICKABLE_LAYERS } from '../layers/geojson.js';
-import { getRiverColor }    from '../layers/registry.js';
+import { CLICKABLE_LAYERS, getHectareasTotalHa } from '../layers/geojson.js';
+import { getRiverColor }                         from '../layers/registry.js';
+
+/* Formatea un número con separador de miles y decimales fijos (formato en-US).
+ * Ejemplo: fmt(3475.8612, 2) → "3,475.86" */
+function fmt(value, decimals = 2) {
+  return Number(value).toLocaleString('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+}
 
 export function setupInfoPanel(map) {
   /* Cursor pointer sobre capas interactivas */
@@ -31,6 +40,7 @@ export function setupInfoPanel(map) {
 /* ── Construcción del contenido del panel ──────────────────────────── */
 
 function buildInfo(layerId, p) {
+  console.log('[InfoPanel] layerId:', layerId, '| props:', p);
   switch (layerId) {
 
     case 'rio-cauca-line':
@@ -65,21 +75,24 @@ function buildInfo(layerId, p) {
           ['Tributario', nombre],
           ['Cuenca',     p.NOM_CUENCA  ?? '—'],
           ['Buffer',     p.BUFF_DIST != null ? `${p.BUFF_DIST} m` : '700 m'],
-          ['Long. río',  p.LONGITUD_KM != null ? `${p.LONGITUD_KM} km` : '—'],
+          ['Long. río',  p.LONGITUD_KM != null ? `${fmt(p.LONGITUD_KM, 2)} km` : '—'],
           ['Fuente',     p.FUENTE_DATO ?? '—'],
         ],
       };
     }
 
     case 'hectareas-fill': {
-      const rio = p.RIO ?? '—';
+      const rio   = p.RIO ?? '—';
+      const area  = p.SUM_AREA_HA != null ? Number(p.SUM_AREA_HA) : null;
+      const total = getHectareasTotalHa();
+      const pct   = (area != null && total > 0) ? (area / total) * 100 : null;
+
       return {
-        title: `Caña de azúcar — ${rio}`,
+        title: rio,
         color: '#c9907e',
         rows: [
-          ['Área',   p.AREA_HA != null ? `${Number(p.AREA_HA).toFixed(2)} ha` : '—'],
-          ['Río',    rio],
-          ['Cuenca', p.COD_CUENCA ?? '—'],
+          ['Área de caña de azúcar',       area != null ? `${fmt(area)} ha` : '—'],
+          ['Participación en el corredor',  pct  != null ? `${fmt(pct)} %`  : '—'],
         ],
       };
     }

@@ -3,10 +3,10 @@
 /* global maplibregl */
 
 const TRAMOS = {
-  all: { bounds: [[-76.65, 3.00], [-75.78, 5.20]], opts: { maxZoom: 10 } },
-  '1': { bounds: [[-76.65, 2.95], [-76.10, 3.60]], opts: { maxZoom: 11 } },
-  '2': { bounds: [[-76.45, 3.55], [-75.90, 4.15]], opts: { maxZoom: 11 } },
-  '3': { bounds: [[-76.10, 4.10], [-75.75, 5.25]], opts: { maxZoom: 11 } },
+  all: { bounds: [[-76.77, 2.85], [-75.85, 4.90]], opts: { maxZoom: 10 } },
+  '1': { bounds: [[-76.77, 2.88], [-76.38, 3.40]], opts: { maxZoom: 11 } },
+  '2': { bounds: [[-76.55, 3.20], [-76.25, 3.97]], opts: { maxZoom: 11 } },
+  '3': { bounds: [[-76.42, 3.80], [-75.88, 4.85]], opts: { maxZoom: 11 } },
 };
 
 export function setupTramoFilter(map) {
