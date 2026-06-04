@@ -6,6 +6,7 @@ import { loadGeoJSONLayers }       from './layers/geojson.js';
 import { setupLayerPanel }         from './controls/LayerPanel.js';
 import { setupTramoFilter }        from './controls/TramoFilter.js';
 import { setupInfoPanel }          from './controls/InfoPanel.js';
+import { loadWaterQualityData }    from './data/waterQuality.js';
 
 /* ── Inicializar mapa ─────────────────────────────────────────────────── */
 const map = initMap();
@@ -24,6 +25,9 @@ document.querySelectorAll('.basemap-btn').forEach(btn => {
 
 /* ── Bootstrap principal ─────────────────────────────────────────────── */
 map.on('load', async () => {
+
+  /* Disparar la carga del CSV de calidad del agua en paralelo (no bloquea) */
+  loadWaterQualityData();
 
   /* Cargar y registrar todas las capas GeoJSON */
   await loadGeoJSONLayers(map);

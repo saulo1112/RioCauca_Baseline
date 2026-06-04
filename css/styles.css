@@ -415,6 +415,45 @@ h1, .tramo-num, .section-title, .logo-name {
 }
 .info-table td:last-child { color: var(--text-secondary); }
 
+/* ── Sección histórica (calidad del agua) ───────────────────── */
+.info-panel { max-height: 70vh; overflow-y: auto; }
+
+.info-sep {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 10px 0 8px;
+}
+.info-hist-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.info-hist-body { font-size: 11px; color: var(--text-secondary); }
+.info-hist-summary {
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.info-hist-params > div {
+  padding: 1px 0;
+  font-variant-numeric: tabular-nums;
+}
+.info-hist-dl {
+  margin-top: 9px;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 10.5px;
+  font-family: inherit;
+  color: #FF6B35;
+  background: rgba(255,107,53,0.10);
+  border: 1px solid rgba(255,107,53,0.35);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.info-hist-dl:hover { background: rgba(255,107,53,0.20); }
+
 /* ── Atribución personalizada ───────────────────────────────── */
 .map-attribution-custom {
   position: absolute;

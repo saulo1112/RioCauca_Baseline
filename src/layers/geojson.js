@@ -15,25 +15,28 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '1.2';
+const BUILD_VERSION = '1.4';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
-  'buffer-zona':  'data/cartografia/Buffer_Zona_de_Estudio.geojson',
-  'hectareas-cz': 'data/cartografia/Hectareas_CZ.geojson',
-  'rio-cauca':    'data/cartografia/Rio_cauca.geojson',
-  'tributarios':  'data/cartografia/Tributarios_rios_cauca.geojson',
+  'buffer-zona':      'data/cartografia/Buffer_Zona_de_Estudio.geojson',
+  'hectareas-cz':     'data/cartografia/Hectareas_CZ.geojson',
+  'rio-cauca':        'data/cartografia/Rio_cauca.geojson',
+  'tributarios':      'data/cartografia/Tributarios_rios_cauca.geojson',
+  'estaciones-cauca': 'data/water%20quality/Estaciones_calidad_del_agua.geojson',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
 /* lyr-rios se gestiona con subcontroles en LayerPanel (geo + etiquetas) */
 export const LAYER_GROUPS = {
-  'lyr-buffer':    ['buffer-fill', 'buffer-outline'],
-  'lyr-hectareas': ['hectareas-fill'],
+  'lyr-buffer':           ['buffer-fill', 'buffer-outline'],
+  'lyr-hectareas':        ['hectareas-fill'],
+  'lyr-estaciones-cauca': ['estaciones-cauca-circle', 'estaciones-cauca-label'],
 };
 
 /* ── Capas clickeables (exportado para InfoPanel) ───────────────────── */
 export const CLICKABLE_LAYERS = [
+  'estaciones-cauca-circle',
   'buffer-fill',
   'hectareas-fill',
   'rio-cauca-line',
@@ -77,9 +80,12 @@ export async function loadGeoJSONLayers(map) {
     });
   }
 
+  /* 4. Estaciones calidad del agua — Río Cauca */
+  await _loadEstacionesCauca(map);
+
   console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
 
-  /* 4. Hectareas CZ — carga diferida en segundo plano */
+  /* 5. Hectareas CZ — carga diferida en segundo plano */
   _loadHectareasBackground(map);
 }
 
@@ -136,6 +142,66 @@ async function _loadSource(map, sourceId, sourceOpts = {}) {
   } catch (err) {
     console.error(`[geojson] Error cargando ${sourceId}:`, err);
     return null;
+  }
+}
+
+/* ── Estaciones calidad del agua (Río Cauca) ─────────────────────────── */
+
+async function _loadEstacionesCauca(map) {
+  try {
+    const resp = await fetch(`${PATHS['estaciones-cauca']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const geojson = await resp.json();
+
+    const features = geojson.features.filter(
+      f => f.properties?.CORRIENTE_PROY === 'Rio Cauca'
+    );
+    const data = { type: 'FeatureCollection', features };
+
+    if (!map.getSource('estaciones-cauca')) {
+      map.addSource('estaciones-cauca', { type: 'geojson', data });
+    }
+
+    if (!map.getLayer('estaciones-cauca-circle')) {
+      map.addLayer({
+        id:      'estaciones-cauca-circle',
+        type:    'circle',
+        source:  'estaciones-cauca',
+        minzoom: 8,
+        paint: {
+          'circle-radius':       6,
+          'circle-color':        '#FF6B35',
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#FFFFFF',
+          'circle-opacity':      0.9,
+        },
+      });
+    }
+
+    if (!map.getLayer('estaciones-cauca-label')) {
+      map.addLayer({
+        id:      'estaciones-cauca-label',
+        type:    'symbol',
+        source:  'estaciones-cauca',
+        minzoom: 10,
+        layout: {
+          'text-field':  ['get', 'DESCRIPCION'],
+          'text-size':   11,
+          'text-font':   ['Open Sans Regular'],
+          'text-offset': [0, 1.2],
+          'text-anchor': 'top',
+        },
+        paint: {
+          'text-color':      '#FF6B35',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 2,
+        },
+      });
+    }
+
+    console.log('[geojson] Estaciones Río Cauca:', features.length, 'puntos');
+  } catch (err) {
+    console.error('[geojson] Error cargando estaciones:', err);
   }
 }
 
