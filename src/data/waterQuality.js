@@ -7,7 +7,8 @@
  * lectura del archivo por sesión, compartida por todos los accesores.
  */
 
-const CSV_PATH = 'data/databases/Calidad_del_agua_del_Rio_Cauca_20260604.csv';
+const CSV_PATH    = 'data/databases/Calidad_del_agua_del_Rio_Cauca_20260604.csv';
+const DATA_VERSION = '1.5';   // incrementar junto con BUILD_VERSION en geojson.js cuando se actualice el CSV
 
 const FECHA_COL = 'FECHA DE MUESTREO';
 const EST_COL   = 'ESTACIONES';
@@ -110,11 +111,34 @@ function csvCell(v) {
 
 /* ── Carga + agrupación (memoizada) ────────────────────────────────── */
 async function _doLoad() {
-  const resp = await fetch(`${CSV_PATH}?v=1.3`);
+  const resp = await fetch(`${CSV_PATH}?v=${DATA_VERSION}`);
   if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
   const text = await resp.text();
+  console.log('[waterQuality] CSV primeros 200 chars:', text.slice(0, 200));
+  console.log('[waterQuality] Total chars:', text.length);
 
-  const rows = parseCSV(text);
+  /* Detectar formato "línea envuelta": toda la fila está dentro de un par de
+   * comillas externas y las comillas internas aparecen dobladas ("").
+   * Ejemplo: "FECHA DE MUESTREO,""ESTACIONES"",..."
+   * Si se detecta, normalizar a CSV estándar antes de parsear. */
+  const firstLine = text.trimStart().split('\n')[0].trim();
+  let processedText = text;
+  if (firstLine.startsWith('"FECHA DE MUESTREO,')) {
+    processedText = text
+      .split('\n')
+      .map(line => {
+        const t = line.trim();
+        if (!t) return '';
+        if (t.startsWith('"') && t.endsWith('"')) {
+          return t.slice(1, -1).replace(/""/g, '"');
+        }
+        return t;
+      })
+      .join('\n');
+    console.log('[waterQuality] Formato envuelto detectado — normalizado');
+  }
+
+  const rows = parseCSV(processedText);
   if (rows.length < 2) { _dataMap = new Map(); return _dataMap; }
 
   _headers = rows[0];
