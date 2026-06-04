@@ -38,7 +38,7 @@ export function buildBaseStyle(basemapKey) {
     /* Fondo de color sólido — sin tiles externos, sin CORS */
     return {
       version: 8,
-      glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
+      glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
       sprite: '',
       sources: {},
       layers: [
@@ -50,7 +50,7 @@ export function buildBaseStyle(basemapKey) {
   /* Basemap raster (OSM, Esri, etc.) */
   return {
     version: 8,
-    glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
+    glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
     sprite: '',
     sources: {
       basemap: {

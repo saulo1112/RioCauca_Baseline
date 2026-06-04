@@ -15,7 +15,7 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '1.1';
+const BUILD_VERSION = '1.2';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -77,6 +77,8 @@ export async function loadGeoJSONLayers(map) {
     });
   }
 
+  console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
+
   /* 4. Hectareas CZ — carga diferida en segundo plano */
   _loadHectareasBackground(map);
 }
@@ -117,6 +119,10 @@ async function _loadSource(map, sourceId, sourceOpts = {}) {
     const resp = await fetch(`${PATHS[sourceId]}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+
+    if (sourceId === 'tributarios') {
+      console.log('[geojson] tributario ejemplo:', geojson.features[0].properties);
+    }
 
     if (!map.getSource(sourceId)) {
       map.addSource(sourceId, {
@@ -227,27 +233,32 @@ function _addRioCaucaLayers(map) {
     });
   }
 
-  if (!map.getLayer('rio-cauca-label')) {
-    map.addLayer({
-      id:      'rio-cauca-label',
-      type:    'symbol',
-      source:  'rio-cauca',
-      minzoom: 9,
-      layout: {
-        'symbol-placement': 'line',
-        'text-field':       ['get', 'NOM1_DRENAJE'],
-        'text-size':        12,
-        'text-font':        ['Open Sans Regular'],
-        'symbol-spacing':   600,
-        'text-optional':    true,
-        'text-max-angle':   30,
-      },
-      paint: {
-        'text-color':       '#7EB3FF',
-        'text-halo-color':  '#0f1419',
-        'text-halo-width':  1.5,
-      },
-    });
+  try {
+    if (!map.getLayer('rio-cauca-label')) {
+      map.addLayer({
+        id:     'rio-cauca-label',
+        type:   'symbol',
+        source: 'rio-cauca',
+        layout: {
+          'symbol-placement':  'line',
+          'text-field':        ['literal', 'Río Cauca'],
+          'text-size':         ['interpolate', ['linear'], ['zoom'], 5, 10, 10, 13, 15, 17],
+          'text-font':         ['Open Sans Regular'],
+          'symbol-spacing':    1200,
+          'text-keep-upright': true,
+          'text-max-angle':    30,
+          'text-optional':     true,
+        },
+        paint: {
+          'text-color':      '#004DA8',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 3,
+          'text-halo-blur':  1,
+        },
+      });
+    }
+  } catch (err) {
+    console.warn('[geojson] rio-cauca-label no disponible:', err);
   }
 }
 
@@ -292,26 +303,31 @@ function _addTributariosLayers(map) {
     });
   }
 
-  if (!map.getLayer('tributarios-label')) {
-    map.addLayer({
-      id:      'tributarios-label',
-      type:    'symbol',
-      source:  'tributarios',
-      minzoom: 9,
-      layout: {
-        'symbol-placement': 'line',
-        'text-field':       ['get', 'NOM1_DRENA'],
-        'text-size':        10,
-        'text-font':        ['Open Sans Regular'],
-        'symbol-spacing':   400,
-        'text-optional':    true,
-        'text-max-angle':   30,
-      },
-      paint: {
-        'text-color':       '#B8DEFF',
-        'text-halo-color':  '#0f1419',
-        'text-halo-width':  1.5,
-      },
-    });
+  try {
+    if (!map.getLayer('tributarios-label')) {
+      map.addLayer({
+        id:     'tributarios-label',
+        type:   'symbol',
+        source: 'tributarios',
+        layout: {
+          'symbol-placement':  'line',
+          'text-field':        ['get', 'NOM1_DRENA'],
+          'text-size':         ['interpolate', ['linear'], ['zoom'], 5, 9, 10, 11, 15, 14],
+          'text-font':         ['Open Sans Regular'],
+          'symbol-spacing':    1200,
+          'text-keep-upright': true,
+          'text-max-angle':    30,
+          'text-optional':     true,
+        },
+        paint: {
+          'text-color':      '#0077FF',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 3,
+          'text-halo-blur':  1,
+        },
+      });
+    }
+  } catch (err) {
+    console.warn('[geojson] tributarios-label no disponible:', err);
   }
 }

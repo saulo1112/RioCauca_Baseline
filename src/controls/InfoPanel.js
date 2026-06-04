@@ -67,7 +67,8 @@ function buildInfo(layerId, p) {
     }
 
     case 'buffer-fill': {
-      const nombre = p.NOM1_DRENA ?? '—';
+      const nombre   = p.NOM1_DRENA ?? '—';
+      const longitud = p.LONGITUD_AJUSTADA_KM ?? p.LONGITUD_KM;
       return {
         title: `Zona de estudio — ${nombre}`,
         color: 'rgba(0, 130, 255, 0.9)',
@@ -75,7 +76,7 @@ function buildInfo(layerId, p) {
           ['Tributario', nombre],
           ['Cuenca',     p.NOM_CUENCA  ?? '—'],
           ['Buffer',     p.BUFF_DIST != null ? `${p.BUFF_DIST} m` : '700 m'],
-          ['Long. río',  p.LONGITUD_KM != null ? `${fmt(p.LONGITUD_KM, 2)} km` : '—'],
+          ['Long. río',  longitud != null ? `${fmt(longitud, 2)} km` : '—'],
           ['Fuente',     p.FUENTE_DATO ?? '—'],
         ],
       };
