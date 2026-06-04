@@ -18,6 +18,9 @@ export function initMap() {
     dragRotate: false,
   });
 
+  /* Errores de MapLibre (glyphs, símbolos, tiles) — visibles en consola */
+  map.on('error', (e) => console.error('[maplibre error]', e?.error ?? e));
+
   map.addControl(
     new maplibregl.NavigationControl({ showCompass: false }),
     'bottom-right'

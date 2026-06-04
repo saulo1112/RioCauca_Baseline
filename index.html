@@ -84,11 +84,21 @@
     <div class="sidebar-section">
       <div class="section-title">Capas</div>
 
-      <div class="layer-item">
+      <div class="layer-item has-submenu">
         <input type="checkbox" id="lyr-rios" checked>
         <div class="layer-swatch" style="background:linear-gradient(135deg,#004DA8 50%,#0A93FC 50%)"></div>
         <span class="layer-label">Ríos (Cauca + Tributarios)</span>
         <span class="layer-count">60</span>
+        <div class="layer-submenu">
+          <label class="submenu-item">
+            <input type="checkbox" id="lyr-rios-geo" checked>
+            <span>Geometría</span>
+          </label>
+          <label class="submenu-item">
+            <input type="checkbox" id="lyr-rios-labels" checked>
+            <span>Etiquetas</span>
+          </label>
+        </div>
       </div>
 
       <div class="layer-item">

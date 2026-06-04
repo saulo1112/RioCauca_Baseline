@@ -26,8 +26,8 @@ const PATHS = {
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
+/* lyr-rios se gestiona con subcontroles en LayerPanel (geo + etiquetas) */
 export const LAYER_GROUPS = {
-  'lyr-rios':      ['rio-cauca-halo', 'rio-cauca-line', 'rio-cauca-label', 'tributarios-halo', 'tributarios-line', 'tributarios-label'],
   'lyr-buffer':    ['buffer-fill', 'buffer-outline'],
   'lyr-hectareas': ['hectareas-fill'],
 };
@@ -233,33 +233,6 @@ function _addRioCaucaLayers(map) {
     });
   }
 
-  try {
-    if (!map.getLayer('rio-cauca-label')) {
-      map.addLayer({
-        id:     'rio-cauca-label',
-        type:   'symbol',
-        source: 'rio-cauca',
-        layout: {
-          'symbol-placement':  'line',
-          'text-field':        ['literal', 'Río Cauca'],
-          'text-size':         ['interpolate', ['linear'], ['zoom'], 5, 10, 10, 13, 15, 17],
-          'text-font':         ['Open Sans Regular'],
-          'symbol-spacing':    1200,
-          'text-keep-upright': true,
-          'text-max-angle':    30,
-          'text-optional':     true,
-        },
-        paint: {
-          'text-color':      '#004DA8',
-          'text-halo-color': '#FFFFFF',
-          'text-halo-width': 3,
-          'text-halo-blur':  1,
-        },
-      });
-    }
-  } catch (err) {
-    console.warn('[geojson] rio-cauca-label no disponible:', err);
-  }
 }
 
 function _addTributariosLayers(map) {
@@ -310,14 +283,12 @@ function _addTributariosLayers(map) {
         type:   'symbol',
         source: 'tributarios',
         layout: {
-          'symbol-placement':  'line',
-          'text-field':        ['get', 'NOM1_DRENA'],
-          'text-size':         ['interpolate', ['linear'], ['zoom'], 5, 9, 10, 11, 15, 14],
-          'text-font':         ['Open Sans Regular'],
-          'symbol-spacing':    1200,
-          'text-keep-upright': true,
-          'text-max-angle':    30,
-          'text-optional':     true,
+          'symbol-placement':      'point',
+          'text-field':            ['get', 'NOM1_DRENA'],
+          'text-size':             12,
+          'text-font':             ['Open Sans Regular'],
+          'text-allow-overlap':    true,
+          'text-ignore-placement': true,
         },
         paint: {
           'text-color':      '#0077FF',
