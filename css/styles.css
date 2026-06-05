@@ -274,6 +274,15 @@ h1, .tramo-num, .section-title, .logo-name {
   cursor: pointer;
 }
 .submenu-item:hover span { color: var(--text-primary); }
+.submenu-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  color: #FF6B35;
+}
+.submenu-btn span { color: #FF6B35; }
+.submenu-btn:hover span { color: #ff9d6a; }
 
 .layer-badge {
   font-size: 9px;
@@ -510,6 +519,132 @@ h1, .tramo-num, .section-title, .logo-name {
   border-color: rgba(0,63,136,0.40);
 }
 .hidro-dl:hover { background: rgba(0,63,136,0.22); }
+
+/* ── Galería lightbox de perfiles de calidad del agua ───────── */
+.wqg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  display: flex;
+  padding: 24px;
+}
+.wqg-container {
+  max-width: 900px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wqg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wqg-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+.wqg-close {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.wqg-close:hover { color: #fff; }
+
+.wqg-stage {
+  position: relative;
+  background: #000;
+  border-radius: 6px;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.wqg-main {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.wqg-missing {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-style: italic;
+}
+.wqg-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  width: 40px;
+  height: 56px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 2;
+}
+.wqg-nav:hover { background: rgba(0,0,0,0.75); }
+.wqg-prev { left: 12px; }
+.wqg-next { right: 12px; }
+
+.wqg-caption {
+  text-align: center;
+  color: #e8ecf0;
+  font-size: 13px;
+}
+.wqg-caption strong { color: #FF6B35; }
+
+.wqg-thumbs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+}
+.wqg-thumbs::-webkit-scrollbar { height: 6px; }
+.wqg-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+.wqg-thumb {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 50px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: #1a1a1a;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+.wqg-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.wqg-thumb-active { border-color: #FF6B35; }
+.wqg-thumb-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: var(--text-muted);
+  background: #2a2a2a;
+  text-align: center;
+  padding: 2px;
+}
 
 /* ── Atribución personalizada ───────────────────────────────── */
 .map-attribution-custom {

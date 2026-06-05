@@ -7,6 +7,7 @@ import { setupLayerPanel }         from './controls/LayerPanel.js';
 import { setupTramoFilter }        from './controls/TramoFilter.js';
 import { setupInfoPanel }          from './controls/InfoPanel.js';
 import { loadWaterQualityData }    from './data/waterQuality.js';
+import * as WaterQualityGallery    from './controls/WaterQualityGallery.js';
 
 /* ── Inicializar mapa ─────────────────────────────────────────────────── */
 const map = initMap();
@@ -35,6 +36,10 @@ map.on('load', async () => {
   /* Controles interactivos */
   setupLayerPanel(map);
   setupInfoPanel(map);
+  WaterQualityGallery.init();
+
+  document.getElementById('btn-galeria-calidad')
+    ?.addEventListener('click', () => WaterQualityGallery.open());
 
   /* Limpiar indicador de carga */
   document.getElementById('map-loading')?.remove();

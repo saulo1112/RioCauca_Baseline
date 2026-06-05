@@ -4,6 +4,7 @@ import { CLICKABLE_LAYERS, getHectareasTotalHa } from '../layers/geojson.js';
 import { getRiverColor }                         from '../layers/registry.js';
 import { getStationRecords, getAvailableParams, buildStationCSV }
   from '../data/waterQuality.js';
+import * as WaterQualityGallery from './WaterQualityGallery.js';
 
 /* Formatea un número con separador de miles y decimales fijos (formato en-US).
  * Ejemplo: fmt(3475.8612, 2) → "3,475.86" */
