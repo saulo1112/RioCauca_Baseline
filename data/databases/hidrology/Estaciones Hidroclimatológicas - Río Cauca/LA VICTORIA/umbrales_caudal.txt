@@ -1,0 +1,15 @@
+Estación: LA VICTORIA
+Datos: 5,883 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 483.1 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 228.5 – 483.1 m³/s
+  VERANO    : caudal ≤ 228.5 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 45.1 m³/s
+  Máximo   : 1,219.4 m³/s
+  Promedio : 399.0 m³/s
+  Mediana  : 328.8 m³/s

@@ -1,0 +1,15 @@
+Estación: LA BALSA
+Datos: 5,564 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 218.6 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 124.2 – 218.6 m³/s
+  VERANO    : caudal ≤ 124.2 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 29.3 m³/s
+  Máximo   : 768.3 m³/s
+  Promedio : 188.5 m³/s
+  Mediana  : 159.9 m³/s

@@ -1,0 +1,15 @@
+Estación: JUANCHITO (S HASTA 2017)
+Datos: 1,094 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 255.7 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 151.1 – 255.7 m³/s
+  VERANO    : caudal ≤ 151.1 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 59.1 m³/s
+  Máximo   : 792.6 m³/s
+  Promedio : 225.6 m³/s
+  Mediana  : 198.3 m³/s

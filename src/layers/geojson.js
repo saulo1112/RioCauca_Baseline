@@ -15,7 +15,7 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '1.5';
+const BUILD_VERSION = '1.6';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -24,6 +24,7 @@ const PATHS = {
   'rio-cauca':        'data/cartografia/Rio_cauca.geojson',
   'tributarios':      'data/cartografia/Tributarios_rios_cauca.geojson',
   'estaciones-cauca': 'data/water%20quality/Estaciones_calidad_del_agua.geojson',
+  'estaciones-hidro': 'data/hydrology/estaciones_hidro.json',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
@@ -32,11 +33,13 @@ export const LAYER_GROUPS = {
   'lyr-buffer':           ['buffer-fill', 'buffer-outline'],
   'lyr-hectareas':        ['hectareas-fill'],
   'lyr-estaciones-cauca': ['estaciones-cauca-circle', 'estaciones-cauca-label'],
+  'lyr-estaciones-hidro': ['estaciones-hidro-circle', 'estaciones-hidro-label'],
 };
 
 /* ── Capas clickeables (exportado para InfoPanel) ───────────────────── */
 export const CLICKABLE_LAYERS = [
   'estaciones-cauca-circle',
+  'estaciones-hidro-circle',
   'buffer-fill',
   'hectareas-fill',
   'rio-cauca-line',
@@ -82,6 +85,9 @@ export async function loadGeoJSONLayers(map) {
 
   /* 4. Estaciones calidad del agua — Río Cauca */
   await _loadEstacionesCauca(map);
+
+  /* 4b. Estaciones hidrométricas — Río Cauca */
+  await _loadEstacionesHidro(map);
 
   console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
 
@@ -164,10 +170,9 @@ async function _loadEstacionesCauca(map) {
 
     if (!map.getLayer('estaciones-cauca-circle')) {
       map.addLayer({
-        id:      'estaciones-cauca-circle',
-        type:    'circle',
-        source:  'estaciones-cauca',
-        minzoom: 8,
+        id:     'estaciones-cauca-circle',
+        type:   'circle',
+        source: 'estaciones-cauca',
         paint: {
           'circle-radius':       6,
           'circle-color':        '#FF6B35',
@@ -202,6 +207,76 @@ async function _loadEstacionesCauca(map) {
     console.log('[geojson] Estaciones Río Cauca:', features.length, 'puntos');
   } catch (err) {
     console.error('[geojson] Error cargando estaciones:', err);
+  }
+}
+
+/* ── Estaciones hidrométricas (Río Cauca) ────────────────────────────── */
+
+async function _loadEstacionesHidro(map) {
+  try {
+    const resp = await fetch(`${PATHS['estaciones-hidro']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const items = await resp.json();
+
+    /* Array de objetos → FeatureCollection de puntos */
+    const features = items
+      .filter(o => o.longitud != null && o.latitud != null)
+      .map(o => ({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [o.longitud, o.latitud] },
+        properties: o,
+      }));
+    const data = { type: 'FeatureCollection', features };
+
+    if (!map.getSource('estaciones-hidro')) {
+      map.addSource('estaciones-hidro', { type: 'geojson', data });
+    }
+
+    if (!map.getLayer('estaciones-hidro-circle')) {
+      map.addLayer({
+        id:     'estaciones-hidro-circle',
+        type:   'circle',
+        source: 'estaciones-hidro',
+        paint: {
+          'circle-radius':       7,
+          'circle-color':        '#003F88',
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#FFFFFF',
+          /* Suspendida → 0.4 · Activa (u otro) → 1.0 */
+          'circle-opacity': [
+            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
+          ],
+          'circle-stroke-opacity': [
+            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
+          ],
+        },
+      });
+    }
+
+    if (!map.getLayer('estaciones-hidro-label')) {
+      map.addLayer({
+        id:      'estaciones-hidro-label',
+        type:    'symbol',
+        source:  'estaciones-hidro',
+        minzoom: 10,
+        layout: {
+          'text-field':  ['get', 'nombre_display'],
+          'text-size':   11,
+          'text-font':   ['Open Sans Regular'],
+          'text-offset': [0, 1.2],
+          'text-anchor': 'top',
+        },
+        paint: {
+          'text-color':      '#003F88',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 2,
+        },
+      });
+    }
+
+    console.log('[geojson] Estaciones hidrométricas:', features.length, 'puntos');
+  } catch (err) {
+    console.error('[geojson] Error cargando estaciones hidrométricas:', err);
   }
 }
 
@@ -248,7 +323,6 @@ function _addHectareasLayers(map) {
       id:     'hectareas-fill',
       type:   'fill',
       source: 'hectareas-cz',
-      layout: { visibility: 'none' },
       paint: {
         'fill-color':   '#FBC4BB',
         'fill-opacity': 0.7,

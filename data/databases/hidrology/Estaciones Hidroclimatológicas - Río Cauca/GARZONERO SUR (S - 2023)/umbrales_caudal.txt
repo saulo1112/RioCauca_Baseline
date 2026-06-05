@@ -1,0 +1,15 @@
+Estación: GARZONERO SUR (S - 2023)
+Datos: 3,000 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 3.6 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 2.1 – 3.6 m³/s
+  VERANO    : caudal ≤ 2.1 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.4 m³/s
+  Máximo   : 7.0 m³/s
+  Promedio : 3.0 m³/s
+  Mediana  : 2.6 m³/s

@@ -1,0 +1,15 @@
+Estación: HORMIGUERO
+Datos: 1,050 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 329.7 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 214.2 – 329.7 m³/s
+  VERANO    : caudal ≤ 214.2 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 139.8 m³/s
+  Máximo   : 767.0 m³/s
+  Promedio : 289.6 m³/s
+  Mediana  : 259.3 m³/s

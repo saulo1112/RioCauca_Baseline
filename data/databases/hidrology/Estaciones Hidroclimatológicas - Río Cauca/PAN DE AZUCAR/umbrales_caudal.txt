@@ -1,0 +1,15 @@
+Estación: PAN DE AZUCAR
+Datos: 3,889 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 115.4 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 61.1 – 115.4 m³/s
+  VERANO    : caudal ≤ 61.1 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 19.1 m³/s
+  Máximo   : 427.4 m³/s
+  Promedio : 98.6 m³/s
+  Mediana  : 84.7 m³/s

@@ -1,0 +1,15 @@
+Estación: JUAN DIAZ
+Datos: 2,043 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 4.3 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 2.1 – 4.3 m³/s
+  VERANO    : caudal ≤ 2.1 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.5 m³/s
+  Máximo   : 8.7 m³/s
+  Promedio : 3.5 m³/s
+  Mediana  : 3.3 m³/s

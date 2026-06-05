@@ -99,6 +99,22 @@ function buildInfo(layerId, p) {
         ],
       };
 
+    case 'estaciones-hidro-circle': {
+      const activa = p.estado === 'Activa';
+      const estadoHtml = `<span style="color:${activa ? '#4caf50' : '#8fa3b8'}">${
+        escapeHtml(p.estado ?? '—')}</span>`;
+      return {
+        title: p.nombre_display ?? p.nombre ?? '—',
+        color: '#003F88',
+        hidro: p,
+        rows: [
+          ['Tipo',    p.tipo    ?? '—'],
+          ['Estado',  estadoHtml],
+          ['Período', p.años_datos ?? '—'],
+        ],
+      };
+    }
+
     case 'hectareas-fill': {
       const rio   = p.RIO ?? '—';
       const area  = p.SUM_AREA_HA != null ? Number(p.SUM_AREA_HA) : null;
@@ -130,7 +146,7 @@ function buildInfo(layerId, p) {
  * hace click en otra estación antes de que el CSV termine de procesarse). */
 let _panelToken = 0;
 
-function showPanel({ title, color, rows, station }) {
+function showPanel({ title, color, rows, station, hidro }) {
   const panel = document.getElementById('info-panel');
   if (!panel) return;
   const token = ++_panelToken;
@@ -146,6 +162,7 @@ function showPanel({ title, color, rows, station }) {
   panel.classList.add('visible');
 
   if (station) renderHistorico(station, token);
+  if (hidro)   renderHidro(hidro);
 }
 
 function hidePanel() {
@@ -209,6 +226,77 @@ async function renderHistorico(descripcion, token) {
 
   body.querySelector('.info-hist-dl')
     ?.addEventListener('click', () => downloadStationCSV(descripcion));
+}
+
+/* ── Estación hidrométrica: estadísticas de caudal + curva de duración ── */
+
+function renderHidro(p) {
+  const extra = document.getElementById('info-extra');
+  if (!extra) return;
+
+  let html = '';
+
+  /* Sección B — Estadísticas de caudal (solo si hay promedio) */
+  if (p.promedio_m3s != null) {
+    const stat = (label, v) =>
+      `<div class="hidro-stat"><span class="hidro-stat-lbl">${label}</span>` +
+      `<span class="hidro-stat-val">${v != null ? `${fmt(v, 1)}` : '—'}</span></div>`;
+
+    html +=
+      '<hr class="info-sep">' +
+      '<div class="info-hist-title">Caudal diario (m³/s)</div>' +
+      '<div class="hidro-grid">' +
+        stat('Promedio', p.promedio_m3s) +
+        stat('Mediana',  p.mediana_m3s) +
+        stat('Mínimo',   p.minimo_m3s) +
+        stat('Máximo',   p.maximo_m3s) +
+      '</div>';
+
+    if (p.tiene_calidad && p.estacion_calidad) {
+      html += `<div class="hidro-link">↗ Estación de calidad: ${
+        escapeHtml(p.estacion_calidad)}</div>`;
+    }
+  }
+
+  /* Sección C — Curva de duración de caudales */
+  html += '<hr class="info-sep">';
+  if (p.tiene_cdc) {
+    const src = `data/hydrology/${encodeURIComponent(p.nombre)}/curva_duracion_caudales.png`;
+    html += `<img class="hidro-cdc" src="${src}" alt="Curva de duración de caudales">`;
+    if (p.umbral_invierno_m3s != null && p.umbral_verano_m3s != null) {
+      html += `<div class="hidro-umbral">Invierno ≥ ${fmt(p.umbral_invierno_m3s, 1)} m³/s · ` +
+              `Verano ≤ ${fmt(p.umbral_verano_m3s, 1)} m³/s</div>`;
+    }
+  } else {
+    html += '<div class="hidro-no-cdc">Curva de duración no disponible</div>';
+  }
+
+  /* Botón de descarga */
+  html += '<button class="info-hist-dl hidro-dl" type="button">⬇ Descargar caudal diario CSV</button>';
+
+  extra.innerHTML = html;
+  extra.querySelector('.hidro-dl')
+    ?.addEventListener('click', () => downloadHidroCSV(p.nombre));
+}
+
+async function downloadHidroCSV(nombre) {
+  try {
+    const resp = await fetch(`data/hydrology/${encodeURIComponent(nombre)}/caudal_diario.csv`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const csv  = await resp.text();
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `caudal_diario_${nombre.toLowerCase().replace(/\s+/g, '_')}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error('[InfoPanel] Error descargando caudal:', err);
+  }
 }
 
 async function downloadStationCSV(descripcion) {

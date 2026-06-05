@@ -1,0 +1,15 @@
+Estación: TABLANCA
+Datos: 354 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 228.8 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 146.0 – 228.8 m³/s
+  VERANO    : caudal ≤ 146.0 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 97.6 m³/s
+  Máximo   : 498.2 m³/s
+  Promedio : 217.4 m³/s
+  Mediana  : 176.1 m³/s

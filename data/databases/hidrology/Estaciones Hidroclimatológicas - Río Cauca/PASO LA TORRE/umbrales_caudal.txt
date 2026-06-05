@@ -1,0 +1,15 @@
+Estación: PASO LA TORRE
+Datos: 584 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 340.7 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 150.0 – 340.7 m³/s
+  VERANO    : caudal ≤ 150.0 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 31.9 m³/s
+  Máximo   : 944.4 m³/s
+  Promedio : 277.8 m³/s
+  Mediana  : 201.6 m³/s

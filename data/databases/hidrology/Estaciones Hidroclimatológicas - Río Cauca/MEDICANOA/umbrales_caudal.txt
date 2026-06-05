@@ -1,0 +1,15 @@
+Estación: MEDICANOA
+Datos: 5,674 caudales diarios (2010–2026)
+
+── Umbrales calculados ──────────────────────────────
+Permanencia usada: 30% (invierno) | 70% (verano)
+
+  INVIERNO  : caudal ≥ 407.4 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 196.2 – 407.4 m³/s
+  VERANO    : caudal ≤ 196.2 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 63.5 m³/s
+  Máximo   : 1,074.4 m³/s
+  Promedio : 338.1 m³/s
+  Mediana  : 277.3 m³/s

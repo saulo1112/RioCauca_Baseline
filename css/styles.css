@@ -454,6 +454,63 @@ h1, .tramo-num, .section-title, .logo-name {
 }
 .info-hist-dl:hover { background: rgba(255,107,53,0.20); }
 
+/* ── Estación hidrométrica (caudal + CDC) ───────────────────── */
+.hidro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 10px;
+  margin-bottom: 4px;
+}
+.hidro-stat {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0,63,136,0.10);
+  border: 1px solid rgba(0,63,136,0.30);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+}
+.hidro-stat-lbl {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+.hidro-stat-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.hidro-link {
+  font-size: 10px;
+  color: #5b9bd5;
+  margin-top: 5px;
+}
+.hidro-cdc {
+  width: 100%;
+  border-radius: 6px;
+  margin-top: 8px;
+  display: block;
+}
+.hidro-umbral {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: 5px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.hidro-no-cdc {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.hidro-dl {
+  color: #5b9bd5;
+  background: rgba(0,63,136,0.12);
+  border-color: rgba(0,63,136,0.40);
+}
+.hidro-dl:hover { background: rgba(0,63,136,0.22); }
+
 /* ── Atribución personalizada ───────────────────────────────── */
 .map-attribution-custom {
   position: absolute;
