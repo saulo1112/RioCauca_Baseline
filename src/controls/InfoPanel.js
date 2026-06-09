@@ -100,6 +100,22 @@ function buildInfo(layerId, p) {
         ],
       };
 
+    case 'estaciones-trib-circle': {
+      const desc = (p.DESCRIPCION && p.DESCRIPCION !== '<Null>') ? p.DESCRIPCION : null;
+      return {
+        title: desc ?? p.MUNICIPIO ?? '—',
+        color: '#00BFA5',
+        rows: [
+          ['Río',              p.CORRIENTE_PROY ?? '—'],
+          ['Municipio',        p.MUNICIPIO      ?? '—'],
+          ['Zona de muestreo', p.ZONA_MUESTREO  ?? '—'],
+          ['Fuente',           p.FUENTE         ?? '—'],
+          ['Latitud',          p.LATITUD  != null ? String(p.LATITUD)  : '—'],
+          ['Longitud',         p.LONGITUD != null ? String(p.LONGITUD) : '—'],
+        ],
+      };
+    }
+
     case 'estaciones-hidro-circle': {
       const activa = p.estado === 'Activa';
       const estadoHtml = `<span style="color:${activa ? '#4caf50' : '#8fa3b8'}">${

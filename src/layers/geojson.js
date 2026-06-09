@@ -15,7 +15,7 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '1.6';
+const BUILD_VERSION = '1.7';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -24,6 +24,7 @@ const PATHS = {
   'rio-cauca':        'data/cartografia/Rio_cauca.geojson',
   'tributarios':      'data/cartografia/Tributarios_rios_cauca.geojson',
   'estaciones-cauca': 'data/water%20quality/Estaciones_calidad_del_agua.geojson',
+  'estaciones-trib':  'data/water%20quality/Estaciones_calidad_del_agua.geojson',
   'estaciones-hidro': 'data/hydrology/estaciones_hidro.json',
 };
 
@@ -33,12 +34,14 @@ export const LAYER_GROUPS = {
   'lyr-buffer':           ['buffer-fill', 'buffer-outline'],
   'lyr-hectareas':        ['hectareas-fill'],
   'lyr-estaciones-cauca': ['estaciones-cauca-circle', 'estaciones-cauca-label'],
+  'lyr-estaciones-trib':  ['estaciones-trib-circle',  'estaciones-trib-label'],
   'lyr-estaciones-hidro': ['estaciones-hidro-circle', 'estaciones-hidro-label'],
 };
 
 /* ── Capas clickeables (exportado para InfoPanel) ───────────────────── */
 export const CLICKABLE_LAYERS = [
   'estaciones-cauca-circle',
+  'estaciones-trib-circle',
   'estaciones-hidro-circle',
   'buffer-fill',
   'hectareas-fill',
@@ -86,7 +89,10 @@ export async function loadGeoJSONLayers(map) {
   /* 4. Estaciones calidad del agua — Río Cauca */
   await _loadEstacionesCauca(map);
 
-  /* 4b. Estaciones hidrométricas — Río Cauca */
+  /* 4b. Estaciones calidad del agua — Ríos tributarios */
+  await _loadEstacionesTrib(map);
+
+  /* 4c. Estaciones hidrométricas — Río Cauca */
   await _loadEstacionesHidro(map);
 
   console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
@@ -207,6 +213,70 @@ async function _loadEstacionesCauca(map) {
     console.log('[geojson] Estaciones Río Cauca:', features.length, 'puntos');
   } catch (err) {
     console.error('[geojson] Error cargando estaciones:', err);
+  }
+}
+
+/* ── Estaciones calidad del agua (Ríos tributarios) ──────────────────── */
+
+async function _loadEstacionesTrib(map) {
+  try {
+    const resp = await fetch(`${PATHS['estaciones-trib']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const geojson = await resp.json();
+
+    const features = geojson.features.filter(
+      f => f.properties?.CORRIENTE_PROY !== 'Rio Cauca'
+    );
+    const data = { type: 'FeatureCollection', features };
+
+    if (!map.getSource('estaciones-trib')) {
+      map.addSource('estaciones-trib', { type: 'geojson', data });
+    }
+
+    if (!map.getLayer('estaciones-trib-circle')) {
+      map.addLayer({
+        id:     'estaciones-trib-circle',
+        type:   'circle',
+        source: 'estaciones-trib',
+        paint: {
+          'circle-radius':       6,
+          'circle-color':        '#00BFA5',
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#FFFFFF',
+          'circle-opacity':      0.9,
+        },
+      });
+    }
+
+    if (!map.getLayer('estaciones-trib-label')) {
+      map.addLayer({
+        id:      'estaciones-trib-label',
+        type:    'symbol',
+        source:  'estaciones-trib',
+        minzoom: 11,
+        layout: {
+          'text-field': [
+            'case',
+            ['all', ['has', 'DESCRIPCION'], ['!=', ['get', 'DESCRIPCION'], '<Null>']],
+            ['get', 'DESCRIPCION'],
+            ['get', 'MUNICIPIO'],
+          ],
+          'text-size':   10,
+          'text-font':   ['Open Sans Regular'],
+          'text-offset': [0, 1.2],
+          'text-anchor': 'top',
+        },
+        paint: {
+          'text-color':      '#007A6E',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 2,
+        },
+      });
+    }
+
+    console.log('[geojson] Estaciones tributarios:', features.length, 'puntos');
+  } catch (err) {
+    console.error('[geojson] Error cargando estaciones tributarios:', err);
   }
 }
 
