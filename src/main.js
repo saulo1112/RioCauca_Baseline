@@ -41,6 +41,13 @@ map.on('load', async () => {
   document.getElementById('btn-galeria-calidad')
     ?.addEventListener('click', () => WaterQualityGallery.open());
 
-  /* Limpiar indicador de carga */
+  /* Limpiar indicador de carga inline */
   document.getElementById('map-loading')?.remove();
+
+  /* Fade-out y eliminación del splash screen */
+  const splash = document.getElementById('splash-screen');
+  if (splash) {
+    splash.classList.add('fade-out');
+    splash.addEventListener('transitionend', () => splash.remove(), { once: true });
+  }
 });
