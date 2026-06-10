@@ -146,7 +146,7 @@ function buildInfo(layerId, p) {
         color: '#c9907e',
         rows: [
           ['Área de caña de azúcar',       area != null ? `${fmt(area)} ha` : '—'],
-          ['Participación en el corredor',  pct  != null ? `${fmt(pct)} %`  : '—'],
+          ['Porcentaje relativo',  pct  != null ? `${fmt(pct)} %`  : '—'],
         ],
       };
     }
