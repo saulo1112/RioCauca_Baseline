@@ -1,6 +1,6 @@
 /* InfoPanel.js — Popup de atributos al hacer click en capas GeoJSON */
 
-import { CLICKABLE_LAYERS, getHectareasTotalHa } from '../layers/geojson.js';
+import { CLICKABLE_LAYERS, getHectareasTotalHa, flashCana } from '../layers/geojson.js';
 import { getRiverColor }                         from '../layers/registry.js';
 import { getStationRecords, getAvailableParams, buildStationCSV }
   from '../data/waterQuality.js';
@@ -35,6 +35,9 @@ export function setupInfoPanel(map) {
 
     const { layer: { id: layerId }, properties: props } = hits[0];
     showPanel(buildInfo(layerId, props ?? {}));
+
+    /* Highlight parpadeante de los polígonos de caña del mismo río */
+    if (layerId === 'hectareas-fill') flashCana(map, props?.RIO);
   });
 
   document.getElementById('info-close')?.addEventListener('click', hidePanel);

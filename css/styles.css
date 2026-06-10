@@ -173,7 +173,48 @@ h1, .tramo-num, .section-title, .logo-name {
   display: flex;
   flex-direction: column;
   z-index: 10;
+  transition: margin-left 0.3s ease;
 }
+.sidebar.collapsed {
+  margin-left: calc(-1 * var(--sidebar-w));
+}
+
+/* ── Toggle del panel lateral ───────────────────────────────── */
+.section-title-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-collapse-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+.sidebar-collapse-btn:hover { color: var(--text-primary); }
+
+.sidebar-show-btn {
+  position: fixed;
+  top: calc(var(--header-h) + 12px);
+  left: 12px;
+  z-index: 999;
+  display: none;
+  background: rgba(20,20,20,0.75);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.sidebar-show-btn:hover { background: rgba(20,20,20,0.9); }
+.sidebar-show-btn.visible { display: block; }
 
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-track { background: transparent; }
@@ -327,6 +368,8 @@ h1, .tramo-num, .section-title, .logo-name {
 }
 .submenu-btn span { color: #FF6B35; }
 .submenu-btn:hover span { color: #ff9d6a; }
+.submenu-btn-hidro span { color: #5b9bd5; }
+.submenu-btn-hidro:hover span { color: #89c4f4; }
 
 .layer-badge {
   font-size: 9px;
@@ -689,6 +732,65 @@ h1, .tramo-num, .section-title, .logo-name {
   text-align: center;
   padding: 2px;
 }
+
+/* ── Lightbox perfil de caudal ──────────────────────────────── */
+.cg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  display: flex;
+  padding: 24px;
+}
+.cg-container {
+  max-width: 960px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cg-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #5b9bd5;
+}
+.cg-close {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.cg-close:hover { color: #fff; }
+.cg-img {
+  width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #000;
+}
+.cg-missing {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+  padding: 40px;
+}
+.cg-caption {
+  text-align: center;
+  color: #8fa3b8;
+  font-size: 11px;
+  font-style: italic;
+}
+
 
 /* ── Atribución personalizada ───────────────────────────────── */
 .map-attribution-custom {

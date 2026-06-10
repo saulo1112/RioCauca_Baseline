@@ -400,6 +400,57 @@ function _addHectareasLayers(map) {
     },
     before,
   );
+
+  /* Capa de highlight — encima de hectareas-fill, debajo de los ríos.
+   * Filtro inicial vacío: no muestra nada hasta que se hace clic. */
+  if (!map.getLayer('cana-highlight')) {
+    map.addLayer(
+      {
+        id:     'cana-highlight',
+        type:   'fill',
+        source: 'hectareas-cz',
+        filter: ['==', ['get', 'RIO'], ''],
+        paint: {
+          'fill-color':   '#00ddff',
+          'fill-opacity': 0,
+        },
+      },
+      before,
+    );
+  }
+}
+
+/* ── Highlight parpadeante de caña por río (efecto tipo ArcGIS) ──────── */
+let _flashTimers = [];
+
+export function flashCana(map, rioNombre) {
+  if (!map.getLayer('cana-highlight') || !rioNombre) return;
+
+  /* Cancelar cualquier parpadeo en curso para no encadenar estados */
+  _flashTimers.forEach(clearTimeout);
+  _flashTimers = [];
+
+  map.setFilter('cana-highlight', ['==', ['get', 'RIO'], rioNombre]);
+
+  const flashes  = [0.6, 0, 0.6, 0, 0.6, 0];
+  const duracion = 200;   // ms por estado
+
+  flashes.forEach((opacidad, i) => {
+    const t = setTimeout(() => {
+      if (!map.getLayer('cana-highlight')) return;
+      map.setPaintProperty('cana-highlight', 'fill-opacity', opacidad);
+
+      if (i === flashes.length - 1) {
+        const tEnd = setTimeout(() => {
+          if (!map.getLayer('cana-highlight')) return;
+          map.setPaintProperty('cana-highlight', 'fill-opacity', 0);
+          map.setFilter('cana-highlight', ['==', ['get', 'RIO'], '']);
+        }, duracion);
+        _flashTimers.push(tEnd);
+      }
+    }, i * duracion);
+    _flashTimers.push(t);
+  });
 }
 
 function _addRioCaucaLayers(map) {

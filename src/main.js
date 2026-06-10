@@ -8,6 +8,7 @@ import { setupTramoFilter }        from './controls/TramoFilter.js';
 import { setupInfoPanel }          from './controls/InfoPanel.js';
 import { loadWaterQualityData }    from './data/waterQuality.js';
 import * as WaterQualityGallery    from './controls/WaterQualityGallery.js';
+import * as CaudalGallery          from './controls/CaudalGallery.js';
 
 /* ── Inicializar mapa ─────────────────────────────────────────────────── */
 const map = initMap();
@@ -24,6 +25,32 @@ document.querySelectorAll('.basemap-btn').forEach(btn => {
   });
 });
 
+/* ── Panel lateral colapsable ────────────────────────────────────────── */
+function setupSidebarToggle(map) {
+  const sidebar  = document.querySelector('.sidebar');
+  const btnHide  = document.getElementById('btn-collapse-sidebar');
+  const btnShow  = document.getElementById('btn-show-sidebar');
+  if (!sidebar || !btnHide || !btnShow) return;
+
+  /* Estado en memoria de sesión (no localStorage) */
+  let collapsed = false;
+
+  const apply = next => {
+    collapsed = next;
+    sidebar.classList.toggle('collapsed', collapsed);
+    btnShow.classList.toggle('visible', collapsed);
+  };
+
+  btnHide.addEventListener('click', () => apply(true));
+  btnShow.addEventListener('click', () => apply(false));
+
+  /* Reajustar el lienzo del mapa al terminar la transición de ancho */
+  sidebar.addEventListener('transitionend', e => {
+    if (e.propertyName === 'margin-left') map.resize();
+  });
+}
+setupSidebarToggle(map);
+
 /* ── Bootstrap principal ─────────────────────────────────────────────── */
 map.on('load', async () => {
 
@@ -37,9 +64,14 @@ map.on('load', async () => {
   setupLayerPanel(map);
   setupInfoPanel(map);
   WaterQualityGallery.init();
+  CaudalGallery.init();
 
+  /* Botones de galería en el panel lateral */
   document.getElementById('btn-galeria-calidad')
     ?.addEventListener('click', () => WaterQualityGallery.open());
+
+  document.getElementById('btn-perfil-caudal')
+    ?.addEventListener('click', () => CaudalGallery.open());
 
   /* Limpiar indicador de carga inline */
   document.getElementById('map-loading')?.remove();

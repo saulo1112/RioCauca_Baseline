@@ -52,11 +52,15 @@
 
     <!-- Selector de tramos -->
     <div class="sidebar-section">
-      <div class="section-title">Navegación</div>
+      <div class="section-title section-title-nav">
+        <span>Navegación</span>
+        <button class="sidebar-collapse-btn" id="btn-collapse-sidebar"
+                title="Ocultar panel" aria-label="Ocultar panel">☰</button>
+      </div>
       <div class="tramo-buttons">
         <button class="tramo-btn active" data-tramo="all">
           <span class="tramo-num">∀</span>
-          Corredor completo
+          Visor completo
         </button>
         <button class="tramo-btn" data-tramo="1">
           <span class="tramo-num">T1</span>
@@ -136,11 +140,16 @@
         <span class="layer-count">92</span>
       </div>
 
-      <div class="layer-item">
+      <div class="layer-item has-submenu">
         <input type="checkbox" id="lyr-estaciones-hidro" checked>
         <div class="layer-swatch" style="background:#003F88;border-radius:50%;width:12px;height:12px"></div>
         <span class="layer-label">Estaciones hidrométricas</span>
         <span class="layer-count">16</span>
+        <div class="layer-submenu">
+          <button class="submenu-item submenu-btn submenu-btn-hidro" id="btn-perfil-caudal">
+            <span>Ver perfil de caudal</span>
+          </button>
+        </div>
       </div>
 
     </div>
@@ -186,6 +195,10 @@
   <!-- ── Mapa ─────────────────────────────────────────────────────── -->
   <div class="map-container">
     <div id="map"></div>
+
+    <!-- Botón flotante para reactivar el panel (visible al colapsar) -->
+    <button class="sidebar-show-btn" id="btn-show-sidebar"
+            title="Mostrar panel" aria-label="Mostrar panel">☰</button>
 
     <!-- Indicador de carga -->
     <div id="map-loading" class="map-loading">
