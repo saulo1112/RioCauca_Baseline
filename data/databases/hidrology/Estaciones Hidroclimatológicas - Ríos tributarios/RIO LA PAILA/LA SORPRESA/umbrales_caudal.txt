@@ -1,0 +1,13 @@
+Estación : RIO LA PAILA / LA SORPRESA
+Registros: 3,639 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 2.77 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 1.38 – 2.77 m³/s
+  VERANO    : caudal ≤ 1.38 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.45 m³/s
+  Máximo   : 58.90 m³/s
+  Promedio : 2.91 m³/s
+  Mediana  : 1.89 m³/s

@@ -1,0 +1,13 @@
+Estación : RIO DESBARATADO / ORTIGAL (HASTA 2023 - S)
+Registros: 3,229 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 1.78 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 0.71 – 1.78 m³/s
+  VERANO    : caudal ≤ 0.71 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.02 m³/s
+  Máximo   : 5.96 m³/s
+  Promedio : 1.35 m³/s
+  Mediana  : 1.01 m³/s

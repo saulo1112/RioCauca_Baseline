@@ -135,6 +135,23 @@ function buildInfo(layerId, p) {
       };
     }
 
+    case 'estaciones-hidro-trib-circle': {
+      const activa = p.estado === 'Activa';
+      const estadoHtml = `<span style="color:${activa ? '#4caf50' : '#8fa3b8'}">${
+        escapeHtml(p.estado ?? '—')}</span>`;
+      return {
+        title: p.nombre_display ?? p.nombre ?? '—',
+        color: '#2E7D32',
+        hidro: p,
+        rows: [
+          ['Río',     p.rio       ?? '—'],
+          ['Municipio', p.municipio ?? '—'],
+          ['Estado',  estadoHtml],
+          ['Período', p.años_datos ?? '—'],
+        ],
+      };
+    }
+
     case 'hectareas-fill': {
       const rio   = p.RIO ?? '—';
       const area  = p.SUM_AREA_HA != null ? Number(p.SUM_AREA_HA) : null;
@@ -279,9 +296,10 @@ function renderHidro(p) {
   }
 
   /* Sección C — Curva de duración de caudales */
+  const rutaHidro = p.ruta_hidro ?? p.nombre;
   html += '<hr class="info-sep">';
   if (p.tiene_cdc) {
-    const src = `data/hydrology/${encodeURIComponent(p.nombre)}/curva_duracion_caudales.png`;
+    const src = `data/hydrology/${rutaHidro.split('/').map(encodeURIComponent).join('/')}/curva_duracion_caudales.png`;
     html += `<img class="hidro-cdc" src="${src}" alt="Curva de duración de caudales">`;
     if (p.umbral_invierno_m3s != null && p.umbral_verano_m3s != null) {
       html += `<div class="hidro-umbral">Invierno ≥ ${fmt(p.umbral_invierno_m3s, 1)} m³/s · ` +
@@ -296,12 +314,13 @@ function renderHidro(p) {
 
   extra.innerHTML = html;
   extra.querySelector('.hidro-dl')
-    ?.addEventListener('click', () => downloadHidroCSV(p.nombre));
+    ?.addEventListener('click', () => downloadHidroCSV(rutaHidro, p.nombre));
 }
 
-async function downloadHidroCSV(nombre) {
+async function downloadHidroCSV(ruta, nombre) {
   try {
-    const resp = await fetch(`data/hydrology/${encodeURIComponent(nombre)}/caudal_diario.csv`);
+    const encodedRuta = ruta.split('/').map(encodeURIComponent).join('/');
+    const resp = await fetch(`data/hydrology/${encodedRuta}/caudal_diario.csv`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const csv  = await resp.text();
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });

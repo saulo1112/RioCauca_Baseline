@@ -1,0 +1,13 @@
+Estación : RIOFRIO / SALONICA
+Registros: 3,745 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 9.74 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 4.33 – 9.74 m³/s
+  VERANO    : caudal ≤ 4.33 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.11 m³/s
+  Máximo   : 88.56 m³/s
+  Promedio : 8.40 m³/s
+  Mediana  : 6.76 m³/s

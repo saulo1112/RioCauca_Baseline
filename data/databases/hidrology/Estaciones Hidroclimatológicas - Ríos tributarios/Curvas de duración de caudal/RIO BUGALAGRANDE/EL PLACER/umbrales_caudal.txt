@@ -1,0 +1,13 @@
+Estación : RIO BUGALAGRANDE / EL PLACER
+Registros: 3,611 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 15.82 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 7.59 – 15.82 m³/s
+  VERANO    : caudal ≤ 7.59 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 1.68 m³/s
+  Máximo   : 231.52 m³/s
+  Promedio : 13.78 m³/s
+  Mediana  : 10.91 m³/s

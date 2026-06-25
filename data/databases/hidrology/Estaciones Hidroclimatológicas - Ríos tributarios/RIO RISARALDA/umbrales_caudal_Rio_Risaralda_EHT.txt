@@ -1,0 +1,6 @@
+Estacion: Rio Risaralda (EHT)
+Datos: 466 valores diarios
+Periodo: 2025-2026
+
+Umbral Invierno (Q30%): 7.14 m3/s
+Umbral Verano   (Q70%): 4.31 m3/s

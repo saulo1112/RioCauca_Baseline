@@ -19,23 +19,25 @@ const BUILD_VERSION = '1.7';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
-  'buffer-zona':      'data/cartografia/Buffer_Zona_de_Estudio.geojson',
-  'hectareas-cz':     'data/cartografia/Hectareas_CZ.geojson',
-  'rio-cauca':        'data/cartografia/Rio_cauca.geojson',
-  'tributarios':      'data/cartografia/Tributarios_rios_cauca.geojson',
-  'estaciones-cauca': 'data/water%20quality/Estaciones_calidad_del_agua.geojson',
-  'estaciones-trib':  'data/water%20quality/Estaciones_calidad_del_agua.geojson',
-  'estaciones-hidro': 'data/hydrology/estaciones_hidro.json',
+  'buffer-zona':           'data/cartografia/Buffer_Zona_de_Estudio.geojson',
+  'hectareas-cz':          'data/cartografia/Hectareas_CZ.geojson',
+  'rio-cauca':             'data/cartografia/Rio_cauca.geojson',
+  'tributarios':           'data/cartografia/Tributarios_rios_cauca.geojson',
+  'estaciones-cauca':      'data/water%20quality/Estaciones_calidad_del_agua.geojson',
+  'estaciones-trib':       'data/water%20quality/Estaciones_calidad_del_agua.geojson',
+  'estaciones-hidro':      'data/hydrology/estaciones_hidro.json',
+  'estaciones-hidro-trib': 'data/hydrology/estaciones_hidro_trib.json',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
 /* lyr-rios se gestiona con subcontroles en LayerPanel (geo + etiquetas) */
 export const LAYER_GROUPS = {
-  'lyr-buffer':           ['buffer-fill', 'buffer-outline'],
-  'lyr-hectareas':        ['hectareas-fill'],
-  'lyr-estaciones-cauca': ['estaciones-cauca-circle', 'estaciones-cauca-label'],
-  'lyr-estaciones-trib':  ['estaciones-trib-circle',  'estaciones-trib-label'],
-  'lyr-estaciones-hidro': ['estaciones-hidro-circle', 'estaciones-hidro-label'],
+  'lyr-buffer':                ['buffer-fill', 'buffer-outline'],
+  'lyr-hectareas':             ['hectareas-fill'],
+  'lyr-estaciones-cauca':      ['estaciones-cauca-circle',      'estaciones-cauca-label'],
+  'lyr-estaciones-trib':       ['estaciones-trib-circle',       'estaciones-trib-label'],
+  'lyr-estaciones-hidro':      ['estaciones-hidro-circle',      'estaciones-hidro-label'],
+  'lyr-estaciones-hidro-trib': ['estaciones-hidro-trib-circle', 'estaciones-hidro-trib-label'],
 };
 
 /* ── Capas clickeables (exportado para InfoPanel) ───────────────────── */
@@ -43,6 +45,7 @@ export const CLICKABLE_LAYERS = [
   'estaciones-cauca-circle',
   'estaciones-trib-circle',
   'estaciones-hidro-circle',
+  'estaciones-hidro-trib-circle',
   'buffer-fill',
   'hectareas-fill',
   'rio-cauca-line',
@@ -94,6 +97,9 @@ export async function loadGeoJSONLayers(map) {
 
   /* 4c. Estaciones hidrométricas — Río Cauca */
   await _loadEstacionesHidro(map);
+
+  /* 4d. Estaciones hidrométricas — Ríos tributarios */
+  await _loadEstacionesHidroTrib(map);
 
   console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
 
@@ -347,6 +353,74 @@ async function _loadEstacionesHidro(map) {
     console.log('[geojson] Estaciones hidrométricas:', features.length, 'puntos');
   } catch (err) {
     console.error('[geojson] Error cargando estaciones hidrométricas:', err);
+  }
+}
+
+/* ── Estaciones hidrométricas (Ríos tributarios) ─────────────────────── */
+
+async function _loadEstacionesHidroTrib(map) {
+  try {
+    const resp = await fetch(`${PATHS['estaciones-hidro-trib']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const items = await resp.json();
+
+    const features = items
+      .filter(o => o.longitud != null && o.latitud != null)
+      .map(o => ({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [o.longitud, o.latitud] },
+        properties: o,
+      }));
+    const data = { type: 'FeatureCollection', features };
+
+    if (!map.getSource('estaciones-hidro-trib')) {
+      map.addSource('estaciones-hidro-trib', { type: 'geojson', data });
+    }
+
+    if (!map.getLayer('estaciones-hidro-trib-circle')) {
+      map.addLayer({
+        id:     'estaciones-hidro-trib-circle',
+        type:   'circle',
+        source: 'estaciones-hidro-trib',
+        paint: {
+          'circle-radius':       7,
+          'circle-color':        '#2E7D32',
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#FFFFFF',
+          'circle-opacity': [
+            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
+          ],
+          'circle-stroke-opacity': [
+            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
+          ],
+        },
+      });
+    }
+
+    if (!map.getLayer('estaciones-hidro-trib-label')) {
+      map.addLayer({
+        id:      'estaciones-hidro-trib-label',
+        type:    'symbol',
+        source:  'estaciones-hidro-trib',
+        minzoom: 10,
+        layout: {
+          'text-field':  ['get', 'nombre_display'],
+          'text-size':   11,
+          'text-font':   ['Open Sans Regular'],
+          'text-offset': [0, 1.2],
+          'text-anchor': 'top',
+        },
+        paint: {
+          'text-color':      '#1B5E20',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 2,
+        },
+      });
+    }
+
+    console.log('[geojson] Estaciones hidrométricas tributarios:', features.length, 'puntos');
+  } catch (err) {
+    console.error('[geojson] Error cargando estaciones hidrométricas tributarios:', err);
   }
 }
 

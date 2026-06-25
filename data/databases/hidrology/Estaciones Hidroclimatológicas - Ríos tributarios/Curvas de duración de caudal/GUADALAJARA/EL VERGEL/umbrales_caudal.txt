@@ -1,0 +1,13 @@
+Estación : GUADALAJARA / EL VERGEL
+Registros: 3,910 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 6.08 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 2.48 – 6.08 m³/s
+  VERANO    : caudal ≤ 2.48 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 1.07 m³/s
+  Máximo   : 18.59 m³/s
+  Promedio : 4.59 m³/s
+  Mediana  : 4.20 m³/s

@@ -1,0 +1,13 @@
+Estación : RIO BOLO / ARRIBA (S - HASTA 2022)
+Registros: 2,834 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 8.61 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 4.69 – 8.61 m³/s
+  VERANO    : caudal ≤ 4.69 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 1.63 m³/s
+  Máximo   : 68.08 m³/s
+  Promedio : 7.78 m³/s
+  Mediana  : 6.50 m³/s

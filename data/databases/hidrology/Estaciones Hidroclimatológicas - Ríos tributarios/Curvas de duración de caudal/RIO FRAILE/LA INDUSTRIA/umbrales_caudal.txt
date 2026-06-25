@@ -1,0 +1,13 @@
+Estación : RIO FRAILE / LA INDUSTRIA
+Registros: 3,251 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 3.46 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 2.31 – 3.46 m³/s
+  VERANO    : caudal ≤ 2.31 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.11 m³/s
+  Máximo   : 29.05 m³/s
+  Promedio : 3.20 m³/s
+  Mediana  : 2.73 m³/s

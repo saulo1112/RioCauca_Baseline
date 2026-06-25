@@ -1,0 +1,13 @@
+Estación : AMAIME / AMAIME (Hasta 2023)
+Registros: 2,906 caudales diarios
+
+── Umbrales (percentil 70% / 30%) ──────────────────
+  INVIERNO  : caudal ≥ 11.47 m³/s  (permanencia < 30%)
+  TRANSICIÓN: 2.09 – 11.47 m³/s
+  VERANO    : caudal ≤ 2.09 m³/s  (permanencia > 70%)
+
+── Estadísticas generales ───────────────────────────
+  Mínimo   : 0.03 m³/s
+  Máximo   : 112.56 m³/s
+  Promedio : 9.38 m³/s
+  Mediana  : 5.00 m³/s
