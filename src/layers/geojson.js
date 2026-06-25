@@ -273,7 +273,7 @@ async function _loadEstacionesTrib(map) {
           'text-anchor': 'top',
         },
         paint: {
-          'text-color':      '#007A6E',
+          'text-color':      '#0095ff',
           'text-halo-color': '#FFFFFF',
           'text-halo-width': 2,
         },
@@ -384,7 +384,7 @@ async function _loadEstacionesHidroTrib(map) {
         source: 'estaciones-hidro-trib',
         paint: {
           'circle-radius':       7,
-          'circle-color':        '#2E7D32',
+          'circle-color':        '#0095ff',
           'circle-stroke-width': 2,
           'circle-stroke-color': '#FFFFFF',
           'circle-opacity': [
