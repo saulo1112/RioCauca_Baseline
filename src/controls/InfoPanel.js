@@ -104,17 +104,16 @@ function buildInfo(layerId, p) {
       };
 
     case 'estaciones-trib-circle': {
-      const desc = (p.DESCRIPCION && p.DESCRIPCION !== '<Null>') ? p.DESCRIPCION : null;
+      const desc = p.Punto_Monitoreo ?? null;
       return {
-        title: desc ?? p.MUNICIPIO ?? '—',
+        title: desc ?? p.Rio ?? '—',
         color: '#00BFA5',
+        trib: p,
         rows: [
-          ['Río',              p.CORRIENTE_PROY ?? '—'],
-          ['Municipio',        p.MUNICIPIO      ?? '—'],
-          ['Zona de muestreo', p.ZONA_MUESTREO  ?? '—'],
-          ['Fuente',           p.FUENTE         ?? '—'],
-          ['Latitud',          p.LATITUD  != null ? String(p.LATITUD)  : '—'],
-          ['Longitud',         p.LONGITUD != null ? String(p.LONGITUD) : '—'],
+          ['Río',       p.Rio ?? '—'],
+          ['Registros', p.N_Registros != null ? String(p.N_Registros) : '—'],
+          ['Período',   (p.Año_Min != null && p.Año_Max != null) ? `${p.Año_Min}–${p.Año_Max}` : '—'],
+          ['Fuente',    p.Fuente_CRS ?? '—'],
         ],
       };
     }
@@ -183,7 +182,7 @@ function buildInfo(layerId, p) {
  * hace click en otra estación antes de que el CSV termine de procesarse). */
 let _panelToken = 0;
 
-function showPanel({ title, color, rows, station, hidro }) {
+function showPanel({ title, color, rows, station, hidro, trib }) {
   const panel = document.getElementById('info-panel');
   if (!panel) return;
   const token = ++_panelToken;
@@ -200,6 +199,7 @@ function showPanel({ title, color, rows, station, hidro }) {
 
   if (station) renderHistorico(station, token);
   if (hidro)   renderHidro(hidro);
+  if (trib)    renderHistoricoTrib(trib);
 }
 
 function hidePanel() {
@@ -263,6 +263,65 @@ async function renderHistorico(descripcion, token) {
 
   body.querySelector('.info-hist-dl')
     ?.addEventListener('click', () => downloadStationCSV(descripcion));
+}
+
+/* ── Sección B (tributarios): resumen histórico desde el GeoJSON ──────── */
+/* A diferencia del Río Cauca, los valores recientes ya vienen incrustados en
+ * las propiedades del feature (parametros_recientes) y el CSV está pre-generado,
+ * así que no se parsea nada en el navegador: solo se lee y se descarga. */
+function renderHistoricoTrib(p) {
+  const extra = document.getElementById('info-extra');
+  if (!extra) return;
+
+  const nreg = p.N_Registros != null ? Number(p.N_Registros) : 0;
+  if (!nreg) {
+    extra.innerHTML =
+      '<hr class="info-sep">' +
+      '<div class="info-hist-title">Datos históricos de calidad del agua</div>' +
+      '<div class="info-hist-body">Sin datos disponibles</div>';
+    return;
+  }
+
+  let recientes = [];
+  try { recientes = JSON.parse(p.parametros_recientes || '[]'); } catch { recientes = []; }
+
+  const rango = (p.Año_Min != null && p.Año_Max != null) ? `${p.Año_Min}–${p.Año_Max}` : '—';
+  const lines = recientes.map(r => `${r.param}: ${r.valor}${r.anio != null ? ` (${r.anio})` : ''}`);
+
+  extra.innerHTML =
+    '<hr class="info-sep">' +
+    '<div class="info-hist-title">Datos históricos de calidad del agua</div>' +
+    '<div class="info-hist-body">' +
+      `<div class="info-hist-summary">${nreg} registros · ${rango}</div>` +
+      `<div class="info-hist-params">${
+        lines.map(l => `<div>${escapeHtml(l)}</div>`).join('')
+      }</div>` +
+      '<button class="info-hist-dl" type="button">⬇ Descargar datos CSV</button>' +
+    '</div>';
+
+  extra.querySelector('.info-hist-dl')
+    ?.addEventListener('click', () => downloadTribCSV(p.csv_filename));
+}
+
+async function downloadTribCSV(csvFilename) {
+  if (!csvFilename) return;
+  try {
+    const resp = await fetch(`data/geovisor/csv_por_punto/${encodeURIComponent(csvFilename)}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const csv  = await resp.text();
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = csvFilename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error('[InfoPanel] Error descargando CSV tributario:', err);
+  }
 }
 
 /* ── Estación hidrométrica: estadísticas de caudal + curva de duración ── */

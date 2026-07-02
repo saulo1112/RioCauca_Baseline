@@ -15,7 +15,7 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '1.7';
+const BUILD_VERSION = '2.0';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -23,8 +23,8 @@ const PATHS = {
   'hectareas-cz':          'data/cartografia/Hectareas_CZ.geojson',
   'rio-cauca':             'data/cartografia/Rio_cauca.geojson',
   'tributarios':           'data/cartografia/Tributarios_rios_cauca.geojson',
-  'estaciones-cauca':      'data/water%20quality/Estaciones_calidad_del_agua.geojson',
-  'estaciones-trib':       'data/water%20quality/Estaciones_calidad_del_agua.geojson',
+  'estaciones-cauca':      'data/databases/Estaciones_Calidad_RC.geojson',
+  'estaciones-trib':       'data/geovisor/puntos_calidad_tributarios.geojson',
   'estaciones-hidro':      'data/hydrology/estaciones_hidro.json',
   'estaciones-hidro-trib': 'data/hydrology/estaciones_hidro_trib.json',
 };
@@ -171,13 +171,8 @@ async function _loadEstacionesCauca(map) {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
 
-    const features = geojson.features.filter(
-      f => f.properties?.CORRIENTE_PROY === 'Rio Cauca'
-    );
-    const data = { type: 'FeatureCollection', features };
-
     if (!map.getSource('estaciones-cauca')) {
-      map.addSource('estaciones-cauca', { type: 'geojson', data });
+      map.addSource('estaciones-cauca', { type: 'geojson', data: geojson });
     }
 
     if (!map.getLayer('estaciones-cauca-circle')) {
@@ -216,7 +211,7 @@ async function _loadEstacionesCauca(map) {
       });
     }
 
-    console.log('[geojson] Estaciones Río Cauca:', features.length, 'puntos');
+    console.log('[geojson] Estaciones Río Cauca:', geojson.features.length, 'puntos');
   } catch (err) {
     console.error('[geojson] Error cargando estaciones:', err);
   }
@@ -230,13 +225,8 @@ async function _loadEstacionesTrib(map) {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
 
-    const features = geojson.features.filter(
-      f => f.properties?.CORRIENTE_PROY !== 'Rio Cauca'
-    );
-    const data = { type: 'FeatureCollection', features };
-
     if (!map.getSource('estaciones-trib')) {
-      map.addSource('estaciones-trib', { type: 'geojson', data });
+      map.addSource('estaciones-trib', { type: 'geojson', data: geojson });
     }
 
     if (!map.getLayer('estaciones-trib-circle')) {
@@ -263,9 +253,9 @@ async function _loadEstacionesTrib(map) {
         layout: {
           'text-field': [
             'case',
-            ['all', ['has', 'DESCRIPCION'], ['!=', ['get', 'DESCRIPCION'], '<Null>']],
-            ['get', 'DESCRIPCION'],
-            ['get', 'MUNICIPIO'],
+            ['has', 'Punto_Monitoreo'],
+            ['get', 'Punto_Monitoreo'],
+            ['get', 'Rio'],
           ],
           'text-size':   10,
           'text-font':   ['Open Sans Regular'],
@@ -280,7 +270,7 @@ async function _loadEstacionesTrib(map) {
       });
     }
 
-    console.log('[geojson] Estaciones tributarios:', features.length, 'puntos');
+    console.log('[geojson] Estaciones tributarios:', geojson.features.length, 'puntos');
   } catch (err) {
     console.error('[geojson] Error cargando estaciones tributarios:', err);
   }
