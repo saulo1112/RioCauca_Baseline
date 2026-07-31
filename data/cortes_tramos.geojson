@@ -1,0 +1,97 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Bolo",
+        "estacion": "Rio Bolo - Puente Pradera - Palmira",
+        "km_eje": 10.938,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje en la estacion, 2 km"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.240637,
+            3.438605
+          ],
+          [
+            -76.250697,
+            3.423683
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Bolo",
+        "estacion": "Rio Bolo - Puente Bolo - San Isidro - vía a Candelaria",
+        "km_eje": 30.024,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje en la estacion, 2 km"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.329883,
+            3.465744
+          ],
+          [
+            -76.342375,
+            3.452781
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Fraile",
+        "estacion": "Rio Frayle - Puente Vía a Miranda",
+        "km_eje": 28.879,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje en la estacion, 2 km"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.239134,
+            3.327086
+          ],
+          [
+            -76.235826,
+            3.309405
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Fraile",
+        "estacion": "Rio Frayle - Limnigrafo CVC - caserio Brisas de Frayle",
+        "km_eje": 52.141,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje en la estacion, 2 km"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.34115,
+            3.377636
+          ],
+          [
+            -76.357325,
+            3.369712
+          ]
+        ]
+      }
+    }
+  ]
+}

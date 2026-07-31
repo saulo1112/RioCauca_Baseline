@@ -107,11 +107,16 @@
         </div>
       </div>
 
-      <div class="layer-item">
+      <div class="layer-item has-submenu">
         <input type="checkbox" id="lyr-buffer" checked>
         <div class="layer-swatch" style="background:rgba(0,100,255,0.25);border:1px solid #6E6E6E"></div>
         <span class="layer-label">Zona de Estudio</span>
         <span class="layer-count">16</span>
+        <div class="layer-submenu">
+          <button class="submenu-item submenu-btn submenu-btn-tramos" id="btn-cortar-tramos">
+            <span>Cortar tramos y calcular caña</span>
+          </button>
+        </div>
       </div>
 
       <div class="layer-item">
@@ -237,6 +242,9 @@
 
 <!-- ── MapLibre GL JS ────────────────────────────────────────────────── -->
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+<!-- ── Turf.js — geometría para la herramienta de corte de tramos ────── -->
+<script defer src="https://unpkg.com/@turf/turf@7.1.0/turf.min.js"></script>
 
 <!-- Módulo principal (ES module) -->
 <script type="module" src="src/main.js"></script>

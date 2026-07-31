@@ -9,6 +9,7 @@ import { setupInfoPanel }          from './controls/InfoPanel.js';
 import { loadWaterQualityData }    from './data/waterQuality.js';
 import * as WaterQualityGallery    from './controls/WaterQualityGallery.js';
 import * as CaudalGallery          from './controls/CaudalGallery.js';
+import * as CutLineTool            from './controls/CutLineTool.js';
 
 /* ── Inicializar mapa ─────────────────────────────────────────────────── */
 const map = initMap();
@@ -65,6 +66,7 @@ map.on('load', async () => {
   setupInfoPanel(map);
   WaterQualityGallery.init();
   CaudalGallery.init();
+  CutLineTool.init(map);
 
   /* Botones de galería en el panel lateral */
   document.getElementById('btn-galeria-calidad')
@@ -72,6 +74,9 @@ map.on('load', async () => {
 
   document.getElementById('btn-perfil-caudal')
     ?.addEventListener('click', () => CaudalGallery.open());
+
+  document.getElementById('btn-cortar-tramos')
+    ?.addEventListener('click', () => CutLineTool.toggle());
 
   /* Limpiar indicador de carga inline */
   document.getElementById('map-loading')?.remove();

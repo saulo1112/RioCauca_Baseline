@@ -5,25 +5,33 @@ import { getRiverColor }                         from '../layers/registry.js';
 import { getStationRecords, getAvailableParams, buildStationCSV }
   from '../data/waterQuality.js';
 import * as WaterQualityGallery from './WaterQualityGallery.js';
+import { fmt, escapeHtml }      from '../utils/format.js';
 
-/* Formatea un número con separador de miles y decimales fijos (formato en-US).
- * Ejemplo: fmt(3475.8612, 2) → "3,475.86" */
-function fmt(value, decimals = 2) {
-  return Number(value).toLocaleString('en-US', {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
+/* Interruptor global del panel. La herramienta de corte de tramos lo apaga
+ * mientras el usuario dibuja, para que el click de dibujo no abra el popup de
+ * atributos ni robe el cursor. Ver CutLineTool.js */
+let _enabled = true;
+
+export function setInfoPanelEnabled(value) {
+  _enabled = !!value;
+  if (!_enabled) hidePanel();
 }
 
 export function setupInfoPanel(map) {
   /* Cursor pointer sobre capas interactivas */
   CLICKABLE_LAYERS.forEach(id => {
-    map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
-    map.on('mouseleave', id, () => { map.getCanvas().style.cursor = '';          });
+    map.on('mouseenter', id, () => {
+      if (_enabled) map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', id, () => {
+      if (_enabled) map.getCanvas().style.cursor = '';
+    });
   });
 
   /* Click: detectar la capa con mayor prioridad bajo el puntero */
   map.on('click', e => {
+    if (!_enabled) return;
+
     const hits = map.queryRenderedFeatures(e.point, {
       layers: CLICKABLE_LAYERS.filter(id => map.getLayer(id)),
     });
@@ -208,11 +216,6 @@ function hidePanel() {
 }
 
 /* ── Sección B: resumen histórico de calidad del agua ──────────────── */
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"]/g, c =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-}
 
 async function renderHistorico(descripcion, token) {
   const extra = document.getElementById('info-extra');

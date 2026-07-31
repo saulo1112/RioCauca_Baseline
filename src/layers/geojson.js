@@ -59,6 +59,21 @@ let _hectareasTotalHa = 0;   // suma de SUM_AREA_HA de todos los registros
  * Usado por InfoPanel para calcular la participación porcentual por río. */
 export function getHectareasTotalHa() { return _hectareasTotalHa; }
 
+/* ── Caché de GeoJSON parseados ──────────────────────────────────────
+ * MapLibre no expone la data original de una fuente en la v4.7 (solo el
+ * privado `source._data`), así que la herramienta de tramos necesita su
+ * propia copia para hacer geometría con Turf. Se guarda la referencia ya
+ * parseada — no duplica memoria, es el mismo objeto que recibió addSource. */
+const _cache = {};
+
+function _getCached(id) { return _cache[id] ?? null; }
+
+export function getBufferData()         { return _getCached('buffer-zona');     }
+export function getHectareasData()      { return _getCached('hectareas-cz');    }
+export function getTributariosData()    { return _getCached('tributarios');     }
+export function getRioCaucaData()       { return _getCached('rio-cauca');       }
+export function getEstacionesTribData() { return _getCached('estaciones-trib'); }
+
 /* ── Carga principal ─────────────────────────────────────────────────── */
 export async function loadGeoJSONLayers(map) {
   const bboxes = [];
@@ -113,6 +128,7 @@ async function _loadHectareasBackground(map) {
     const resp = await fetch(`${PATHS['hectareas-cz']}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+    _cache['hectareas-cz'] = geojson;
 
     /* Calcular el total del corredor para porcentajes en el popup */
     _hectareasTotalHa = geojson.features.reduce(
@@ -143,6 +159,7 @@ async function _loadSource(map, sourceId, sourceOpts = {}) {
     const resp = await fetch(`${PATHS[sourceId]}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+    _cache[sourceId] = geojson;
 
     if (sourceId === 'tributarios') {
       console.log('[geojson] tributario ejemplo:', geojson.features[0].properties);
@@ -224,6 +241,7 @@ async function _loadEstacionesTrib(map) {
     const resp = await fetch(`${PATHS['estaciones-trib']}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+    _cache['estaciones-trib'] = geojson;
 
     if (!map.getSource('estaciones-trib')) {
       map.addSource('estaciones-trib', { type: 'geojson', data: geojson });

@@ -9,23 +9,32 @@ Plataforma web estática (GitHub Pages) que sirve como línea base interactiva d
 
 ```
 Rio_Cauca_Baseline/
-├── index.html                         ← Entrada principal
-├── css/styles.css                     ← Estilos dark mode
-├── js/
-│   ├── data-loader.js                 ← Carga GeoJSON y CSV
-│   ├── map.js                         ← Mapa Leaflet (capas, popups, filtros)
-│   ├── charts.js                      ← Gráficas Chart.js
-│   └── filters.js                     ← Event listeners UI
+├── index.html                          ← Entrada única (sidebar, leyenda, #map)
+├── css/styles.css                      ← Estilos dark mode (archivo único)
+├── src/
+│   ├── main.js                         ← Bootstrap: initMap → capas → controles
+│   ├── map/init.js, map/basemaps.js    ← Mapa MapLibre y mapas base ráster
+│   ├── layers/geojson.js               ← Carga y registro de todas las capas
+│   ├── layers/registry.js              ← Paleta RIVER_COLORS
+│   ├── controls/LayerPanel.js          ← Checkboxes → visibility
+│   ├── controls/TramoFilter.js         ← Navegación por extensiones
+│   ├── controls/InfoPanel.js           ← Popup de atributos + descargas CSV
+│   ├── controls/CutLineTool.js         ← Herramienta de tramos y caña
+│   ├── controls/*Gallery.js            ← Lightbox de perfiles PNG
+│   ├── tramos/geometry.js              ← Semiplanos, corte, área geodésica
+│   ├── tramos/stations.js              ← Río ↔ estaciones, etiquetas de tramo
+│   ├── data/waterQuality.js            ← Parser CSV + join por estación
+│   ├── utils/bounds.js, utils/format.js
+│   └── build_*.py, perfil_*.py         ← Preparación de datos (no se sirven)
 ├── data/
-│   ├── rios_tributarios.geojson       ← 15 tributarios (geometría aprox.)
-│   ├── estaciones_hidrometricas.geojson ← 35 estaciones CVC (coords aprox.)
-│   ├── cauca_tramos.geojson           ← 3 tramos río Cauca
-│   ├── calidad_agua.csv               ← Perfil calidad (muestra / CARDER)
-│   ├── hidrometria.csv                ← Estadísticos caudal (muestra / CVC)
-│   └── caudales_cdc.csv               ← Curvas duración caudal (CARDER ERA)
-├── scripts/
-│   └── prepare_data.py                ← Transforma CSVs CARDER → formato app
-└── .github/workflows/deploy.yml      ← Auto-deploy en GitHub Pages
+│   ├── cartografia/                    ← Buffer 700 m, caña (Hectareas_CZ),
+│   │                                     Río Cauca y tributarios (WGS84)
+│   ├── cortes_tramos.geojson           ← Cortes de tramo versionados
+│   ├── databases/                      ← Estaciones y calidad (fuente CVC)
+│   ├── geovisor/                       ← Puntos de calidad + CSV por punto
+│   ├── hydrology/                      ← Caudales y curvas de duración
+│   └── water_quality/perfiles/         ← PNG de perfiles longitudinales
+└── .github/workflows/deploy.yml        ← Auto-deploy en GitHub Pages
 ```
 
 ---
@@ -100,8 +109,62 @@ git push
 | Escorrentía | Pendiente | — | Zonal Statistics IDEAM sobre buffer |
 
 **Pendientes:**
-- Calcular áreas de caña por buffer de 700 m en ArcGIS Pro
 - Obtener escorrentía anual promedio por buffer (IDEAM)
+
+---
+
+## Herramienta de tramos y caña de azúcar
+
+Panel lateral → *Zona de Estudio* → **Cortar tramos y calcular caña**.
+
+Desagrega las hectáreas de caña por tramo entre estaciones de monitoreo, en vez de
+por río completo. Todo el cálculo ocurre en el navegador con Turf.js; no hay backend.
+
+**Cómo se usa**
+
+1. Elegir el río en el selector.
+2. Añadir cortes, de dos maneras:
+   - **Corte en estación** — genera la perpendicular exacta al eje del cauce en la
+     estación seleccionada. Reproducible, es la opción recomendada.
+   - **Dibujar corte** — traza a mano con dos clics (Esc cancela).
+3. La tabla se recalcula sola. Un clic en cualquier fila encuadra ese tramo.
+4. Exportar: `⬇ CSV` (tabla con metadatos de trazabilidad), `⬇ Cortes`
+   (las líneas, para versionar), `⬇ Polígonos` (los tramos, para reabrir en ArcGIS Pro).
+
+**Cómo se calcula**
+
+- Cada línea de corte se convierte en dos polígonos de semiplano; los tramos salen de
+  operaciones booleanas sobre ellos, no de reensamblar el contorno del buffer a mano.
+  El alcance del semiplano se deriva del bbox del buffer: con un valor fijo pequeño, los
+  meandros que sobresalen quedan fuera del recorte y el área se pierde en silencio.
+- Las áreas usan `turf.area()`, geodésica sobre el esferoide WGS84 — nunca planimetría
+  sobre grados.
+- Los tramos se ordenan y se nombran proyectando cortes y estaciones sobre el eje del
+  río (`nearestPointOnLine`), de modo que **el orden en que se dibujen no altera el
+  resultado**. El sentido de flujo se deduce de qué extremo del eje está más cerca del
+  Río Cauca.
+- Como `turf.area()` es geodésica y ArcGIS calculó en MAGNA-Sirgas, la tabla muestra la
+  columna **cruda** y una **normalizada** por el factor `SUM_AREA_HA / área_geodésica`,
+  para que los tramos sumen exactamente el total publicado del río. Medido: −0,26 % en
+  Bolo y Fraile.
+- El panel reporta el **cierre geométrico** (suma de tramos ÷ total del río). Debe dar
+  100,000 %; si no, algún corte está mal orientado.
+
+**Estado verificado** (Bolo y Fraile, 2 cortes por río, 3 tramos):
+
+| Río | Tramo 1 | Tramo 2 | Tramo 3 | Total | Oficial ArcGIS |
+|---|---|---|---|---|---|
+| Bolo | 295,66 | 1.614,78 | 1.884,41 | 3.794,85 ha | 3.794,85 ha |
+| Fraile | 78,56 | 1.960,59 | 2.950,86 | 4.990,00 ha | 4.990,00 ha |
+
+Cierre geométrico 100,0000 % en ambos. `data/cortes_tramos.geojson` trae los 4 cortes
+perpendiculares en las estaciones intermedias y se carga solo al abrir la herramienta.
+
+**Limitación:** el corte se comporta como una recta infinita. Si un río vuelve a cruzar
+esa recta en otro meandro, el tramo quedaría partido en trozos no contiguos; la
+herramienta lo detecta (avisa cuando el corte cruza el buffer en más de 2 puntos) pero
+no lo impide. El Río Cauca no está disponible en el selector porque su eje son 43
+líneas sueltas, no una sola.
 
 ---
 
@@ -109,13 +172,15 @@ git push
 
 | Tecnología | Versión | Uso |
 |---|---|---|
-| Leaflet.js | 1.9.4 | Mapa interactivo |
-| Chart.js | 4.4.0 | Gráficas calidad/caudal/carga |
-| PapaParse | 5.4.1 | Lectura de CSV |
+| MapLibre GL JS | 4.7.1 | Mapa interactivo (CDN unpkg, global `maplibregl`) |
+| Turf.js | 7.1.0 | Geometría de la herramienta de tramos (CDN unpkg, global `turf`) |
 | Google Fonts | — | DM Sans + Syne |
 | GitHub Pages | — | Hosting estático |
 | GitHub Actions | v4 | Auto-deploy |
-| Python / pandas | 3.x | Script de transformación de datos |
+| Python | 3.x | Scripts de preparación de datos en `src/` (no se sirven al navegador) |
+
+Sin build step: módulos ES nativos y `<script>` globales. No hay `package.json` ni bundler.
+Las gráficas son PNG pre-renderizados por los scripts de Python, no una librería de charts.
 
 ---
 
