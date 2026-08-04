@@ -164,11 +164,23 @@ function verificar(rios) {
 
 /* ── Salidas ─────────────────────────────────────────────────────────── */
 
+/* Columnas de la tabla. Se dejó deliberadamente FUERA cualquier columna de
+ * auditoría que muestre un número de caña alternativo (lo que decía la propia
+ * capa de uso del suelo antes de sustituirla, el factor de reescalado, etc.):
+ * conviven mal con `area_ha`, que ya es la cifra correcta, y llevaban a leer
+ * el número equivocado. La única fuente de verdad para la caña es
+ * `Hectareas_CZ` vía `docs/tramos_cana_tributarios.csv` (columna
+ * `cana_ha_normalizada`), y es exactamente lo que aparece en `area_ha`.
+ *
+ * `cobertura_pct` sí se conserva: no es un artefacto de auditoría sino una
+ * advertencia metodológica — sin ella, un lector no tiene forma de saber que
+ * los porcentajes de Desbaratado describen solo el 49,8 % del buffer con
+ * datos de la CVC. */
 function escribirCSV(rios, destino, agrupado) {
   const cols = ['rio', 'tramo', 'estacion_aguas_arriba', 'estacion_aguas_abajo',
-    'km_inicio', 'km_fin', 'area_tramo_ha', 'area_referencia_ha', 'cobertura_pct',
+    'km_inicio', 'km_fin', 'area_tramo_ha', 'cobertura_pct',
     agrupado ? 'grupo' : 'cod_cob25', agrupado ? 'nombre_grupo' : 'clase',
-    'area_ha', 'pct', 'fuente_cana', 'cana_ha_uso_suelo', 'factor_reescalado'];
+    'area_ha', 'pct'];
   const filas = [cols.join(',')];
 
   for (const r of rios) {
@@ -192,11 +204,9 @@ function escribirCSV(rios, destino, agrupado) {
           csvCell(r.nombre), t.indice,
           csvCell(t.arriba?.nombre ?? ''), csvCell(t.abajo?.nombre ?? ''),
           fmt(t.kmInicio, 3), fmt(t.kmFin, 3),
-          fmt(t.bufferHa), fmt(t.areaRef), fmt(r.cobertura * 100, 1),
+          fmt(t.bufferHa), fmt(r.cobertura * 100, 1),
           k, csvCell(etiqueta),
           fmt(ha), fmt(t.areaRef > 0 ? ha / t.areaRef * 100 : 0),
-          k === 'CANA' || k === '22171' ? 'Hectareas_CZ' : 'Uso_del_suelo_ZP',
-          fmt(t.canaUso), fmt(t.factorReescalado, 6),
         ].join(','));
       }
     }
@@ -205,8 +215,9 @@ function escribirCSV(rios, destino, agrupado) {
   filas.push('');
   filas.push(`# generado,${new Date().toISOString()}`);
   filas.push('# cobertura,capa CVC Uso_del_suelo_ZP (escala 1:25.000)');
-  filas.push('# cana,tomada de Hectareas_CZ por tener resuelto el solape entre buffers vecinos');
-  filas.push('# resto,reescalado para que el tramo cierre en 100 % del area de referencia');
+  filas.push('# cana,area_ha de la clase CANA = cana_ha_normalizada de tramos_cana_tributarios.csv (fuente Hectareas_CZ)');
+  filas.push('# resto,reescalado proporcionalmente para que el tramo cierre en 100 %');
+  filas.push('# cobertura_pct,ver advertencia si es menor a 95 % (Desbaratado): el % describe solo la parte con datos');
   filas.push('# excluidos,' + csvCell(Object.entries(EXCLUIDOS)
     .map(([k, v]) => `${k}: ${v}`).join(' | ')));
 
@@ -244,11 +255,13 @@ function escribirMD(rios, destino) {
       'solo la fracción con datos |');
   }
   L.push('');
-  L.push('**La caña no sale de esta capa.** Se toma de `Hectareas_CZ.geojson`, que tiene resuelto el');
-  L.push('solapamiento entre buffers vecinos. La capa de uso del suelo sobrestima la caña frente a');
-  L.push('ella, por vigencia distinta y por no descontar el solape. Las demás clases se reescalan');
-  L.push('para que cada tramo cierre en 100 %; el CSV trae `cana_ha_uso_suelo` y `factor_reescalado`');
-  L.push('para que el ajuste sea auditable.');
+  L.push('**La caña no sale de esta capa.** La columna `area_ha` de la clase CANA es exactamente la');
+  L.push('`cana_ha_normalizada` de [tramos_cana_tributarios.csv](tramos_cana_tributarios.csv), es decir');
+  L.push('`Hectareas_CZ.geojson`, que tiene resuelto el solapamiento entre buffers vecinos. La capa de');
+  L.push('uso del suelo por sí sola sobrestima la caña frente a ella (por vigencia distinta y por no');
+  L.push('descontar el solape), así que **no se usa su propio número de caña en ningún lado**: las');
+  L.push('demás clases se reescalan proporcionalmente para que cada tramo cierre en 100 % con la caña');
+  L.push('ya sustituida.');
   L.push('');
   L.push('**La vigencia es heterogénea.** Cada cuenca se levantó en un año distinto, entre 2014 y');
   L.push('2025, así que la comparación entre ríos mezcla fechas.');

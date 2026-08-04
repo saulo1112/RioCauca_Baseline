@@ -228,9 +228,10 @@ Tres advertencias:
 - **La capa se detiene en el límite del Valle del Cauca.** Risaralda queda con 0 % de
   cobertura y Palo con 1,5 %: ambos **se excluyen**. Desbaratado se incluye con el 49,8 %
   que sí tiene, marcado como parcial.
-- **La caña no sale de esta capa**, sino de `Hectareas_CZ.geojson`, que tiene resuelto el
-  solapamiento entre buffers vecinos. Las demás clases se reescalan para que el tramo cierre
-  en 100 %; el CSV trae `cana_ha_uso_suelo` y `factor_reescalado` para auditarlo.
+- **La caña no sale de esta capa.** La columna `area_ha` de la clase CANA es exactamente
+  `cana_ha_normalizada` de `tramos_cana_tributarios.csv` (fuente `Hectareas_CZ.geojson`,
+  que tiene resuelto el solapamiento entre buffers vecinos). Las demás clases se reescalan
+  proporcionalmente para que el tramo cierre en 100 % con esa caña ya sustituida.
 - **La vigencia es heterogénea:** cada cuenca se levantó entre 2014 y 2025.
 
 ---

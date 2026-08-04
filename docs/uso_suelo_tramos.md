@@ -20,11 +20,13 @@ límite del Valle del Cauca:
 | Palo | 1,5 % | **excluido** — dept. del Cauca, jurisdicción CRC |
 | Rio Desbaratado | 49,8 % | **parcial** — los porcentajes describen solo la fracción con datos |
 
-**La caña no sale de esta capa.** Se toma de `Hectareas_CZ.geojson`, que tiene resuelto el
-solapamiento entre buffers vecinos. La capa de uso del suelo sobrestima la caña frente a
-ella, por vigencia distinta y por no descontar el solape. Las demás clases se reescalan
-para que cada tramo cierre en 100 %; el CSV trae `cana_ha_uso_suelo` y `factor_reescalado`
-para que el ajuste sea auditable.
+**La caña no sale de esta capa.** La columna `area_ha` de la clase CANA es exactamente la
+`cana_ha_normalizada` de [tramos_cana_tributarios.csv](tramos_cana_tributarios.csv), es decir
+`Hectareas_CZ.geojson`, que tiene resuelto el solapamiento entre buffers vecinos. La capa de
+uso del suelo por sí sola sobrestima la caña frente a ella (por vigencia distinta y por no
+descontar el solape), así que **no se usa su propio número de caña en ningún lado**: las
+demás clases se reescalan proporcionalmente para que cada tramo cierre en 100 % con la caña
+ya sustituida.
 
 **La vigencia es heterogénea.** Cada cuenca se levantó en un año distinto, entre 2014 y
 2025, así que la comparación entre ríos mezcla fechas.
