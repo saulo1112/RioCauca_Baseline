@@ -46,7 +46,7 @@ Rio Zabaletas,1,Rio Sabaletas - Antes caserío Los Medios,Rio Sabaletas - Cruce 
 Rio Zabaletas,2,Rio Sabaletas - Cruce sector vía La Novillera,Rio Sabaletas - Puente vía Santa Elena-Ginebra,16,16,14.872,20.101,5.229,590.54,343.74,342.85,13.57,58.06,si
 Rio Zabaletas,3,Rio Sabaletas - Puente vía Santa Elena-Ginebra,Rio Sabaletas - Antes desembocadura a Rio Cauca,16,16,20.101,43.353,23.252,2751.17,2144.92,2139.40,84.66,77.76,si
 
-# generado,2026-08-03T20:23:08.212Z
+# generado,2026-08-04T16:58:07.698Z
 # metodo,corte perpendicular local + asignacion por posicion sobre el eje
 # area,turf.area geodesica WGS84 normalizada a SUM_AREA_HA (ArcGIS MAGNA-Sirgas)
 # total_normalizado_ha,25092.55

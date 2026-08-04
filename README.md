@@ -206,6 +206,35 @@ Dos hallazgos del análisis que conviene tener presentes:
 
 ---
 
+## Uso del suelo por tramo
+
+[**docs/uso_suelo_tramos.md**](docs/uso_suelo_tramos.md) — reporte  
+[**docs/uso_suelo_tramos.csv**](docs/uso_suelo_tramos.csv) — 18 grupos de uso  
+[**docs/uso_suelo_tramos_detalle.csv**](docs/uso_suelo_tramos_detalle.csv) — los 103 códigos de 25k
+
+Qué fracción de cada tramo es caña, pastos, bosque, zona urbana, etc., a partir de la capa
+de cobertura de la CVC (`data/databases/Uso_del_suelo_ZP.geojson`, escala 1:25.000).
+
+```bash
+cd tools/tramos && node build_uso_suelo_tramos.mjs
+```
+
+Usa **los mismos tramos** que el análisis de caña: la partición del buffer vive en
+`tools/tramos/segmentacion.mjs`, compartida por los dos scripts, así que coinciden por
+construcción y no por coincidencia.
+
+Tres advertencias:
+
+- **La capa se detiene en el límite del Valle del Cauca.** Risaralda queda con 0 % de
+  cobertura y Palo con 1,5 %: ambos **se excluyen**. Desbaratado se incluye con el 49,8 %
+  que sí tiene, marcado como parcial.
+- **La caña no sale de esta capa**, sino de `Hectareas_CZ.geojson`, que tiene resuelto el
+  solapamiento entre buffers vecinos. Las demás clases se reescalan para que el tramo cierre
+  en 100 %; el CSV trae `cana_ha_uso_suelo` y `factor_reescalado` para auditarlo.
+- **La vigencia es heterogénea:** cada cuenca se levantó entre 2014 y 2025.
+
+---
+
 ## Stack tecnológico
 
 | Tecnología | Versión | Uso |

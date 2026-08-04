@@ -1,7 +1,7 @@
 # Hectáreas de caña de azúcar por tramo — tributarios del Río Cauca
 
 **Proyecto 890K | UAO × ASOCAÑA | Fase I — Corredor Biológico**  
-*Generado el 2026-08-03 por `tools/tramos/build_tramos_cana.mjs`*
+*Generado el 2026-08-04 por `tools/tramos/build_tramos_cana.mjs`*
 
 Desagregación de las hectáreas de caña dentro del buffer de 700 m, por tramo entre
 estaciones de calidad del agua. **46 tramos en 15 ríos, 25.092,55 ha.**

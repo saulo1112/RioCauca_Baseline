@@ -15,7 +15,7 @@
 
 import {
   ensureHectareasLoaded, getBufferData, getHectareasData,
-  getTributariosData, getRioCaucaData, getEstacionesTribData,
+  getTributariosData, getRioCaucaData, getEstacionesTribData, BUILD_VERSION,
 } from '../layers/geojson.js';
 import { setInfoPanelEnabled } from './InfoPanel.js';
 import { fmt, escapeHtml, csvCell } from '../utils/format.js';
@@ -666,10 +666,14 @@ async function _importCuts(e) {
 }
 
 /* Carga silenciosa del archivo versionado. Un 404 es normal mientras no se
- * haya commiteado ningún corte. */
+ * haya commiteado ningún corte.
+ *
+ * El `?v=` es obligatorio, igual que en el resto de capas: este archivo cambia
+ * cada vez que se recalculan los tramos, y sin sello de versión el navegador
+ * sirve la copia anterior. */
 async function _loadSavedCuts() {
   try {
-    const resp = await fetch(CORTES_PATH);
+    const resp = await fetch(`${CORTES_PATH}?v=${BUILD_VERSION}`);
     if (!resp.ok) return;
     const n = _ingestCuts(await resp.json());
     console.log(`[tramos] ${n} cortes cargados de ${CORTES_PATH}`);

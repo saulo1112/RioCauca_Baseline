@@ -14,8 +14,13 @@
 import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
- * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '2.1';
+ * que el navegador descarte la caché y descargue la versión más reciente.
+ *
+ * Se exporta porque CutLineTool también descarga un GeoJSON de datos
+ * (data/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
+ * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
+ * aparecían sin tramos. */
+export const BUILD_VERSION = '2.2';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {

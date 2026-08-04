@@ -9,88 +9,37 @@
  * Produce:
  *     docs/tramos_cana_tributarios.md
  *     docs/tramos_cana_tributarios.csv
+ *     data/cortes_tramos.geojson
  *
- * ── Por qué NO se usan los semiplanos del visor ──────────────────────────
- * buildHalfPlane() prolonga la línea de corte decenas de km para que se
- * comporte como una recta infinita. En ríos meandriformes esa recta vuelve a
- * entrar al buffer (6 de 50 cortes cruzan más de 2 veces) y el área se cuenta
- * dos veces: el Palo cerraba en 112,38 %.
- *
- * Aquí se corta con la perpendicular LOCAL, materializada como una ranura
- * delgada que se resta del polígono, y cada trozo se asigna al tramo por su
- * posición sobre el eje del río. Al usar el sistema de coordenadas del propio
- * cauce, el método es inmune a los meandros.
+ * La partición del buffer en tramos vive en ./segmentacion.mjs, compartida con
+ * build_uso_suelo_tramos.mjs para que los dos análisis usen exactamente los
+ * mismos tramos. Aquí solo se cruza esa partición contra la capa de caña.
  */
 
 import * as turf from '@turf/turf';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
 
 /* Los módulos del visor esperan turf como global (allí llega por <script>). */
 globalThis.turf = turf;
 
-const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(HERE, '..', '..');
-const imp = p => import(pathToFileURL(path.join(ROOT, p)).href);
+import {
+  ROOT, CORTES_PATH, leer, safeIntersect, areaHa, normalizeRiver, shortStationName,
+  cargarContexto, clavesDeRios, segmentarRio,
+} from './segmentacion.mjs';
 
-const { orientAxisDownstream, perpendicularAt, prepareCana, areaHa } =
-  await imp('src/tramos/geometry.js');
-const { normalizeRiver, shortStationName } = await imp('src/tramos/stations.js');
+const { prepareCana } =
+  await import(pathToFileURL(path.join(ROOT, 'src/tramos/geometry.js')).href);
 
 /* ── Parámetros ──────────────────────────────────────────────────────── */
 
-/* Escalera de reintentos: [base del rumbo, longitud de la línea] en km.
- *
- * La base del rumbo es la que más pesa. Los ejes traen un vértice cada 13–24 m,
- * así que una base corta mide el zigzag de digitalización en vez de la
- * dirección del cauce y la perpendicular sale girada. Se empieza en 500 m
- * (suficiente para los 50 cortes medidos) y se alarga si hace falta.
- *
- * La longitud se mantiene corta al principio para no alcanzar meandros vecinos. */
 const BASE_INICIAL = Number(process.env.TRAMOS_BASE_INICIAL ?? 0.25);
-
-const ESCALERA = [
-  [BASE_INICIAL, 4], [BASE_INICIAL, 8],
-  [0.5, 4],  [0.5, 8],
-  [1.0, 4],  [1.0, 8],
-  [2.0, 8],  [2.0, 16],
-].filter(([b], i) => i < 2 || b > BASE_INICIAL);
-
-/* Cortes ya versionados. Los de Bolo y Fraile se trazaron con el criterio
- * anterior y sus cifras están publicadas en el README, así que se PRESERVAN
- * tal cual en vez de regenerarlos: cambiar su orientación movía Fraile T1 de
- * 78,56 a 92,77 ha. Los ríos que no figuren en el archivo se calculan
- * automáticamente. */
-const CORTES_PATH = 'data/cortes_tramos.geojson';
-
-/* Holgura al clasificar un trozo como "aguas arriba" o "aguas abajo" del corte.
- * Debe superar el medio ancho del corredor (700 m), porque un trozo pegado al
- * corte siempre tiene vértices que proyectan al otro lado. */
-const TOL_LADO_KM = 0.9;
-
-/* Grosor de la ranura. Debe bastar para separar topológicamente sin comerse
- * área apreciable: 0,5 m × 1,4 km de corredor ≈ 0,07 ha por corte. */
-const SLIVER_KM = 0.0005;
-
-/* Dos estaciones a menos de esta distancia sobre el eje son el mismo punto
- * físico registrado dos veces (Guabas km 13,91; Tuluá km 67,68). */
-const DEDUPE_KM = 0.15;
-
-/* Cuántos vértices de cada trozo se proyectan sobre el eje para comprobar que
- * no cruza una frontera de tramo. Ver la nota en la puerta correspondiente. */
-const MUESTRA_VERTICES = 200;
-
-/* Estaciones mal clasificadas: figuran bajo un río al que no pertenecen. */
-const EXCLUIR = [
-  { patron: /^r[ií]o cauca\b/i, motivo: 'estación del Río Cauca clasificada bajo otro río' },
-];
-
 const TOL_CIERRE = 0.998;   // cierre geométrico mínimo aceptable
 
 /* ── Utilidades ──────────────────────────────────────────────────────── */
 
-const read = p => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
+const read = leer;
 const fmt = (v, d = 2) => Number(v).toFixed(d);
 
 /* Formato colombiano para el reporte: 1.234,56 */
@@ -105,224 +54,29 @@ function csvCell(v) {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-function safeIntersect(a, b) {
-  try { return turf.intersect(turf.featureCollection([a, b])); } catch { return null; }
-}
-
-function safeDifference(a, b) {
-  try { return turf.difference(turf.featureCollection([a, b])); } catch { return null; }
-}
-
-/* Posición en km del punto sobre el eje. */
-const kmOn = (axis, pt) =>
-  turf.nearestPointOnLine(axis, pt, { units: 'kilometers' }).properties.location;
-
-/* ── Corte secuencial verificado ─────────────────────────────────────── */
-
-/* Rango [min, max] de km sobre el eje de un polígono, por muestreo de vértices. */
-function rangoKm(axis, poly) {
-  const coords = turf.coordAll(poly);
-  const paso = Math.max(1, Math.ceil(coords.length / MUESTRA_VERTICES));
-  const kms = [];
-  for (let c = 0; c < coords.length; c += paso) kms.push(kmOn(axis, turf.point(coords[c])));
-  kms.sort((a, b) => a - b);
-  return { lo: kms[0], hi: kms.at(-1), mediana: kms[Math.floor(kms.length / 2)] };
-}
-
-/* Parte `pieces` con la perpendicular al eje en `station`.
- *
- * Se corta SOLO el trozo que contiene el punto de corte. Unir todas las ranuras
- * en una máscara única y hacer una sola resta NO funciona: en Riofrío degrada el
- * corte de km 33,2 y dos tramos se fusionan sin dar ningún error.
- *
- * No basta con exigir que salgan ≥2 trozos: un corte mal orientado recorta un
- * lóbulo lateral y deja el trozo principal abarcando ambos lados. Por eso se
- * exige que TODO trozo resultante quede de un solo lado del corte. */
-function splitPieces(pieces, axis, station, lineaFija = null) {
-  const snap = turf.nearestPointOnLine(axis, station.f, { units: 'kilometers' });
-  const kmCorte = snap.properties.location;
-
-  const idx = pieces.findIndex(p => turf.booleanPointInPolygon(snap, p));
-  if (idx < 0) {
-    return { ok: false, pieces, motivo: 'el punto de corte no cae en ningún trozo' };
-  }
-
-  /* Con un corte preservado del archivo no se puede tocar el azimut: solo se
-   * alarga manteniendo su orientación. */
-  const intentos = lineaFija
-    ? [4, 8, 16].map(largo => [null, largo])
-    : ESCALERA;
-
-  for (const [base, largo] of intentos) {
-    const linea = lineaFija
-      ? alargarLinea(lineaFija, largo)
-      : perpendicularAt(axis, station.f, largo, base);
-    const ranura = turf.buffer(linea, SLIVER_KM, { units: 'kilometers' });
-    const cortado = safeDifference(pieces[idx], ranura);
-    if (!cortado) continue;
-
-    const trozos = turf.flatten(cortado).features;
-    if (trozos.length < 2) continue;
-
-    /* El test de "corte limpio" solo se aplica a los cortes AUTOMÁTICOS: está
-     * para vetar una perpendicular mal orientada que recorta un lóbulo lateral.
-     * Un corte preservado del archivo ya fue revisado y sus cifras están
-     * publicadas, así que se acepta con que separe. El de Fraile en Puente Vía
-     * a Miranda es oblicuo respecto al eje —de ahí que su tramo 1 dé 78,56 y no
-     * 92,77 ha— y no pasaría este test. */
-    if (!lineaFija) {
-      const limpio = trozos.every(t => {
-        const { lo, hi } = rangoKm(axis, t);
-        return hi <= kmCorte + TOL_LADO_KM || lo >= kmCorte - TOL_LADO_KM;
-      });
-      if (!limpio) continue;
-    }
-
-    const out = [...pieces];
-    out.splice(idx, 1, ...trozos);
-    return { ok: true, pieces: out, base, largo, linea, nuevos: trozos.length };
-  }
-
-  return { ok: false, pieces,
-    motivo: lineaFija
-      ? 'el corte preservado del archivo no separa el polígono ni alargándolo'
-      : 'ninguna combinación de la escalera separó el polígono de forma limpia' };
-}
-
-/* Reescala una línea de 2 puntos a `largoKm` conservando centro y azimut. */
-function alargarLinea(linea, largoKm) {
-  const [a, b] = linea.geometry.coordinates;
-  const centro = turf.midpoint(turf.point(a), turf.point(b));
-  const az = turf.bearing(turf.point(a), turf.point(b));
-  const half = largoKm / 2;
-  return turf.lineString([
-    turf.destination(centro, half, az, { units: 'kilometers' }).geometry.coordinates,
-    turf.destination(centro, half, az + 180, { units: 'kilometers' }).geometry.coordinates,
-  ]);
-}
-
 /* ── Análisis de un río ──────────────────────────────────────────────── */
 
 function analizarRio(clave, ctx) {
-  const { buffers, trib, rioCauca, cana, est, cortesPrevios } = ctx;
-  const buscar = (fc, campo) =>
-    fc.features.find(f => normalizeRiver(f.properties[campo]) === clave);
+  /* La partición del buffer en tramos es compartida con el análisis de uso del
+   * suelo: ver ./segmentacion.mjs. Aquí solo se cruza contra la capa de caña. */
+  const seg = segmentarRio(clave, ctx);
+  if (!seg) return null;
 
-  const buffer = buscar(buffers, 'NOM1_DRENA');
-  const ejeRaw = buscar(trib, 'NOM1_DRENA');
-  const canaF  = buscar(cana, 'RIO');
-  if (!buffer || !ejeRaw || !canaF) return null;
+  const canaF = ctx.cana.features.find(f => normalizeRiver(f.properties.RIO) === clave);
+  if (!canaF) return null;
 
-  const { axis } = orientAxisDownstream(ejeRaw, rioCauca);
-  const largoEje = turf.length(axis, { units: 'kilometers' });
-
-  /* Extensión del buffer sobre el eje: se muestrea cada 100 m. El buffer no
-   * envuelve todo el cauce, solo el tramo de valle, y saber dónde arranca es lo
-   * que explica que haya estaciones de montaña inutilizables como corte. */
-  let bufIni = null, bufFin = null;
-  for (let d = 0; d <= largoEje; d += 0.1) {
-    if (turf.booleanPointInPolygon(turf.along(axis, d, { units: 'kilometers' }), buffer)) {
-      if (bufIni === null) bufIni = d;
-      bufFin = d;
-    }
-  }
-
-  /* 1. Estaciones del río, descartando las mal clasificadas */
-  const descartadas = [];
-  let estaciones = est.features
-    .filter(f => normalizeRiver(f.properties.Rio) === clave)
-    .filter(f => {
-      const hit = EXCLUIR.find(e => e.patron.test(f.properties.Punto_Monitoreo || ''));
-      if (hit) descartadas.push({ n: f.properties.Punto_Monitoreo, motivo: hit.motivo });
-      return !hit;
-    })
-    .map(f => ({
-      f,
-      nombre: f.properties.Punto_Monitoreo,
-      corto:  shortStationName(f.properties.Punto_Monitoreo),
-      N:      f.properties.N_Registros ?? 0,
-      km:     kmOn(axis, f),
-      enZona: turf.booleanPointInPolygon(f, buffer),
-    }))
-    .sort((a, b) => a.km - b.km);
-
-  /* 2. Deduplicar puntos físicos repetidos */
-  const dedup = [];
-  for (const s of estaciones) {
-    const prev = dedup.at(-1);
-    if (prev && Math.abs(s.km - prev.km) < DEDUPE_KM) {
-      descartadas.push({ n: (s.N > prev.N ? prev : s).nombre, motivo: `duplicada en km ${fmt(s.km, 2)}` });
-      if (s.N > prev.N) dedup[dedup.length - 1] = s;
-    } else {
-      dedup.push(s);
-    }
-  }
-  estaciones = dedup;
-
-  /* 3. Cortes = intermedias que además caen dentro de la zona cañera.
-   *    Una estación fuera del buffer no puede cortar: no hay polígono ahí. */
-  const intermedias = estaciones.slice(1, -1);
-  const cortes = intermedias.filter(s => s.enZona);
-  const fueraZona = estaciones.filter(s => !s.enZona);
-
-  /* 4. Cortar secuencialmente, preservando los cortes ya versionados */
-  const previos = cortesPrevios.get(clave) ?? new Map();
-  let pieces = turf.flatten(buffer).features;
-  const fallos = [];
-  const lineas = [];
-  let nPreservados = 0;
-
-  for (const s of cortes) {
-    const fija = previos.get(s.nombre) ?? null;
-    const r = splitPieces(pieces, axis, s, fija);
-    if (!r.ok) fallos.push({ estacion: s.nombre, km: s.km, motivo: r.motivo });
-    else {
-      if (fija) nPreservados++;
-      /* Para un corte reutilizado se guarda su geometría y sus propiedades
-       * ORIGINALES, no las que se hayan alargado o recalculado internamente:
-       * alargar conserva centro y azimut, así que es la misma recta, y el
-       * archivo debe quedar idéntico al versionado corrida tras corrida. */
-      lineas.push({
-        estacion: s,
-        linea: fija ?? r.linea,
-        reutilizado: !!fija,
-        props: fija?.properties ?? null,
-      });
-    }
-    pieces = r.pieces;
-  }
-
-  /* 5. Asignar cada trozo a su tramo por posición sobre el eje */
-  const bordes = [0, ...cortes.map(s => s.km), largoEje];
-  const nTramos = bordes.length - 1;
   const partes = prepareCana(canaF);
-
-  const bufHa  = new Array(nTramos).fill(0);
+  const nTramos = seg.tramos.length;
   const canaHa = new Array(nTramos).fill(0);
 
-  for (const pz of pieces) {
-    /* Asignación por la MEDIANA de las proyecciones, no por un punto
-     * representativo suelto: en trozos largos y sinuosos `pointOnFeature`
-     * puede caer en un lóbulo lateral y mandar el trozo al tramo equivocado. */
-    const km = rangoKm(axis, pz).mediana;
-    let i = bordes.findIndex((b, j) => j < nTramos && km >= b && km < bordes[j + 1]);
-    if (i < 0) i = nTramos - 1;
-
-    /* No se vigila aquí que el rango de km del trozo respete las fronteras: un
-     * corte es una recta perpendicular y el eje es sinuoso, así que un trozo
-     * que ES un tramo siempre se desborda ~700 m (medio ancho del corredor) por
-     * cada extremo. Cualquier umbral que tolere ese desborde deja de distinguir
-     * un tramo corto legítimo de dos tramos fusionados. El fallo real —un corte
-     * que no separó— lo detectan con precisión las puertas de `fallos` y de
-     * tramo vacío. */
-    bufHa[i] += areaHa(pz);
+  for (const { poly, tramo } of seg.piezas) {
     for (const p of partes) {
-      const clip = safeIntersect(pz, p.feature);
-      if (clip) canaHa[i] += areaHa(clip);
+      const clip = safeIntersect(poly, p.feature);
+      if (clip) canaHa[tramo] += areaHa(clip);
     }
   }
 
-  /* 6. Normalizar al total oficial de ArcGIS.
+  /* Normalizar al total oficial de ArcGIS.
    *
    * El divisor es la suma REPARTIDA entre tramos, no el área total del río:
    * así el factor absorbe también la fracción de hectárea que se lleva la
@@ -332,32 +86,18 @@ function analizarRio(clave, ctx) {
   const oficialHa = canaF.properties.SUM_AREA_HA;
   const sumaRaw   = canaHa.reduce((a, b) => a + b, 0);
   const factor    = sumaRaw > 0 ? oficialHa / sumaRaw : 1;
-  const bufTotal  = areaHa(buffer);
 
-  const tramos = [];
-  for (let i = 0; i < nTramos; i++) {
-    const arriba = i === 0 ? estaciones[0] : cortes[i - 1];
-    const abajo  = i === nTramos - 1 ? estaciones.at(-1) : cortes[i];
-    tramos.push({
-      indice: i + 1,
-      kmInicio: bordes[i],
-      kmFin: bordes[i + 1],
-      longitudKm: bordes[i + 1] - bordes[i],
-      arriba, abajo,
-      bufferHa: bufHa[i],
-      canaCrudaHa: canaHa[i],
-      canaNormHa: canaHa[i] * factor,
-    });
-  }
+  const tramos = seg.tramos.map((t, i) => ({
+    ...t,
+    canaCrudaHa: canaHa[i],
+    canaNormHa:  canaHa[i] * factor,
+  }));
 
   return {
-    clave,
-    nombre: buffer.properties.NOM1_DRENA,
-    largoEje, bufIni, bufFin, bufTotal, oficialHa, canaRaw, factor,
+    ...seg,
+    oficialHa, canaRaw, factor, tramos,
     cierreCana: sumaRaw / canaRaw,
-    cierreBuffer: bufHa.reduce((a, b) => a + b, 0) / bufTotal,
-    estaciones, cortes, fueraZona, descartadas,
-    tramos, nPiezas: pieces.length, fallos, lineas, nPreservados,
+    cierreBuffer: seg.tramos.reduce((a, t) => a + t.bufferHa, 0) / seg.bufTotal,
   };
 }
 
@@ -642,50 +382,16 @@ function escribirMD(rios, destino) {
 
 /* ── Main ────────────────────────────────────────────────────────────── */
 
-/* Cortes ya versionados, indexados por río → nombre de estación.
- *
- * Reutilizarlos hace la corrida idempotente: el archivo no cambia entre
- * ejecuciones y los números del reporte son reproducibles. La contrapartida es
- * que un cambio en el algoritmo NO regenera los cortes ya guardados; para
- * forzarlo, correr con TRAMOS_REGENERAR_CORTES=1 o borrar el archivo. */
-function cargarCortesPrevios() {
-  const mapa = new Map();
-  if (process.env.TRAMOS_REGENERAR_CORTES === '1') {
-    console.log('TRAMOS_REGENERAR_CORTES=1 — se ignoran los cortes versionados.\n');
-    return mapa;
-  }
-  const abs = path.join(ROOT, CORTES_PATH);
-  if (!fs.existsSync(abs)) return mapa;
-  const fc = JSON.parse(fs.readFileSync(abs, 'utf8'));
-  for (const f of fc.features ?? []) {
-    if (f.geometry?.type !== 'LineString') continue;
-    const k = normalizeRiver(f.properties?.rio);
-    const e = f.properties?.estacion;
-    if (!k || !e) continue;
-    if (!mapa.has(k)) mapa.set(k, new Map());
-    mapa.get(k).set(e, f);
-  }
-  return mapa;
-}
-
 const ctx = {
-  buffers:  read('data/cartografia/Buffer_Zona_de_Estudio.geojson'),
-  trib:     read('data/cartografia/Tributarios_rios_cauca.geojson'),
-  rioCauca: read('data/cartografia/Rio_cauca.geojson'),
-  cana:     read('data/cartografia/Hectareas_CZ.geojson'),
-  est:      read('data/geovisor/puntos_calidad_tributarios.geojson'),
-  cortesPrevios: cargarCortesPrevios(),
+  ...cargarContexto(),
+  cana: read('data/cartografia/Hectareas_CZ.geojson'),
 };
 
 /* TRAMOS_RIOS=bolo,fraile limita la corrida a esos ríos (útil al depurar).
  * Ojo: en modo filtrado NO se reescribe cortes_tramos.geojson, para no perder
  * los cortes de los ríos que no se procesaron. */
 const FILTRO = (process.env.TRAMOS_RIOS ?? '').split(',').map(s => s.trim()).filter(Boolean);
-
-const claves = [...new Set(ctx.buffers.features.map(f => normalizeRiver(f.properties.NOM1_DRENA)))]
-  .filter(k => k !== 'cauca')
-  .filter(k => FILTRO.length === 0 || FILTRO.includes(k))
-  .sort();
+const claves = clavesDeRios(ctx);
 
 console.log(`Procesando ${claves.length} tributarios (Río Cauca excluido)…\n`);
 
