@@ -1,0 +1,10 @@
+# Dependencias de las herramientas de escritorio (tools/).
+# El sitio estático no tiene build step ni dependencias instaladas.
+node_modules/
+
+# Temporales de Python de los scripts de preparación de datos
+__pycache__/
+*.pyc
+
+# Temporales de Excel/Office al abrir los .xlsx de datos
+~$*

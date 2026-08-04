@@ -364,18 +364,30 @@ export function prepareCana(canaFeature) {
 
 /* ── Corte perpendicular automático en un punto ──────────────────────── */
 
+/* Base sobre la que se mide el rumbo local del eje, en km.
+ *
+ * NO bajarla sin medir. Los ejes vienen digitalizados con un vértice cada
+ * 13–24 m, así que con una base corta el rumbo lo domina el zigzag de
+ * digitalización y no la dirección real del cauce: la "perpendicular" sale
+ * girada y recorta un lóbulo lateral en vez de cruzar el corredor. Medido
+ * sobre Riofrío, Palo, Tuluá y Amaime: con ±50 m fallan 6 cortes; con ±500 m
+ * ninguno. */
+const BEARING_BASE_KM = 0.5;
+
 /* Genera la perpendicular exacta al eje en la proyección de `point`.
  * Más reproducible que el pulso del mouse; la línea resultante se puede
- * borrar y redibujar a mano si hace falta. */
-export function perpendicularAt(axis, point, lengthKm = 2) {
+ * borrar y redibujar a mano si hace falta.
+ *
+ * `bearingBaseKm` permite alargar la base del rumbo cuando el corte no llega a
+ * separar el polígono (ver la escalera de reintentos en
+ * tools/tramos/build_tramos_cana.mjs). */
+export function perpendicularAt(axis, point, lengthKm = 2, bearingBaseKm = BEARING_BASE_KM) {
   const snapped = turf.nearestPointOnLine(axis, point, { units: 'kilometers' });
   const km = snapped.properties.location;
   const total = turf.length(axis, { units: 'kilometers' });
 
-  /* Rumbo local del eje: se mide entre dos puntos a ±50 m de la proyección. */
-  const delta = 0.05;
-  const a = turf.along(axis, Math.max(0, km - delta), { units: 'kilometers' });
-  const b = turf.along(axis, Math.min(total, km + delta), { units: 'kilometers' });
+  const a = turf.along(axis, Math.max(0, km - bearingBaseKm), { units: 'kilometers' });
+  const b = turf.along(axis, Math.min(total, km + bearingBaseKm), { units: 'kilometers' });
   const bearing = turf.bearing(a, b);
 
   const half = lengthKm / 2;

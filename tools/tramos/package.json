@@ -1,0 +1,13 @@
+{
+  "name": "tramos-cana",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Analisis de hectareas de cana por tramo entre estaciones de calidad. Herramienta de escritorio: NO forma parte del sitio estatico, que sigue sin build step.",
+  "scripts": {
+    "build": "node build_tramos_cana.mjs"
+  },
+  "dependencies": {
+    "@turf/turf": "^7.1.0"
+  }
+}

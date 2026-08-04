@@ -9,6 +9,15 @@
 
 import { locationOnAxis } from './geometry.js';
 
+/* Variantes ortográficas del mismo río entre capas. La cartografía y los
+ * puntos de calidad no coinciden en la grafía, y sin esta tabla el río se
+ * queda sin estaciones (silenciosamente: la tabla sale con etiquetas "km X"
+ * en vez de nombres). */
+const ALIAS = {
+  frayle:    'fraile',      // calidad "Rio Frayle"    ↔ cartografía "Rio Fraile"
+  sabaletas: 'zabaletas',   // calidad "Rio Sabaletas" ↔ cartografía "Rio Zabaletas"
+};
+
 /* Normaliza un nombre de río a una clave comparable:
  * minúsculas, sin tildes, sin el prefijo "rio/río", y con las variantes
  * ortográficas conocidas unificadas. */
@@ -21,9 +30,7 @@ export function normalizeRiver(name) {
     .replace(/^rio\s+/, '')
     .replace(/\s+/g, ' ');
 
-  /* Variantes ortográficas entre capas */
-  if (s === 'frayle') s = 'fraile';
-  return s;
+  return ALIAS[s] ?? s;
 }
 
 /* Busca la feature de una FeatureCollection cuyo campo `field` coincide con el

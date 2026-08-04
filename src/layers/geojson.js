@@ -15,7 +15,7 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente. */
-const BUILD_VERSION = '2.0';
+const BUILD_VERSION = '2.1';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {

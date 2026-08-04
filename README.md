@@ -26,6 +26,9 @@ Rio_Cauca_Baseline/
 │   ├── data/waterQuality.js            ← Parser CSV + join por estación
 │   ├── utils/bounds.js, utils/format.js
 │   └── build_*.py, perfil_*.py         ← Preparación de datos (no se sirven)
+├── tools/tramos/                       ← Análisis de tramos (Node + turf).
+│                                         Fuera del sitio: tiene package.json propio
+├── docs/                               ← Reportes versionados (MD + CSV)
 ├── data/
 │   ├── cartografia/                    ← Buffer 700 m, caña (Hectareas_CZ),
 │   │                                     Río Cauca y tributarios (WGS84)
@@ -157,14 +160,49 @@ por río completo. Todo el cálculo ocurre en el navegador con Turf.js; no hay b
 | Bolo | 295,66 | 1.614,78 | 1.884,41 | 3.794,85 ha | 3.794,85 ha |
 | Fraile | 78,56 | 1.960,59 | 2.950,86 | 4.990,00 ha | 4.990,00 ha |
 
-Cierre geométrico 100,0000 % en ambos. `data/cortes_tramos.geojson` trae los 4 cortes
-perpendiculares en las estaciones intermedias y se carga solo al abrir la herramienta.
+Cierre geométrico 100,0000 % en ambos. `data/cortes_tramos.geojson` trae los cortes de
+los 15 tributarios y se carga solo al abrir la herramienta.
 
 **Limitación:** el corte se comporta como una recta infinita. Si un río vuelve a cruzar
 esa recta en otro meandro, el tramo quedaría partido en trozos no contiguos; la
 herramienta lo detecta (avisa cuando el corte cruza el buffer en más de 2 puntos) pero
 no lo impide. El Río Cauca no está disponible en el selector porque su eje son 43
 líneas sueltas, no una sola.
+
+> ⚠️ **Para cifras oficiales usa el reporte, no la herramienta.**
+> La herramienta interactiva sigue usando el método de semiplano infinito, que en ríos
+> meandriformes cuenta área dos veces (el Palo cerraba en 112,38 %). El análisis
+> consolidado de [docs/tramos_cana_tributarios.md](docs/tramos_cana_tributarios.md) usa un
+> método de corte local, verificado, y **es la fuente válida**. Portar ese método al visor
+> está pendiente.
+
+---
+
+## Análisis de tramos: los 15 tributarios
+
+[**docs/tramos_cana_tributarios.md**](docs/tramos_cana_tributarios.md) — reporte completo  
+[**docs/tramos_cana_tributarios.csv**](docs/tramos_cana_tributarios.csv) — datos tabulares
+
+**46 tramos en 15 ríos, 25.092,55 ha.** El Río Cauca queda pendiente.
+
+Se genera con:
+
+```bash
+cd tools/tramos && npm install && node build_tramos_cana.mjs
+```
+
+`tools/` es una herramienta de escritorio con su propio `package.json`: **el sitio estático
+sigue sin build step ni dependencias**.
+
+Dos hallazgos del análisis que conviene tener presentes:
+
+- **El buffer de 700 m solo cubre la zona plana**, no todo el eje del río: arranca donde
+  termina la montaña (en Bugalagrande y Tuluá cubre apenas el 30 % del eje). Por eso una
+  estación de montaña no puede usarse como punto de corte. De las 74 estaciones, solo 48
+  caen dentro de la zona cañera.
+- **Guabas (1.825,85 ha) y Nima (896,63 ha) quedan sin desagregar**: tienen una sola
+  estación dentro de la zona cañera, así que no admiten ningún corte intermedio. Es un
+  vacío de monitoreo, no un error de cálculo.
 
 ---
 

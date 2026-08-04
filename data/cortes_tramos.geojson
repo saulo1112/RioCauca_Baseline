@@ -4,6 +4,52 @@
     {
       "type": "Feature",
       "properties": {
+        "rio": "Rio Amaime",
+        "estacion": "Rio Amaime - Antes Caserio el Placer",
+        "km_eje": 43.852,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.269754,
+            3.628707
+          ],
+          [
+            -76.261568,
+            3.593674
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Amaime",
+        "estacion": "Rio Amaime - Antes desembocadura de Rio Nima",
+        "km_eje": 46.062,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.282928,
+            3.621822
+          ],
+          [
+            -76.275523,
+            3.586616
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "rio": "Rio Bolo",
         "estacion": "Rio Bolo - Puente Pradera - Palmira",
         "km_eje": 10.938,
@@ -50,6 +96,75 @@
     {
       "type": "Feature",
       "properties": {
+        "rio": "Rio Bugalagrande",
+        "estacion": "Rio Bugalagrande - Conciviles - Andalucía",
+        "km_eje": 81.61,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.131378,
+            4.186618
+          ],
+          [
+            -76.158966,
+            4.163445
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Bugalagrande",
+        "estacion": "Rio Bugalagrande - Puente Variante Bugalagrande",
+        "km_eje": 85.131,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.138707,
+            4.194978
+          ],
+          [
+            -76.174773,
+            4.194515
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Desbaratado",
+        "estacion": "Antes de porcícola (Pte. Jordán)",
+        "km_eje": 40.93,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.311575,
+            3.303228
+          ],
+          [
+            -76.300621,
+            3.268958
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "rio": "Rio Fraile",
         "estacion": "Rio Frayle - Puente Vía a Miranda",
         "km_eje": 28.879,
@@ -89,6 +204,512 @@
           [
             -76.357325,
             3.369712
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Guachal",
+        "estacion": "GG2 - Puente vía Yumbo-Aeropuerto",
+        "km_eje": 5.964,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.441238,
+            3.550357
+          ],
+          [
+            -76.471951,
+            3.569183
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Guadalajara",
+        "estacion": "Rio Guadalajara - Bocatoma Acueducto Buga",
+        "km_eje": 16.956,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.26867,
+            3.904295
+          ],
+          [
+            -76.275192,
+            3.868915
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Guadalajara",
+        "estacion": "Rio Guadalajara - Puente Frente vía Ferrea",
+        "km_eje": 21.653,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.3018,
+            3.913621
+          ],
+          [
+            -76.314377,
+            3.879907
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio La Paila",
+        "estacion": "Rio La Paila - antes desembocadura del rio Totoro",
+        "km_eje": 38.256,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.010634,
+            4.304811
+          ],
+          [
+            -76.037796,
+            4.281138
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio La Paila",
+        "estacion": "Rio La Paila - Planta Acuavalle",
+        "km_eje": 41.749,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.031494,
+            4.329654
+          ],
+          [
+            -76.053887,
+            4.261262
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Antes de PTAR Guachené",
+        "km_eje": 56.268,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.379823,
+            3.138816
+          ],
+          [
+            -76.408511,
+            3.117057
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Después de PTAR Guachené",
+        "km_eje": 57.882,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.39459,
+            3.149047
+          ],
+          [
+            -76.411829,
+            3.11746
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Puente del Maíz",
+        "km_eje": 65.195,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.403266,
+            3.17056
+          ],
+          [
+            -76.436684,
+            3.157119
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Antes Bocatoma Propal",
+        "km_eje": 68.681,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.399324,
+            3.191192
+          ],
+          [
+            -76.432588,
+            3.177372
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Puente PICC",
+        "km_eje": 71.474,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.396413,
+            3.208452
+          ],
+          [
+            -76.431869,
+            3.202063
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Puente Perico Negro",
+        "km_eje": 73.275,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.404282,
+            3.221466
+          ],
+          [
+            -76.438719,
+            3.210889
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Palo",
+        "estacion": "Puente Puerto Tejada",
+        "km_eje": 75.406,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.410063,
+            3.242957
+          ],
+          [
+            -76.434796,
+            3.216799
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Riofrio",
+        "estacion": "Rio Riofrio - puente despues Salonica - limnigrafo CVC",
+        "km_eje": 25.622,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.34913,
+            4.12433
+          ],
+          [
+            -76.380834,
+            4.14148
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Riofrio",
+        "estacion": "Rio Riofrio - Bocatoma Acueducto de Riofrio",
+        "km_eje": 33.186,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.337373,
+            4.155119
+          ],
+          [
+            -76.32558,
+            4.189114
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Riofrio",
+        "estacion": "Rio Riofrio - Antes Municipio Riofrio",
+        "km_eje": 38.136,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.300881,
+            4.139283
+          ],
+          [
+            -76.293521,
+            4.174499
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Risaralda",
+        "estacion": "Río Risaralda - Las Palmeras",
+        "km_eje": 64.842,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -75.854225,
+            5.124977
+          ],
+          [
+            -75.831048,
+            5.097388
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Risaralda",
+        "estacion": "Quebrada Chapata - Desembocadura",
+        "km_eje": 65.078,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -75.860387,
+            5.114947
+          ],
+          [
+            -75.826032,
+            5.103849
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Tulua",
+        "estacion": "Rio Tulua - Puente Ferrocarril Barrio La Trinidad",
+        "km_eje": 61.522,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.176669,
+            4.095443
+          ],
+          [
+            -76.212118,
+            4.088824
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Tulua",
+        "estacion": "Rio Tulua - Puente Nuevo (Barrio 7 de Agosto)",
+        "km_eje": 62.718,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.179252,
+            4.105824
+          ],
+          [
+            -76.214552,
+            4.098449
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Tulua",
+        "estacion": "Rio Tulua - Despues Urbanizacion Maracaibo",
+        "km_eje": 64,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.195137,
+            4.127322
+          ],
+          [
+            -76.209704,
+            4.094414
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Zabaletas",
+        "estacion": "Rio Sabaletas - Cruce sector vía La Novillera",
+        "km_eje": 14.872,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.225081,
+            3.705261
+          ],
+          [
+            -76.236206,
+            3.671044
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Zabaletas",
+        "estacion": "Rio Sabaletas - Puente vía Santa Elena-Ginebra",
+        "km_eje": 20.101,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -76.255023,
+            3.706193
+          ],
+          [
+            -76.273068,
+            3.675051
           ]
         ]
       }
