@@ -7,8 +7,9 @@ Se ejecuta UNA SOLA VEZ desde la terminal para generar el CSV consolidado:
 
 Une las series diarias por estación que ya produjo build_hydro_trib.py
 (data/hydrology/tributarios/<ESTACION>/caudal_diario.csv) en un único CSV,
-enriquecido con el río y el estado de cada estación desde
-data/hydrology/estaciones_hidro_trib.json. Produce:
+enriquecido con el río, el estado y las coordenadas WGS84 de cada estación
+desde data/hydrology/estaciones_hidro_trib.json (que a su vez las toma de
+data/databases/Estaciones_tributarios.geojson). Produce:
 
     docs/caudal_consolidado_tributarios.csv
 """
@@ -60,6 +61,8 @@ def main():
                     'estacion':     nombre,
                     'municipio':    e.get('municipio') or '',
                     'estado':       e.get('estado') or '',
+                    'latitud':      e.get('latitud'),
+                    'longitud':     e.get('longitud'),
                     'fecha':        row['FECHA'],
                     'caudal_m3s':   row['CAUDAL_M3S'],
                 })
@@ -73,7 +76,7 @@ def main():
     # deterministic run tras run (independiente del orden del JSON de origen).
     filas.sort(key=lambda r: (r['rio'], r['estacion'], r['fecha']))
 
-    cols = ['rio', 'estacion', 'municipio', 'estado', 'fecha', 'caudal_m3s']
+    cols = ['rio', 'estacion', 'municipio', 'estado', 'latitud', 'longitud', 'fecha', 'caudal_m3s']
     with open(OUT_PATH, 'w', newline='', encoding='utf-8') as fh:
         w = csv.DictWriter(fh, fieldnames=cols)
         w.writeheader()
