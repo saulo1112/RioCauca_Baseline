@@ -321,5 +321,43 @@
     "maximo_m3s": 35.87,
     "umbral_invierno_m3s": 7.14,
     "umbral_verano_m3s": 4.31
+  },
+  {
+    "nombre": "Buichitolo",
+    "nombre_display": "Buichitolo",
+    "rio": "Rio Fraile",
+    "municipio": "Candelaria",
+    "latitud": 3.374429,
+    "longitud": -76.349902,
+    "estado": "Activa",
+    "ruta_hidro": "tributarios/Buichitolo",
+    "tiene_cdc": true,
+    "años_datos": "2015–2022",
+    "n_dias": 2633,
+    "promedio_m3s": 5.05,
+    "mediana_m3s": 3.1,
+    "minimo_m3s": 0.01,
+    "maximo_m3s": 35.18,
+    "umbral_invierno_m3s": 5.72,
+    "umbral_verano_m3s": 1.56
+  },
+  {
+    "nombre": "La Rafaela",
+    "nombre_display": "La Rafaela",
+    "rio": "Rio Tulua",
+    "municipio": "Tulua",
+    "latitud": 4.141772,
+    "longitud": -76.243118,
+    "estado": "Suspendida",
+    "ruta_hidro": "tributarios/La Rafaela",
+    "tiene_cdc": true,
+    "años_datos": "2015–2016",
+    "n_dias": 467,
+    "promedio_m3s": 6.06,
+    "mediana_m3s": 5.53,
+    "minimo_m3s": 2.22,
+    "maximo_m3s": 21.34,
+    "umbral_invierno_m3s": 6.68,
+    "umbral_verano_m3s": 4.08
   }
 ]
