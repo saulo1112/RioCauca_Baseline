@@ -176,7 +176,7 @@ def cargar_datos(df_ref, u_v, u_i) -> pd.DataFrame:
 
 def _label_x():
     return ("Abscisado (km desde La Balsa)  —  "
-            "Fuente: PMC Cuadro. 2.6, Vol. VII (Univ. del Valle - CVC)")
+            "Fuente: PMC Figura N° 5.11 - Vol IX (Univ. del Valle - CVC)")
 
 
 def _nota_pie(fig, u_v, u_i, extra=""):

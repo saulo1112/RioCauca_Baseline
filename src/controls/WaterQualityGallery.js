@@ -9,6 +9,8 @@
  *   close() — cierra y limpia el DOM del overlay
  */
 
+import { BUILD_VERSION } from '../layers/geojson.js';
+
 const BASE = 'data/water_quality/perfiles/';
 
 const GALERIA_PERFILES = [
@@ -31,7 +33,7 @@ let _index   = 0;
 
 function _buildImages() {
   IMAGES = GALERIA_PERFILES.map(p => ({
-    src:   BASE + p.archivo,
+    src:   `${BASE}${p.archivo}?v=${BUILD_VERSION}`,
     label: p.label,
     tipo:  TIPO_CONDICION,
     param: p.param,

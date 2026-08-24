@@ -1,6 +1,8 @@
 /* CaudalGallery.js — Lightbox para el perfil longitudinal de caudal del Río Cauca. */
 
-const IMG_SRC = 'data/water_quality/perfiles/perfil_CAUDAL_condicion.png';
+import { BUILD_VERSION } from '../layers/geojson.js';
+
+const IMG_SRC = `data/water_quality/perfiles/perfil_CAUDAL_condicion.png?v=${BUILD_VERSION}`;
 
 let _overlay = null;
 
