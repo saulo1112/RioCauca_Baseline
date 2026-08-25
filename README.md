@@ -1,7 +1,299 @@
-# Corredor Biológico — Línea Base Interactiva
+# Cauca River Corridor — Interactive Baseline
+**Project 890K | UAO × ASOCAÑA | Phase I — Water Quality Diagnosis**
+
+**English** | [Español](#español)
+
+Static web platform (GitHub Pages) serving as an interactive water-quality
+baseline for the Cauca River and its prioritized tributaries (Pan de Azúcar
+→ La Virginia).
+
+---
+
+## Repository structure
+
+```
+Rio_Cauca_Baseline/
+├── index.html                          ← Single entry point (sidebar, legend, #map)
+├── css/styles.css                      ← Dark mode styles (single file)
+├── src/
+│   ├── main.js                         ← Bootstrap: initMap → layers → controls
+│   ├── map/init.js, map/basemaps.js    ← MapLibre map and raster basemaps
+│   ├── layers/geojson.js               ← Loads and registers every layer
+│   ├── layers/registry.js              ← RIVER_COLORS palette
+│   ├── controls/LayerPanel.js          ← Checkboxes → visibility
+│   ├── controls/TramoFilter.js         ← Navigation by reach
+│   ├── controls/InfoPanel.js           ← Attribute popup + CSV downloads
+│   ├── controls/CutLineTool.js         ← Segment and cane-area cutting tool
+│   ├── controls/*Gallery.js            ← PNG profile lightbox
+│   ├── tramos/geometry.js              ← Half-planes, cutting, geodesic area
+│   ├── tramos/stations.js              ← River ↔ stations, segment labels
+│   ├── data/waterQuality.js            ← CSV parser + join by station
+│   ├── utils/bounds.js, utils/format.js
+│   └── build_*.py, perfil_*.py         ← Data preparation (not served to the browser)
+├── tools/tramos/                       ← Segment analysis (Node + turf).
+│                                          Outside the site: has its own package.json
+├── docs/                               ← Versioned reports (MD + CSV)
+├── data/
+│   ├── cartografia/                    ← 700 m buffer, cane (Hectareas_CZ),
+│   │                                      Cauca River and tributaries (WGS84)
+│   ├── cortes_tramos.geojson           ← Versioned segment cuts
+│   ├── databases/                      ← Stations and quality data (CVC source)
+│   ├── geovisor/                       ← Quality points + CSV per point
+│   ├── hydrology/                      ← Flow rates and duration curves
+│   └── water_quality/perfiles/         ← PNG longitudinal profiles
+└── .github/workflows/deploy.yml        ← Auto-deploy on GitHub Pages
+```
+
+---
+
+## Deploy on GitHub Pages
+
+```bash
+# 1. Initialize the repository
+cd Rio_Cauca_Baseline
+git init
+git add .
+git commit -m "MVP: Interactive baseline v1.0"
+git branch -M main
+
+# 2. Create the repository on GitHub and connect it
+git remote add origin https://github.com/YOUR_USERNAME/corredor-biologico-linea-base.git
+git push -u origin main
+
+# 3. On GitHub: Settings → Pages → Source: "GitHub Actions" → Save
+#    The deploy.yml workflow deploys automatically on every push to main.
+```
+
+**Resulting URL:** `https://YOUR_USERNAME.github.io/corredor-biologico-linea-base/`
+
+---
+
+## Local testing
+
+```bash
+cd Rio_Cauca_Baseline
+python -m http.server 8000
+# Open: http://localhost:8000
+```
+
+---
+
+## Data updates
+
+| Data | File to replace | Source | Status |
+|---|---|---|---|
+| Tributary water quality | `data/calidad_agua.csv` | CVC — DT02 | Pending |
+| Cauca water quality | `data/calidad_agua.csv` (Reach 1/2/3 rows) | CVC — DT02 | Pending |
+| CVC tributary flow rates | `data/hidrometria.csv` | CVC — DT02 | Pending |
+| Risaralda duration curves | `data/caudales_cdc.csv` | CARDER ERA | ✓ Available |
+| Tributary geometry | `data/rios_tributarios.geojson` | SHP CVC/IDEAM | SHP pending |
+| Station coordinates | `data/estaciones_hidrometricas.geojson` | ArcGIS Pro (MAGNA-SIRGAS) | Verification pending |
+| Cane area by buffer | New columns in the tributary GeoJSON | SHP CVC + ArcGIS Pro | Pending |
+
+### Updating CARDER data when DT02/DT03 arrive:
+```bash
+# 1. Copy the source CSVs into the "Fase I/Derechos de petición/" folder
+# 2. Run the transformation script:
+cd Rio_Cauca_Baseline
+python scripts/prepare_data.py
+# 3. Commit the new files in data/
+git add data/
+git commit -m "Update DT02 data — CVC water quality"
+git push
+```
+
+---
+
+## Diffuse load model (in development)
+
+**Formula:** `Load (kg/year) = Cane_area (ha) × Export_coefficient × (Runoff_mm / 1000)`
+
+| Parameter | Value | Literature range | Source |
+|---|---|---|---|
+| N coef. | 10 kg N/ha/year | 8–12 kg/ha/year | Technical literature |
+| P coef. | 1.1 kg P/ha/year | 0.8–1.5 kg/ha/year | Technical literature |
+| Cane area | Pending | — | SHP CVC + ArcGIS Pro (700 m buffer) |
+| Runoff | Pending | — | IDEAM Zonal Statistics over the buffer |
+
+**Pending:**
+- Obtain average annual runoff per buffer (IDEAM)
+
+---
+
+## Segment and sugarcane-cutting tool
+
+Side panel → *Study Area* → **Cut segments and calculate cane area**.
+
+Disaggregates cane hectares by segment between monitoring stations, instead
+of by whole river. All computation happens in the browser with Turf.js;
+there is no backend.
+
+**How to use it**
+
+1. Choose the river from the selector.
+2. Add cuts, two ways:
+   - **Cut at a station** — generates the exact perpendicular to the channel
+     axis at the selected station. Reproducible, the recommended option.
+   - **Draw a cut** — trace by hand with two clicks (Esc cancels).
+3. The table recalculates itself. Clicking any row frames that segment.
+4. Export: `⬇ CSV` (table with traceability metadata), `⬇ Cuts`
+   (the lines, for versioning), `⬇ Polygons` (the segments, to reopen in
+   ArcGIS Pro).
+
+**How it's computed**
+
+- Each cut line becomes two half-plane polygons; segments come from boolean
+  operations on those, not from reassembling the buffer outline by hand.
+  The half-plane's reach is derived from the buffer's bounding box: a fixed
+  small value silently drops area exactly where meanders stick out.
+- Areas use `turf.area()`, geodesic on the WGS84 ellipsoid — never
+  planimetric over degrees.
+- Segments are ordered and named by projecting both cuts and stations onto
+  the river axis (`nearestPointOnLine`), so **the order cuts are drawn in
+  doesn't change the result**. Flow direction is inferred from which end of
+  the axis is closer to the Cauca River.
+- Since `turf.area()` is geodesic and ArcGIS computed in MAGNA-Sirgas, the
+  table shows both the **raw** column and one **normalized** by the factor
+  `SUM_AREA_HA / geodesic_area`, so segments sum to exactly the river's
+  published total. Measured: −0.26% on the Bolo and Fraile.
+- The panel reports **geometric closure** (sum of segments ÷ river total).
+  It must read 100.000%; if not, some cut is misoriented.
+
+**Verified status** (Bolo and Fraile, 2 cuts per river, 3 segments):
+
+| River | Segment 1 | Segment 2 | Segment 3 | Total | Official ArcGIS |
+|---|---|---|---|---|---|
+| Bolo | 295.66 | 1,614.78 | 1,884.41 | 3,794.85 ha | 3,794.85 ha |
+| Fraile | 78.56 | 1,960.59 | 2,950.86 | 4,990.00 ha | 4,990.00 ha |
+
+Geometric closure 100.0000% on both. `data/cortes_tramos.geojson` carries
+the cuts for all 15 tributaries and loads only when the tool is opened.
+
+**Limitation:** a cut behaves as an infinite line. If a river crosses that
+line again at another meander, the segment would split into non-contiguous
+pieces; the tool detects it (it warns when a cut crosses the buffer at more
+than 2 points) but doesn't prevent it. The Cauca River itself isn't
+available in the selector because its axis is 43 loose lines, not a single
+one.
+
+> ⚠️ **Use the report, not the tool, for official figures.**
+> The interactive tool still uses the infinite half-plane method, which on
+> meandering rivers double-counts area (the Palo closed at 112.38%). The
+> consolidated analysis in
+> [docs/tramos_cana_tributarios.md](docs/tramos_cana_tributarios.md) uses a
+> verified, local cutting method and **is the valid source**. Porting that
+> method into the viewer is still pending.
+
+---
+
+## Segment analysis: the 15 tributaries
+
+[**docs/tramos_cana_tributarios.md**](docs/tramos_cana_tributarios.md) — full report
+[**docs/tramos_cana_tributarios.csv**](docs/tramos_cana_tributarios.csv) — tabular data
+
+**46 segments across 15 rivers, 25,092.55 ha.** The Cauca River itself is
+still pending.
+
+Generated with:
+
+```bash
+cd tools/tramos && npm install && node build_tramos_cana.mjs
+```
+
+`tools/` is a desktop tool with its own `package.json`: **the static site
+still has no build step or dependencies.**
+
+Two findings from the analysis worth keeping in mind:
+
+- **The 700 m buffer only covers the flat zone**, not the whole river axis:
+  it starts where the mountain ends (in Bugalagrande and Tuluá it covers
+  barely 30% of the axis). That's why a mountain station can't be used as a
+  cut point. Of the 74 stations, only 48 fall inside the cane zone.
+- **Guabas (1,825.85 ha) and Nima (896.63 ha) remain undisaggregated**: they
+  have only one station inside the cane zone, so they admit no intermediate
+  cut. It's a monitoring gap, not a calculation error.
+
+---
+
+## Land use by segment
+
+[**docs/uso_suelo_tramos.md**](docs/uso_suelo_tramos.md) — report
+[**docs/uso_suelo_tramos.csv**](docs/uso_suelo_tramos.csv) — 18 land-use groups
+[**docs/uso_suelo_tramos_detalle.csv**](docs/uso_suelo_tramos_detalle.csv) — the 103 codes at 1:25k
+
+What fraction of each segment is cane, pasture, forest, urban area, etc.,
+from CVC's land-cover layer (`data/databases/Uso_del_suelo_ZP.geojson`,
+1:25,000 scale).
+
+```bash
+cd tools/tramos && node build_uso_suelo_tramos.mjs
+```
+
+Uses **the same segments** as the cane analysis: the buffer partition lives
+in `tools/tramos/segmentacion.mjs`, shared by both scripts, so they match by
+construction, not coincidence.
+
+Three caveats:
+
+- **The layer stops at the Valle del Cauca boundary.** Risaralda ends up
+  with 0% coverage and Palo with 1.5%: both **are excluded**. Desbaratado is
+  included with the 49.8% it does have, marked as partial.
+- **Cane doesn't come from this layer.** The `area_ha` column for the CANA
+  class is exactly `cana_ha_normalizada` from
+  `tramos_cana_tributarios.csv` (source `Hectareas_CZ.geojson`, which has
+  neighboring-buffer overlap already resolved). Other classes are rescaled
+  proportionally so the segment closes at 100% with that cane value already
+  substituted.
+- **Currency is heterogeneous:** each basin was surveyed between 2014 and
+  2025.
+
+---
+
+## Tech stack
+
+| Technology | Version | Use |
+|---|---|---|
+| MapLibre GL JS | 4.7.1 | Interactive map (CDN unpkg, global `maplibregl`) |
+| Turf.js | 7.1.0 | Segment-tool geometry (CDN unpkg, global `turf`) |
+| Google Fonts | — | DM Sans + Syne |
+| GitHub Pages | — | Static hosting |
+| GitHub Actions | v4 | Auto-deploy |
+| Python | 3.x | Data-prep scripts in `src/` (not served to the browser) |
+
+No build step: native ES modules and global `<script>` tags. No
+`package.json` or bundler. Charts are pre-rendered PNGs from the Python
+scripts, not a charting library.
+
+---
+
+## Technical notes
+
+- **Coordinates:** WGS84 (EPSG:4326) in the web app. Geometries are
+  approximate. Verification and replacement with MAGNA-SIRGAS Origen Único
+  (CVC) shapefiles via ArcGIS Pro is pending.
+- **GIS coordinate system:** MAGNA-SIRGAS Origen Único (CVC) for the station
+  HTML reports. A conversion script to WGS84 is pending identifying the
+  correct EPSG.
+- **CARDER ERA data:** Corresponds to the Risaralda River and its
+  tributaries (Consota, Otún, etc.). Does not yet include the prioritized
+  Valle del Cauca tributaries in this project.
+
+---
+
+*Project director: Ing. Javier Ernesto Holguín González, UAO*
+*Phase I — Water Quality Diagnosis | 2025–2026*
+
+---
+
+# Español
+
+[English](#cauca-river-corridor--interactive-baseline) | **Español**
+
 **Proyecto 890K | UAO × ASOCAÑA | Fase I — Diagnóstico de Calidad del Agua**
 
-Plataforma web estática (GitHub Pages) que sirve como línea base interactiva de calidad del agua del río Cauca y sus tributarios priorizados (Pan de Azúcar → La Virginia).
+Plataforma web estática (GitHub Pages) que sirve como línea base interactiva
+de calidad del agua del río Cauca y sus tributarios priorizados (Pan de
+Azúcar → La Virginia).
 
 ---
 
@@ -180,7 +472,7 @@ líneas sueltas, no una sola.
 
 ## Análisis de tramos: los 15 tributarios
 
-[**docs/tramos_cana_tributarios.md**](docs/tramos_cana_tributarios.md) — reporte completo  
+[**docs/tramos_cana_tributarios.md**](docs/tramos_cana_tributarios.md) — reporte completo
 [**docs/tramos_cana_tributarios.csv**](docs/tramos_cana_tributarios.csv) — datos tabulares
 
 **46 tramos en 15 ríos, 25.092,55 ha.** El Río Cauca queda pendiente.
@@ -208,8 +500,8 @@ Dos hallazgos del análisis que conviene tener presentes:
 
 ## Uso del suelo por tramo
 
-[**docs/uso_suelo_tramos.md**](docs/uso_suelo_tramos.md) — reporte  
-[**docs/uso_suelo_tramos.csv**](docs/uso_suelo_tramos.csv) — 18 grupos de uso  
+[**docs/uso_suelo_tramos.md**](docs/uso_suelo_tramos.md) — reporte
+[**docs/uso_suelo_tramos.csv**](docs/uso_suelo_tramos.csv) — 18 grupos de uso
 [**docs/uso_suelo_tramos_detalle.csv**](docs/uso_suelo_tramos_detalle.csv) — los 103 códigos de 25k
 
 Qué fracción de cada tramo es caña, pastos, bosque, zona urbana, etc., a partir de la capa
@@ -263,5 +555,5 @@ Las gráficas son PNG pre-renderizados por los scripts de Python, no una librer�
 
 ---
 
-*Director del proyecto: Ing. Javier Ernesto Holguín González, UAO*  
+*Director del proyecto: Ing. Javier Ernesto Holguín González, UAO*
 *Fase I — Diagnóstico de calidad del agua | 2025–2026*
