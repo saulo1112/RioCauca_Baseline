@@ -14,6 +14,7 @@ Se ejecuta UNA SOLA VEZ desde la terminal (raíz del proyecto):
 import io
 import sys
 from pathlib import Path
+from datetime import date
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -32,6 +33,7 @@ CALIDAD_FILE    = PROJECT_DIR / "data" / "databases" / "Calidad_del_agua_del_Rio
 CAUDAL_REF_FILE = PROJECT_DIR / "data" / "hydrology" / "MEDICANOA" / "caudal_diario.csv"
 HYDROLOGY_DIR   = PROJECT_DIR / "data" / "hydrology"
 OUTPUT_DIR      = PROJECT_DIR / "data" / "water_quality" / "perfiles"
+BITACORA_FILE   = OUTPUT_DIR / "bitacora_exclusiones.csv"
 
 DPI            = 180
 AÑO_DESDE      = 2015
@@ -54,9 +56,50 @@ PARAMETROS = {
     "P_TOTAL":  {"col": "FOSFORO TOTAL (mg P/l)",                   "unidad": "mg P/L"},
 }
 
+# Techo de OD por encima del cual un registro se considera físicamente
+# implausible para este sistema de ríos. Mismo umbral y mismo sustento que
+# OD_MAX_PLAUSIBLE en perfiles_tributarios.py (saturación teórica APHA/QUAL2Kw
+# para el rango de temperatura/elevación del corredor: ~7,3-7,9 mg/L típico,
+# techo ~9-10 mg/L en el escenario extremo más frío plausible).
+OD_MAX_PLAUSIBLE = 10.0  # mg O2/L
+
 LIMITES_FISICOS = {
     "NITRATOS (mg N-NO3/l)": 15,
+    "OXIGENO DISUELTO (mg O2/l)": OD_MAX_PLAUSIBLE,
 }
+
+# ── Exclusiones manuales puntuales ──────────────────────────────────────────────
+# A diferencia de OD (techo físico fijo), la DBO no tiene un límite universal --
+# un valor alto puede ser un evento real de contaminación. Estos 6 registros se
+# excluyeron tras verificar que el OD de las MISMAS filas también resulta
+# físicamente imposible (51-155 mg/L, ya excluido arriba por LIMITES_FISICOS):
+# una DBO tan alta debería hundir el OD por consumo aerobio, no dispararlo
+# también -- contradicción que apunta a error de captura conjunto, no a un
+# evento real. Se verificó que el valor NO se repite en las otras 7 estaciones
+# de esas mismas 3 fechas de campaña (descarta el patrón de "campaña rellenada"
+# ya visto en tributarios). Solo se anula la celda de DBO -- el resto de la fila
+# (DQO, SST, nitratos, fósforo), que sí se mantiene dentro de rango histórico
+# plausible, se conserva intacto.
+EXCLUSIONES_MANUALES = [
+    {
+        "estacion": "PASO DE LA BALSA",
+        "fechas": [date(2025, 3, 26), date(2025, 8, 28), date(2025, 12, 11)],
+        "columna": "DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l)",
+        "motivo": ("DBO=112.00/91.00/95.00 mg O2/L junto con OD=51.00/80.40/61.20 "
+                   "mg O2/L (físicamente imposible, ya excluido) en las mismas "
+                   "filas -- contradictorio con metabolismo aerobio normal. No se "
+                   "repite en las otras 7 estaciones de esas fechas."),
+    },
+    {
+        "estacion": "LA BOLSA",
+        "fechas": [date(2025, 3, 26), date(2025, 8, 28), date(2025, 12, 11)],
+        "columna": "DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l)",
+        "motivo": ("DBO=114.00/106.00/141.00 mg O2/L junto con OD=115.00/96.60/155.00 "
+                   "mg O2/L (físicamente imposible, ya excluido) en las mismas "
+                   "filas -- contradictorio con metabolismo aerobio normal. No se "
+                   "repite en las otras 7 estaciones de esas fechas."),
+    },
+]
 
 # ── 9 estaciones con par hidrométrico confirmado (Riofrío excluido) ────────────
 ABSCISADOS = {
@@ -140,7 +183,59 @@ def clasificar(q, u_v, u_i):
     else:             return "Transición"
 
 
-def cargar_datos(df_ref, u_v, u_i) -> pd.DataFrame:
+def aplicar_limites_fisicos(df, bitacora):
+    """Anula (NaN) valores por encima de un techo físico fijo (OD, nitratos).
+    Solo toca la celda del parámetro afectado -- el resto de la fila se
+    conserva. Cada exclusión queda registrada en bitacora."""
+    for col_name, limite in LIMITES_FISICOS.items():
+        if col_name not in df.columns:
+            continue
+        mask = df[col_name] > limite
+        n = int(mask.sum())
+        if n == 0:
+            continue
+        for _, r in df.loc[mask].iterrows():
+            print(f"   ⚠  {col_name}: {r['ESTACION_STD']}  {r['FECHA'].date()}  "
+                  f"valor={r[col_name]:.2f} (> {limite})")
+            bitacora.append({
+                "tipo": "LIMITE_FISICO_EXCLUIDO",
+                "estacion": r["ESTACION_STD"], "fecha": r["FECHA"].date(),
+                "columna": col_name, "valor_original": r[col_name],
+                "umbral": limite, "motivo": f"valor > {limite} (techo físico)",
+            })
+        df.loc[mask, col_name] = np.nan
+    return df
+
+
+def aplicar_exclusiones_manuales(df, bitacora):
+    """Anula (NaN) las celdas puntuales listadas en EXCLUSIONES_MANUALES.
+    Igual que aplicar_limites_fisicos(): solo toca la celda específica, nunca
+    la fila completa, y registra cada exclusión en bitacora. No agrega
+    ninguna nota en las figuras."""
+    for excl in EXCLUSIONES_MANUALES:
+        col = excl["columna"]
+        if col not in df.columns:
+            continue
+        mask = ((df["ESTACION_STD"] == excl["estacion"])
+                 & df["FECHA"].dt.date.isin(excl["fechas"])
+                 & df[col].notna())
+        n = int(mask.sum())
+        if n == 0:
+            continue
+        for _, r in df.loc[mask].iterrows():
+            print(f"   ⚠  Exclusión manual: {r['ESTACION_STD']}  {r['FECHA'].date()}  "
+                  f"{col}={r[col]}  -- {excl['motivo']}")
+            bitacora.append({
+                "tipo": "EXCLUSION_MANUAL",
+                "estacion": r["ESTACION_STD"], "fecha": r["FECHA"].date(),
+                "columna": col, "valor_original": r[col],
+                "umbral": None, "motivo": excl["motivo"],
+            })
+        df.loc[mask, col] = np.nan
+    return df
+
+
+def cargar_datos(df_ref, u_v, u_i, bitacora) -> pd.DataFrame:
     df = _leer_csv_calidad(CALIDAD_FILE)
     df["FECHA"] = pd.to_datetime(df["FECHA DE MUESTREO"], errors="coerce")
     df["ESTACION_STD"] = (df["ESTACIONES"].str.strip().str.upper()
@@ -154,13 +249,8 @@ def cargar_datos(df_ref, u_v, u_i) -> pd.DataFrame:
         if info["col"] in df.columns:
             df[info["col"]] = pd.to_numeric(df[info["col"]], errors="coerce")
 
-    for col_name, limite in LIMITES_FISICOS.items():
-        if col_name in df.columns:
-            mask = df[col_name] > limite
-            n = int(mask.sum())
-            if n > 0:
-                df.loc[mask, col_name] = np.nan
-                print(f"   ⚠  {col_name}: {n} valores > {limite} eliminados")
+    df = aplicar_limites_fisicos(df, bitacora)
+    df = aplicar_exclusiones_manuales(df, bitacora)
 
     df["FECHA_DIA"] = df["FECHA"].dt.normalize()
     df_ref["FECHA_DIA"] = df_ref["FECHA"].dt.normalize()
@@ -479,7 +569,8 @@ def main():
     print(f"   → {len(df_caud):,} días | Verano ≤{u_v:.1f} | Invierno ≥{u_i:.1f} m³/s")
 
     print(f"\n📄 Leyendo calidad del agua...")
-    df = cargar_datos(df_caud, u_v, u_i)
+    bitacora = []
+    df = cargar_datos(df_caud, u_v, u_i, bitacora)
     camp = df.groupby("CONDICION")["FECHA_DIA"].nunique()
     print(f"\n   Campañas clasificadas ({df['FECHA_DIA'].nunique()} total):")
     for cond, n in camp.items():
@@ -500,6 +591,10 @@ def main():
     print(f"\n✅ {len(generados)} gráficas guardadas en {OUTPUT_DIR}")
     for p in generados:
         print(f"   {p.name}")
+
+    if bitacora:
+        pd.DataFrame(bitacora).to_csv(BITACORA_FILE, index=False, encoding="utf-8-sig")
+        print(f"\n📋 {len(bitacora)} exclusiones registradas en {BITACORA_FILE.name}")
 
 
 if __name__ == "__main__":

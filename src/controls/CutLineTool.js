@@ -173,8 +173,7 @@ function _buildPanel() {
         <tr>
           <th>Tramo</th>
           <th class="ct-num">Buffer<br>(ha)</th>
-          <th class="ct-num">Caña cruda<br>(ha)</th>
-          <th class="ct-num">Caña norm.<br>(ha)</th>
+          <th class="ct-num">Caña<br>(ha)</th>
           <th class="ct-num">% río</th>
         </tr>
       </thead>
@@ -405,21 +404,18 @@ function _renderTable(res) {
         <span class="ct-km">km ${r.kmInicio.toFixed(1)}–${r.kmFin.toFixed(1)}</span>
       </td>
       <td class="ct-num">${fmt(r.bufferHa)}</td>
-      <td class="ct-num">${fmt(r.canaRawHa)}</td>
       <td class="ct-num ct-strong">${fmt(r.canaNormHa)}</td>
       <td class="ct-num">${res.oficialHa ? fmt(r.canaNormHa / res.oficialHa * 100, 1) : '—'}</td>
     </tr>
   `).join('');
 
   const sumBuffer = res.rows.reduce((s, r) => s + r.bufferHa, 0);
-  const sumRaw = res.rows.reduce((s, r) => s + r.canaRawHa, 0);
   const sumNorm = res.rows.reduce((s, r) => s + r.canaNormHa, 0);
 
   foot.innerHTML = `
     <tr>
       <td><strong>Total</strong></td>
       <td class="ct-num">${fmt(sumBuffer)}</td>
-      <td class="ct-num">${fmt(sumRaw)}</td>
       <td class="ct-num ct-strong">${fmt(sumNorm)}</td>
       <td class="ct-num">${res.oficialHa ? '100.0' : '—'}</td>
     </tr>

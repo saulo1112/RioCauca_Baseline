@@ -12,6 +12,8 @@
  */
 
 import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
+import { normalizeRio, riverColorMatchExpr, ensureTriangleIcon, TRIANGLE_ICON_ID }
+  from './riverColors.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente.
@@ -39,10 +41,12 @@ const PATHS = {
 export const LAYER_GROUPS = {
   'lyr-buffer':                ['buffer-fill', 'buffer-outline'],
   'lyr-hectareas':             ['hectareas-fill'],
-  'lyr-estaciones-cauca':      ['estaciones-cauca-circle',      'estaciones-cauca-label'],
-  'lyr-estaciones-trib':       ['estaciones-trib-circle',       'estaciones-trib-label'],
-  'lyr-estaciones-hidro':      ['estaciones-hidro-circle',      'estaciones-hidro-label'],
-  'lyr-estaciones-hidro-trib': ['estaciones-hidro-trib-circle', 'estaciones-hidro-trib-label'],
+  /* Un solo checkbox por tipo de estación — Río Cauca + tributarios juntos
+   * (antes eran 4 filas separadas; ver ajuste de leyenda). */
+  'lyr-estaciones-calidad':    ['estaciones-cauca-circle', 'estaciones-cauca-label',
+                                 'estaciones-trib-circle',  'estaciones-trib-label'],
+  'lyr-estaciones-hidro':      ['estaciones-hidro-halo',       'estaciones-hidro-circle',       'estaciones-hidro-label',
+                                 'estaciones-hidro-trib-halo',  'estaciones-hidro-trib-circle',  'estaciones-hidro-trib-label'],
 };
 
 /* ── Capas clickeables (exportado para InfoPanel) ───────────────────── */
@@ -246,6 +250,12 @@ async function _loadEstacionesTrib(map) {
     const resp = await fetch(`${PATHS['estaciones-trib']}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+
+    /* rio_color_key: nombre de río normalizado, para colorear por río con
+     * la misma paleta que estaciones-hidro-trib (ver riverColors.js). */
+    geojson.features.forEach(f => {
+      f.properties.rio_color_key = normalizeRio(f.properties.Rio);
+    });
     _cache['estaciones-trib'] = geojson;
 
     if (!map.getSource('estaciones-trib')) {
@@ -259,7 +269,7 @@ async function _loadEstacionesTrib(map) {
         source: 'estaciones-trib',
         paint: {
           'circle-radius':       6,
-          'circle-color':        '#00BFA5',
+          'circle-color':        riverColorMatchExpr('rio_color_key'),
           'circle-stroke-width': 2,
           'circle-stroke-color': '#FFFFFF',
           'circle-opacity':      0.9,
@@ -286,7 +296,9 @@ async function _loadEstacionesTrib(map) {
           'text-anchor': 'top',
         },
         paint: {
-          'text-color':      '#0095ff',
+          /* Tinta neutra: el color ya lo lleva el marcador (por río); el
+           * texto debe leerse igual de bien sin competir con esa paleta. */
+          'text-color':      '#1a1a1a',
           'text-halo-color': '#FFFFFF',
           'text-halo-width': 2,
         },
@@ -321,23 +333,42 @@ async function _loadEstacionesHidro(map) {
       map.addSource('estaciones-hidro', { type: 'geojson', data });
     }
 
+    ensureTriangleIcon(map);
+    const opacityExprCauca = ['case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0];
+
+    /* Halo blanco (triángulo más grande, debajo) — imita circle-stroke. */
+    if (!map.getLayer('estaciones-hidro-halo')) {
+      map.addLayer({
+        id:     'estaciones-hidro-halo',
+        type:   'symbol',
+        source: 'estaciones-hidro',
+        layout: {
+          'icon-image':         TRIANGLE_ICON_ID,
+          'icon-size':          0.34,
+          'icon-allow-overlap': true,
+        },
+        paint: {
+          'icon-color':   '#FFFFFF',
+          'icon-opacity': opacityExprCauca,
+        },
+      });
+    }
+
+    /* Un solo río → color fijo (mismo azul que antes). Se conserva el id
+     * 'estaciones-hidro-circle' para no romper CLICKABLE_LAYERS/LAYER_GROUPS. */
     if (!map.getLayer('estaciones-hidro-circle')) {
       map.addLayer({
         id:     'estaciones-hidro-circle',
-        type:   'circle',
+        type:   'symbol',
         source: 'estaciones-hidro',
+        layout: {
+          'icon-image':         TRIANGLE_ICON_ID,
+          'icon-size':          0.26,
+          'icon-allow-overlap': true,
+        },
         paint: {
-          'circle-radius':       7,
-          'circle-color':        '#003F88',
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#FFFFFF',
-          /* Suspendida → 0.4 · Activa (u otro) → 1.0 */
-          'circle-opacity': [
-            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
-          ],
-          'circle-stroke-opacity': [
-            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
-          ],
+          'icon-color':   '#003F88',
+          'icon-opacity': opacityExprCauca,
         },
       });
     }
@@ -382,7 +413,9 @@ async function _loadEstacionesHidroTrib(map) {
       .map(o => ({
         type: 'Feature',
         geometry: { type: 'Point', coordinates: [o.longitud, o.latitud] },
-        properties: o,
+        /* rio_color_key: mismo campo y misma paleta que estaciones-trib, así
+         * un río tiene un único color entre calidad e hidrometría. */
+        properties: { ...o, rio_color_key: normalizeRio(o.rio) },
       }));
     const data = { type: 'FeatureCollection', features };
 
@@ -390,22 +423,44 @@ async function _loadEstacionesHidroTrib(map) {
       map.addSource('estaciones-hidro-trib', { type: 'geojson', data });
     }
 
+    ensureTriangleIcon(map);
+
+    const opacityExpr = ['case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0];
+
+    /* Halo blanco (triángulo más grande, debajo) — imita circle-stroke. */
+    if (!map.getLayer('estaciones-hidro-trib-halo')) {
+      map.addLayer({
+        id:     'estaciones-hidro-trib-halo',
+        type:   'symbol',
+        source: 'estaciones-hidro-trib',
+        layout: {
+          'icon-image':          TRIANGLE_ICON_ID,
+          'icon-size':           0.34,
+          'icon-allow-overlap':  true,
+        },
+        paint: {
+          'icon-color':   '#FFFFFF',
+          'icon-opacity': opacityExpr,
+        },
+      });
+    }
+
+    /* Relleno coloreado por río (triángulo más chico, encima). Se conserva
+     * el id 'estaciones-hidro-trib-circle' para no romper CLICKABLE_LAYERS
+     * ni LAYER_GROUPS, aunque ya no sea una capa 'circle'. */
     if (!map.getLayer('estaciones-hidro-trib-circle')) {
       map.addLayer({
         id:     'estaciones-hidro-trib-circle',
-        type:   'circle',
+        type:   'symbol',
         source: 'estaciones-hidro-trib',
+        layout: {
+          'icon-image':         TRIANGLE_ICON_ID,
+          'icon-size':          0.26,
+          'icon-allow-overlap': true,
+        },
         paint: {
-          'circle-radius':       7,
-          'circle-color':        '#0095ff',
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#FFFFFF',
-          'circle-opacity': [
-            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
-          ],
-          'circle-stroke-opacity': [
-            'case', ['==', ['get', 'estado'], 'Suspendida'], 0.4, 1.0,
-          ],
+          'icon-color':   riverColorMatchExpr('rio_color_key'),
+          'icon-opacity': opacityExpr,
         },
       });
     }
@@ -424,7 +479,8 @@ async function _loadEstacionesHidroTrib(map) {
           'text-anchor': 'top',
         },
         paint: {
-          'text-color':      '#1B5E20',
+          /* Tinta neutra: el color ya lo lleva el marcador (por río). */
+          'text-color':      '#1a1a1a',
           'text-halo-color': '#FFFFFF',
           'text-halo-width': 2,
         },

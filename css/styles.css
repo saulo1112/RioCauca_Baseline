@@ -416,6 +416,44 @@ h1, .tramo-num, .section-title, .logo-name {
   letter-spacing: 0.3px;
 }
 
+/* Swatch "multicolor": resumen visual de que el color varía por río
+ * (paleta real en riverColors.js / #legend-rios, no repetida a mano aquí). */
+.layer-swatch-multi,
+.legend-swatch.layer-swatch-multi {
+  background: conic-gradient(
+    #2a78d6, #6ec52a, #576d07, #00c7f5, #009c90, #864886, #4bc39f, #00a0f9,
+    #009a3f, #00b2c2, #0091c6, #8d2ead, #f24e73, #b4065f, #3153d3, #55ab00,
+    #2a78d6
+  );
+}
+/* Triángulo (estaciones hidrométricas) — mismo símbolo que el mapa. */
+.layer-swatch-tri {
+  border-radius: 0 !important;
+  clip-path: polygon(50% 4%, 96% 92%, 4% 92%);
+}
+
+/* Grilla compacta con la paleta de los 16 ríos tributarios (poblada por
+ * JS desde RIVER_COLORS, ver src/layers/riverColors.js). */
+.legend-rios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 8px;
+  margin: 2px 0 4px 18px;
+}
+.legend-rio-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.legend-rio-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 /* ── Mapa ────────────────────────────────────────────────────── */
 .map-container {
   flex: 1;

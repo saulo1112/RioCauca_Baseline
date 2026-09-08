@@ -3,6 +3,7 @@
 
 import { initMap, switchBasemap }  from './map/init.js';
 import { loadGeoJSONLayers }       from './layers/geojson.js';
+import { populateRiverLegend }     from './layers/riverColors.js';
 import { setupLayerPanel }         from './controls/LayerPanel.js';
 import { setupTramoFilter }        from './controls/TramoFilter.js';
 import { setupInfoPanel }          from './controls/InfoPanel.js';
@@ -25,6 +26,9 @@ document.querySelectorAll('.basemap-btn').forEach(btn => {
     switchBasemap(map, btn.dataset.basemap);
   });
 });
+
+/* ── Leyenda de colores por río (tributarios) ───────────────────────── */
+populateRiverLegend('legend-rios');
 
 /* ── Panel lateral colapsable ────────────────────────────────────────── */
 function setupSidebarToggle(map) {

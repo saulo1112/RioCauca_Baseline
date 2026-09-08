@@ -1,0 +1,40 @@
+﻿tipo,estacion,fecha,columna,valor_original,umbral,motivo
+LIMITE_FISICO_EXCLUIDO,PASO DE LA BALSA,2022-08-03,NITRATOS (mg N-NO3/l),900.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA BALSA,2022-07-06,NITRATOS (mg N-NO3/l),15000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA BALSA,2022-08-24,NITRATOS (mg N-NO3/l),9300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA BOLSA,2022-08-03,NITRATOS (mg N-NO3/l),1500.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA BOLSA,2022-07-06,NITRATOS (mg N-NO3/l),2400.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA BOLSA,2022-01-01,NITRATOS (mg N-NO3/l),24000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PUENTE HORMIGUERO,2022-08-03,NITRATOS (mg N-NO3/l),15000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PUENTE HORMIGUERO,2022-07-06,NITRATOS (mg N-NO3/l),15000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PUENTE HORMIGUERO,2022-08-24,NITRATOS (mg N-NO3/l),4300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,JUANCHITO,2022-08-03,NITRATOS (mg N-NO3/l),43000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,JUANCHITO,2022-07-06,NITRATOS (mg N-NO3/l),40000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,JUANCHITO,2022-08-24,NITRATOS (mg N-NO3/l),93000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA TORRE,2022-08-03,NITRATOS (mg N-NO3/l),93000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA TORRE,2022-07-06,NITRATOS (mg N-NO3/l),5000000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA TORRE,2022-08-24,NITRATOS (mg N-NO3/l),9300000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,MEDIACANOA,2022-08-03,NITRATOS (mg N-NO3/l),73000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,MEDIACANOA,2022-07-06,NITRATOS (mg N-NO3/l),750000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,MEDIACANOA,2022-08-24,NITRATOS (mg N-NO3/l),43000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PUENTE GUAYABAL,2022-08-03,NITRATOS (mg N-NO3/l),4300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PUENTE GUAYABAL,2022-07-06,NITRATOS (mg N-NO3/l),430000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PUENTE GUAYABAL,2022-08-24,NITRATOS (mg N-NO3/l),150000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA VICTORIA,2022-08-03,NITRATOS (mg N-NO3/l),7500.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA VICTORIA,2022-07-06,NITRATOS (mg N-NO3/l),7300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA VICTORIA,2022-08-24,NITRATOS (mg N-NO3/l),24000.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,ANACARO,2022-08-03,NITRATOS (mg N-NO3/l),2300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,ANACARO,2022-07-06,NITRATOS (mg N-NO3/l),4300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,ANACARO,2022-08-24,NITRATOS (mg N-NO3/l),4300.0,15.0,valor > 15 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA BALSA,2025-03-26,OXIGENO DISUELTO (mg O2/l),51.0,10.0,valor > 10.0 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA BALSA,2025-08-28,OXIGENO DISUELTO (mg O2/l),80.4,10.0,valor > 10.0 (techo físico)
+LIMITE_FISICO_EXCLUIDO,PASO DE LA BALSA,2025-12-11,OXIGENO DISUELTO (mg O2/l),61.2,10.0,valor > 10.0 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA BOLSA,2025-03-26,OXIGENO DISUELTO (mg O2/l),115.0,10.0,valor > 10.0 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA BOLSA,2025-08-28,OXIGENO DISUELTO (mg O2/l),96.6,10.0,valor > 10.0 (techo físico)
+LIMITE_FISICO_EXCLUIDO,LA BOLSA,2025-12-11,OXIGENO DISUELTO (mg O2/l),155.0,10.0,valor > 10.0 (techo físico)
+EXCLUSION_MANUAL,PASO DE LA BALSA,2025-03-26,DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l),112.0,,"DBO=112.00/91.00/95.00 mg O2/L junto con OD=51.00/80.40/61.20 mg O2/L (físicamente imposible, ya excluido) en las mismas filas -- contradictorio con metabolismo aerobio normal. No se repite en las otras 7 estaciones de esas fechas."
+EXCLUSION_MANUAL,PASO DE LA BALSA,2025-08-28,DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l),91.0,,"DBO=112.00/91.00/95.00 mg O2/L junto con OD=51.00/80.40/61.20 mg O2/L (físicamente imposible, ya excluido) en las mismas filas -- contradictorio con metabolismo aerobio normal. No se repite en las otras 7 estaciones de esas fechas."
+EXCLUSION_MANUAL,PASO DE LA BALSA,2025-12-11,DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l),95.0,,"DBO=112.00/91.00/95.00 mg O2/L junto con OD=51.00/80.40/61.20 mg O2/L (físicamente imposible, ya excluido) en las mismas filas -- contradictorio con metabolismo aerobio normal. No se repite en las otras 7 estaciones de esas fechas."
+EXCLUSION_MANUAL,LA BOLSA,2025-03-26,DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l),114.0,,"DBO=114.00/106.00/141.00 mg O2/L junto con OD=115.00/96.60/155.00 mg O2/L (físicamente imposible, ya excluido) en las mismas filas -- contradictorio con metabolismo aerobio normal. No se repite en las otras 7 estaciones de esas fechas."
+EXCLUSION_MANUAL,LA BOLSA,2025-08-28,DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l),106.0,,"DBO=114.00/106.00/141.00 mg O2/L junto con OD=115.00/96.60/155.00 mg O2/L (físicamente imposible, ya excluido) en las mismas filas -- contradictorio con metabolismo aerobio normal. No se repite en las otras 7 estaciones de esas fechas."
+EXCLUSION_MANUAL,LA BOLSA,2025-12-11,DEMANDA BIOQUIMICA DE OXIGENO (mg O2/l),141.0,,"DBO=114.00/106.00/141.00 mg O2/L junto con OD=115.00/96.60/155.00 mg O2/L (físicamente imposible, ya excluido) en las mismas filas -- contradictorio con metabolismo aerobio normal. No se repite en las otras 7 estaciones de esas fechas."
