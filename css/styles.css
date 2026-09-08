@@ -454,6 +454,39 @@ h1, .tramo-num, .section-title, .logo-name {
   flex-shrink: 0;
 }
 
+/* ── Priorización por carga N/P ──────────────────────────────── */
+.submenu-btn-priorizacion span { color: #d47f52; }
+.submenu-btn-priorizacion:hover span { color: #e8a17a; }
+.submenu-btn-priorizacion.active span { color: #7d2317; font-weight: 600; }
+
+/* Bloque de leyenda: oculto por defecto, solo aparece con la capa activa
+ * (ver PriorizacionToggle.js) — así no satura la leyenda cuando no se usa. */
+.legend-priorizacion {
+  display: none;
+  margin: 2px 0 4px 0;
+  padding: 6px 8px;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  border: 1px solid rgba(125,35,23,0.25);
+}
+.legend-priorizacion.visible { display: block; }
+.legend-priorizacion-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.legend-priorizacion-note {
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-style: italic;
+}
+.legend-rios-grid-1col {
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+
 /* ── Mapa ────────────────────────────────────────────────────── */
 .map-container {
   flex: 1;

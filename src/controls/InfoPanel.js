@@ -2,6 +2,7 @@
 
 import { CLICKABLE_LAYERS, getHectareasTotalHa, flashCana } from '../layers/geojson.js';
 import { getRiverColor }                         from '../layers/registry.js';
+import { PRIORIZACION_COLORS }                   from '../layers/priorizacionColors.js';
 import { getStationRecords, getAvailableParams, buildStationCSV }
   from '../data/waterQuality.js';
 import * as WaterQualityGallery from './WaterQualityGallery.js';
@@ -171,6 +172,25 @@ function buildInfo(layerId, p) {
         rows: [
           ['Área de caña de azúcar',       area != null ? `${fmt(area)} ha` : '—'],
           ['Porcentaje relativo',  pct  != null ? `${fmt(pct)} %`  : '—'],
+        ],
+      };
+    }
+
+    case 'priorizacion-np-fill': {
+      const cat = p.categoria ?? '—';
+      const longitud = (p.km_fin != null && p.km_inicio != null) ? p.km_fin - p.km_inicio : null;
+      return {
+        title: `${p.rio ?? '—'} — Tramo ${p.tramo ?? '—'}`,
+        color: PRIORIZACION_COLORS[cat] ?? '#aaa',
+        rows: [
+          ['Categoría',       cat],
+          ['Tramo',           (p.estacion_arriba && p.estacion_abajo)
+                                 ? `${p.estacion_arriba} → ${p.estacion_abajo}` : '—'],
+          ['Longitud',        longitud != null ? `${fmt(longitud, 2)} km` : '—'],
+          ['Área caña',       p.area_cana_ha != null ? `${fmt(p.area_cana_ha)} ha` : '—'],
+          ['% del río',       p.pct_del_rio != null ? `${fmt(p.pct_del_rio, 1)} %` : '—'],
+          ['Nitrógeno (N)',   (p.n_kg_ano != null) ? `${fmt(p.n_kg_ano, 0)} kg/año · ${fmt(p.n_kg_d, 1)} kg/d` : '—'],
+          ['Fósforo (P)',     (p.p_kg_ano != null) ? `${fmt(p.p_kg_ano, 0)} kg/año · ${fmt(p.p_kg_d, 1)} kg/d` : '—'],
         ],
       };
     }

@@ -14,6 +14,7 @@
 import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 import { normalizeRio, riverColorMatchExpr, ensureTriangleIcon, TRIANGLE_ICON_ID }
   from './riverColors.js';
+import { priorizacionColorMatchExpr } from './priorizacionColors.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente.
@@ -22,7 +23,7 @@ import { normalizeRio, riverColorMatchExpr, ensureTriangleIcon, TRIANGLE_ICON_ID
  * (data/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
-export const BUILD_VERSION = '2.3';
+export const BUILD_VERSION = '2.4';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -34,6 +35,7 @@ const PATHS = {
   'estaciones-trib':       'data/geovisor/puntos_calidad_tributarios.geojson',
   'estaciones-hidro':      'data/hydrology/estaciones_hidro.json',
   'estaciones-hidro-trib': 'data/hydrology/estaciones_hidro_trib.json',
+  'priorizacion-np':       'data/cartografia/Priorizacion_NP_tramos.geojson',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
@@ -59,7 +61,11 @@ export const CLICKABLE_LAYERS = [
   'hectareas-fill',
   'rio-cauca-line',
   'tributarios-line',
+  'priorizacion-np-fill',
 ];
+
+/* Ids de la capa de priorización, para el toggle (ver PriorizacionToggle.js). */
+export const PRIORIZACION_LAYERS = ['priorizacion-np-fill', 'priorizacion-np-outline'];
 
 let _hectareasReady  = false;
 let _hectareasTotalHa = 0;   // suma de SUM_AREA_HA de todos los registros
@@ -91,6 +97,11 @@ export async function loadGeoJSONLayers(map) {
   const bufferBbox = await _loadSource(map, 'buffer-zona');
   if (bufferBbox) bboxes.push(bufferBbox);
   _addBufferLayers(map);
+
+  /* 1b. Priorización N/P por subtramo — debajo de ríos/estaciones (se agrega
+   *     antes en la pila) y oculta por defecto; el usuario la activa desde
+   *     el botón en "Zona de Estudio" (ver PriorizacionToggle.js). */
+  await _loadPriorizacion(map);
 
   /* 2. Río Cauca — tolerance 0.05 elimina microvariaciones de vértices
    *    sin perder los meandros reales (tributarios mantienen tolerance: 0) */
@@ -490,6 +501,63 @@ async function _loadEstacionesHidroTrib(map) {
     console.log('[geojson] Estaciones hidrométricas tributarios:', features.length, 'puntos');
   } catch (err) {
     console.error('[geojson] Error cargando estaciones hidrométricas tributarios:', err);
+  }
+}
+
+/* ── Priorización de subtramos por carga difusa de N y P ─────────────── */
+/* 46 fragmentos de buffer (uno por tramo), coloreados por categoría
+ * (Muy alta…Baja, más "No aplica" en gris para tramos sin caña en la
+ * franja). Fuente: docs de la Tabla 5.2 del Informe 1, unida a la misma
+ * geometría de tramos que ya usa el análisis de caña — ver
+ * tools/tramos/build_priorizacion_tramos.mjs. Oculta por defecto: el
+ * usuario la activa con el botón en "Zona de Estudio" (PriorizacionToggle.js),
+ * que además oculta temporalmente Zona de Estudio y Caña de Azúcar para que
+ * su tinte no se mezcle con la escala de color. */
+async function _loadPriorizacion(map) {
+  try {
+    const resp = await fetch(`${PATHS['priorizacion-np']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const geojson = await resp.json();
+
+    if (!map.getSource('priorizacion-np')) {
+      map.addSource('priorizacion-np', { type: 'geojson', data: geojson });
+    }
+
+    if (!map.getLayer('priorizacion-np-fill')) {
+      map.addLayer({
+        id:     'priorizacion-np-fill',
+        type:   'fill',
+        source: 'priorizacion-np',
+        layout: { visibility: 'none' },
+        paint: {
+          'fill-color': priorizacionColorMatchExpr('categoria'),
+          /* "No aplica" recede (no compite visualmente con las categorías
+           * reales); el resto a una opacidad moderada para que el basemap,
+           * el río y las estaciones se sigan viendo encima. */
+          'fill-opacity': [
+            'case', ['==', ['get', 'categoria'], 'No aplica'], 0.25, 0.55,
+          ],
+        },
+      });
+    }
+
+    if (!map.getLayer('priorizacion-np-outline')) {
+      map.addLayer({
+        id:     'priorizacion-np-outline',
+        type:   'line',
+        source: 'priorizacion-np',
+        layout: { visibility: 'none' },
+        paint: {
+          'line-color':   priorizacionColorMatchExpr('categoria'),
+          'line-width':   1,
+          'line-opacity': 0.9,
+        },
+      });
+    }
+
+    console.log('[geojson] Priorización N/P:', geojson.features.length, 'subtramos');
+  } catch (err) {
+    console.error('[geojson] Error cargando priorización N/P:', err);
   }
 }
 

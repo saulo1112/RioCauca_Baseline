@@ -107,11 +107,16 @@
         </div>
       </div>
 
-      <div class="layer-item">
+      <div class="layer-item has-submenu">
         <input type="checkbox" id="lyr-buffer" checked>
         <div class="layer-swatch" style="background:rgba(0,100,255,0.25);border:1px solid #6E6E6E"></div>
         <span class="layer-label">Zona de Estudio</span>
         <span class="layer-count">16</span>
+        <div class="layer-submenu">
+          <button class="submenu-item submenu-btn submenu-btn-priorizacion" id="btn-priorizacion" type="button">
+            <span>Ver priorización por carga (N/P)</span>
+          </button>
+        </div>
       </div>
 
       <div class="layer-item has-submenu">
@@ -181,6 +186,13 @@
           <span>▲ Estaciones hidrométricas</span>
         </div>
         <div id="legend-rios" class="legend-rios-grid"></div>
+
+        <div id="legend-priorizacion" class="legend-priorizacion">
+          <div class="legend-priorizacion-title">Priorización por carga N/P</div>
+          <div id="legend-priorizacion-rios" class="legend-rios-grid legend-rios-grid-1col"></div>
+          <div class="legend-priorizacion-note">Tabla 5.2, Informe 1 — 46 subtramos</div>
+        </div>
+
         <div class="legend-note">Fuentes: IDEAM · CVC · CARDER · CRC </div>
       </div>
     </div>

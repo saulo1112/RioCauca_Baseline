@@ -11,6 +11,7 @@ import { loadWaterQualityData }    from './data/waterQuality.js';
 import * as WaterQualityGallery    from './controls/WaterQualityGallery.js';
 import * as CaudalGallery          from './controls/CaudalGallery.js';
 import * as CutLineTool            from './controls/CutLineTool.js';
+import * as PriorizacionToggle     from './controls/PriorizacionToggle.js';
 
 /* ── Inicializar mapa ─────────────────────────────────────────────────── */
 const map = initMap();
@@ -71,6 +72,7 @@ map.on('load', async () => {
   WaterQualityGallery.init();
   CaudalGallery.init();
   CutLineTool.init(map);
+  PriorizacionToggle.init(map);
 
   /* Botones de galería en el panel lateral */
   document.getElementById('btn-galeria-calidad')
