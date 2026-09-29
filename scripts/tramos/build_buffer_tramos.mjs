@@ -140,9 +140,21 @@ for (const key of porRioTramo.keys()) {
 const nTribFeatures = features.length;
 const bufferZona = leer('data/cartografia/Buffer_Zona_de_Estudio.geojson');
 const cauca = bufferZona.features.find(f => normalizeRiver(f.properties.NOM1_DRENA) === 'cauca');
+
+/* Caña del Cauca: al no tener tramos, es el polígono completo de la capa de
+ * caña, con la misma convención que los tributarios — cruda = área geodésica
+ * (turf), normalizada = SUM_AREA_HA oficial, cobertura = normalizada ÷ buffer. */
+const canaCapa = leer('data/cartografia/Hectareas_CZ.geojson');
+const canaCauca = canaCapa.features.find(f => normalizeRiver(f.properties.RIO) === 'cauca');
+if (!canaCauca || !Number.isFinite(canaCauca.properties.SUM_AREA_HA)) {
+  errores.push('No se encontró la caña de Río Cauca (SUM_AREA_HA) en Hectareas_CZ.geojson');
+}
+
 if (!cauca) {
   errores.push('No se encontró el polígono de Río Cauca en Buffer_Zona_de_Estudio.geojson');
-} else {
+} else if (canaCauca) {
+  const bufferHa = areaHa(cauca);
+  const canaNorm = canaCauca.properties.SUM_AREA_HA;
   features.push({
     type: 'Feature',
     geometry: cauca.geometry,
@@ -154,11 +166,11 @@ if (!cauca) {
       km_inicio: null,
       km_fin:    null,
       longitud_km: null,
-      buffer_ha: Number(areaHa(cauca).toFixed(2)),
-      cana_cruda_ha: null,
-      cana_norm_ha:  null,
-      pct_cana_rio:  null,
-      pct_cobertura: null,
+      buffer_ha: Number(bufferHa.toFixed(2)),
+      cana_cruda_ha: Number(areaHa(canaCauca).toFixed(2)),
+      cana_norm_ha:  canaNorm,
+      pct_cana_rio:  100,
+      pct_cobertura: Number((canaNorm / bufferHa * 100).toFixed(2)),
     },
   });
 }
@@ -173,7 +185,9 @@ console.log(`  OK  ${nTribFeatures} subtramos de tributarios, todos con geometr�
 console.log(`  OK  ${filas.length} filas del CSV, todas usadas`);
 console.log(`  OK  área combinada = buffer del tramo (±1 %) en los ${nTribFeatures} subtramos`);
 console.log(`  OK  buffer_ha coincide con ${CSV_PATH}`);
-console.log(`  OK  Río Cauca incluido completo (sin subdividir), ${features.at(-1).properties.buffer_ha} ha`);
+const pc = features.at(-1).properties;
+console.log(`  OK  Río Cauca incluido completo (sin subdividir), ${pc.buffer_ha} ha de buffer, ` +
+  `${pc.cana_norm_ha} ha de caña (${pc.pct_cobertura} %)`);
 
 const geojson = { type: 'FeatureCollection', features };
 fs.writeFileSync(path.join(ROOT, OUT_PATH), JSON.stringify(geojson));

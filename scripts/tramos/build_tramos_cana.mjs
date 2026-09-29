@@ -122,8 +122,16 @@ function verificar(rios) {
         errores.push(`${r.nombre}: tramo ${t.indice} sin área de buffer pese a medir ${fmt(t.longitudKm)} km`);
       }
     }
+    /* Si la capa de caña no trae SUM_AREA_HA (p. ej. un archivo exportado con
+     * otro nombre de campo), oficialHa queda undefined y todo sale NaN. La
+     * comparación de abajo con NaN es siempre falsa, así que sin esta puerta
+     * el CSV se escribía con NaN sin que nada fallara. */
+    if (!Number.isFinite(r.oficialHa)) {
+      errores.push(`${r.nombre}: SUM_AREA_HA ausente o no numérico en la capa de caña (${r.oficialHa})`);
+      continue;
+    }
     const suma = r.tramos.reduce((s, t) => s + t.canaNormHa, 0);
-    if (Math.abs(suma - r.oficialHa) > 0.01) {
+    if (!(Math.abs(suma - r.oficialHa) <= 0.01)) {
       errores.push(`${r.nombre}: suma normalizada ${fmt(suma)} ≠ oficial ${fmt(r.oficialHa)}`);
     }
   }

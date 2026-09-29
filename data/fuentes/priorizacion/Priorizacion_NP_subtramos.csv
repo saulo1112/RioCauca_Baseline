@@ -8,39 +8,39 @@ n_tabla,categoria,rio,tramo,area_cana_tabla_ha,pct_del_rio,n_kg_ano,n_kg_d,p_kg_
 7,Muy alta,Rio Bolo,2,1614.8,42.5,15450,42.3,2222,6.1
 8,Alta,Rio La Paila,3,1381.3,96.0,13216,36.2,1900,5.2
 9,Alta,Rio Bugalagrande,3,1168.7,91.1,11182,30.6,1608,4.4
-10,Alta,Rio Desbaratado,2,1163.0,72.1,11128,30.5,1600,4.4
+10,Muy alta,Rio Desbaratado,2,2505.8,68.0,23980,65.7,3458,9.5
 11,Alta,Rio Nima,1,896.6,100.0,8579,23.5,1234,3.4
 12,Alta,Rio Amaime,1,708.2,20.4,6776,18.6,974,2.7
 13,Alta,Rio Risaralda,4,585.0,86.2,5597,15.3,805,2.2
 14,Alta,Rio Tulua,4,571.0,90.5,5463,15.0,786,2.2
-15,Media,Rio Desbaratado,1,450.6,27.9,4312,11.8,620,1.7
-16-21,Media,Rio Guachal,1,654.7,100.0,6264,17.2,901,2.5
+15,Alta,Rio Desbaratado,1,1181.6,32.0,11308,31.0,1631,4.5
+16-21,Alta,Rio Guachal,1,654.7,100.0,6264,17.2,901,2.5
 17,Media,Rio Riofrio,4,385.8,76.4,3691,10.1,531,1.5
 18,Media,Rio Zabaletas,2,342.9,13.6,3280,9.0,472,1.3
 19,Media,Rio Bolo,1,295.6,7.8,2828,7.7,407,1.1
 20,Media,Rio Guadalajara,3,266.9,100.0,2554,7.0,367,1.0
-22,Media,Rio Palo,3,193.0,37.8,1847,5.1,266,0.7
-23,Media,Rio Palo,8,182.2,35.6,1743,4.8,251,0.7
+22,Media,Rio Palo,3,465.2,28.5,4452,12.2,642,1.8
+23,Media,Rio Palo,8,442.7,27.1,4237,11.6,611,1.7
 24,Media,Rio Riofrio,3,119.0,23.6,1139,3.1,164,0.4
 25,Baja,Rio Amaime,2,83.5,2.4,799,2.2,115,0.3
 26,Baja,Rio Bugalagrande,1,80.5,6.3,770,2.1,111,0.3
 27,Baja,Rio Fraile,1,78.5,1.6,751,2.1,108,0.3
 28,Baja,Rio Risaralda,1,78.3,11.5,749,2.1,108,0.3
-29,Baja,Rio Palo,7,73.7,14.4,705,1.9,101,0.3
+29,Baja,Rio Palo,7,51.0,3.1,488,1.3,70,0.2
 30,Baja,Rio Tulua,1,60.2,9.5,576,1.6,83,0.2
 31,Baja,Rio La Paila,1,54.2,3.8,519,1.4,75,0.2
-32,Baja,Rio Palo,6,45.9,9.0,439,1.2,63,0.2
+32,Baja,Rio Palo,6,75.5,4.6,723,2.0,104,0.3
 33,Baja,Rio Zabaletas,1,44.7,1.8,428,1.2,62,0.2
 34,Baja,Rio Bugalagrande,2,33.4,2.6,319,0.9,46,0.1
 35,Baja,Rio Risaralda,2,15.1,2.2,144,0.4,21,0.1
-36,Baja,Rio Palo,2,12.9,2.5,124,0.3,18,0.0
+36,Baja,Rio Palo,2,76.3,4.7,730,2.0,105,0.3
 37,Baja,Rio La Paila,2,3.4,0.2,33,0.1,5,0.0
-38,Baja,Rio Palo,4,3.2,0.6,31,0.1,4,0.0
-39,Baja,Rio Palo,1,0.2,0.0,2,0.0,0,0.0
+38,Media,Rio Palo,4,310.3,19.0,2970,8.1,428,1.2
+39,Baja,Rio Palo,1,40.7,2.5,389,1.1,56,0.2
 40,Baja,Rio Tulua,2,0.1,0.0,1,0.0,0,0.0
 41,No aplica,Rio Guadalajara,1,0.0,0.0,0,0.0,0,0.0
 42,No aplica,Rio Guadalajara,2,0.0,0.0,0,0.0,0,0.0
-43,No aplica,Rio Palo,5,0.0,0.0,0,0.0,0,0.0
+43,Media,Rio Palo,5,172.6,10.6,1651,4.5,238,0.7
 44,No aplica,Rio Riofrio,1,0.0,0.0,0,0.0,0,0.0
 45,No aplica,Rio Riofrio,2,0.0,0.0,0,0.0,0,0.0
 46,No aplica,Rio Tulua,3,0.0,0.0,0,0.0,0,0.0

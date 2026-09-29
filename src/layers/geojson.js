@@ -7,7 +7,7 @@
  *   4. tributarios-line             — tributarios
  *   5. *-label                      — etiquetas (siempre al frente)
  *
- * Hectareas_CZ.geojson (12 MB) se carga en segundo plano para no bloquear
+ * Hectareas_CZ.geojson (~9 MB) se carga en segundo plano para no bloquear
  * el arranque. Su capa permanece oculta hasta que el usuario la activa.
  */
 
@@ -23,7 +23,7 @@ import { priorizacionColorMatchExpr } from './priorizacionColors.js';
  * (data/cartografia/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
-export const BUILD_VERSION = '2.6';
+export const BUILD_VERSION = '2.7';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {

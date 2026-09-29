@@ -11,7 +11,7 @@
  *   → ALL CHECKS PASS (luminosidad monótona, saltos >= 0.06,
  *     extremo claro >= 2:1 de contraste, un solo matiz — spread 17°)
  *
- * "No aplica" (sin caña en la franja, 6 de 46 tramos) NO es "menos que Baja"
+ * "No aplica" (sin caña en la franja, 6 de 46 tramos tras la actualización de caña de 2026-09) NO es "menos que Baja"
  * — es una categoría aparte que la propia metodología excluye por
  * construcción. Por eso lleva gris neutro, fuera del ramp, no un quinto
  * escalón más claro que Baja (eso sí implicaría "aún menor prioridad").

@@ -8,8 +8,8 @@ Rio Bolo,3,Rio Bolo - Puente Bolo - San Isidro - vía a Candelaria,Rio Bolo - An
 Rio Bugalagrande,1,Rio Bugalagrande - Puente antes Caserio San Rafael.,Rio Bugalagrande - Conciviles - Andalucía,14,18,0.000,81.610,81.610,1518.28,80.71,80.47,6.27,5.30,no
 Rio Bugalagrande,2,Rio Bugalagrande - Conciviles - Andalucía,Rio Bugalagrande - Puente Variante Bugalagrande,18,18,81.610,85.131,3.520,425.89,33.48,33.39,2.60,7.84,si
 Rio Bugalagrande,3,Rio Bugalagrande - Puente Variante Bugalagrande,Rio Bugalagrande - antes desembocadura a Río Cauca - Hacienda El Guayabo,18,18,85.131,99.429,14.298,1988.23,1172.14,1168.72,91.12,58.78,si
-Rio Desbaratado,1,Antes de bocatoma cabecera Miranda,Antes de porcícola (Pte. Jordán),18,18,0.000,40.930,40.930,1351.90,451.78,450.63,27.93,33.33,no
-Rio Desbaratado,2,Antes de porcícola (Pte. Jordán),Puente Ortigal,18,18,40.930,65.380,24.449,2873.03,1166.00,1163.02,72.07,40.48,si
+Rio Desbaratado,1,Antes de bocatoma cabecera Miranda,Antes de porcícola (Pte. Jordán),18,18,0.000,40.930,40.930,1351.90,1184.67,1181.63,32.05,87.41,no
+Rio Desbaratado,2,Antes de porcícola (Pte. Jordán),Puente Ortigal,18,18,40.930,65.380,24.449,2873.03,2512.21,2505.77,67.95,87.22,si
 Rio Fraile,1,Rio Frayle - Nacimiento El Pedregal,Rio Frayle - Puente Vía a Miranda,16,16,0.000,28.879,28.879,474.21,78.73,78.53,1.57,16.56,no
 Rio Fraile,2,Rio Frayle - Puente Vía a Miranda,Rio Frayle - Limnigrafo CVC - caserio Brisas de Frayle,16,16,28.879,52.141,23.263,2336.06,1965.52,1960.56,39.29,83.93,si
 Rio Fraile,3,Rio Frayle - Limnigrafo CVC - caserio Brisas de Frayle,Rio Frayle - Antes Desembocadura a rio Guachal Recta Cali Palmira,16,15,52.141,80.621,28.479,3531.93,2958.36,2950.90,59.14,83.55,si
@@ -22,14 +22,14 @@ Rio La Paila,1,Rio La Paila - Puente Paila arriba - vía a Sevilla,Rio La Paila 
 Rio La Paila,2,Rio La Paila - antes desembocadura del rio Totoro,Rio La Paila - Planta Acuavalle,19,18,38.256,41.749,3.493,340.75,3.41,3.40,0.24,1.00,si
 Rio La Paila,3,Rio La Paila - Planta Acuavalle,Rio La Paila - Antes desembocadura a Rio Cauca,18,17,41.749,66.470,24.721,2747.15,1385.55,1381.30,96.00,50.28,si
 Rio Nima,1,Rio Nima - Antes Caserio de tenjo,Rio Nima - Antes desembocadura a rio Amaime,17,18,0.000,39.568,39.568,1415.23,899.17,896.63,100.00,63.36,no
-Rio Palo,1,Bocatoma corregimiento El Palo,Antes de PTAR Guachené,20,25,0.000,56.268,56.268,84.58,0.20,0.20,0.04,0.24,no
-Rio Palo,2,Antes de PTAR Guachené,Después de PTAR Guachené,25,22,56.268,57.882,1.614,193.01,12.95,12.94,2.53,6.70,si
-Rio Palo,3,Después de PTAR Guachené,Puente del Maíz,22,22,57.882,65.195,7.313,719.30,193.23,193.04,37.77,26.84,si
-Rio Palo,4,Puente del Maíz,Antes Bocatoma Propal,22,8,65.195,68.681,3.487,404.68,3.21,3.21,0.63,0.79,si
-Rio Palo,5,Antes Bocatoma Propal,Puente PICC,8,22,68.681,71.474,2.793,359.30,0.00,0.00,0.00,0.00,si
-Rio Palo,6,Puente PICC,Puente Perico Negro,22,25,71.474,73.275,1.800,240.00,45.91,45.86,8.97,19.11,si
-Rio Palo,7,Puente Perico Negro,Puente Puerto Tejada,25,22,73.275,75.406,2.131,250.51,73.80,73.73,14.42,29.43,si
-Rio Palo,8,Puente Puerto Tejada,Desembocadura a río Cauca,22,25,75.406,83.103,7.697,1006.25,182.32,182.15,35.64,18.10,si
+Rio Palo,1,Bocatoma corregimiento El Palo,Antes de PTAR Guachené,20,25,0.000,56.268,56.268,84.58,40.78,40.69,2.49,48.11,no
+Rio Palo,2,Antes de PTAR Guachené,Después de PTAR Guachené,25,22,56.268,57.882,1.614,193.01,76.48,76.32,4.67,39.54,si
+Rio Palo,3,Después de PTAR Guachené,Puente del Maíz,22,22,57.882,65.195,7.313,719.30,466.13,465.19,28.46,64.67,si
+Rio Palo,4,Puente del Maíz,Antes Bocatoma Propal,22,8,65.195,68.681,3.487,404.68,310.95,310.31,18.99,76.68,si
+Rio Palo,5,Antes Bocatoma Propal,Puente PICC,8,22,68.681,71.474,2.793,359.30,172.90,172.55,10.56,48.02,si
+Rio Palo,6,Puente PICC,Puente Perico Negro,22,25,71.474,73.275,1.800,240.00,75.71,75.55,4.62,31.48,si
+Rio Palo,7,Puente Perico Negro,Puente Puerto Tejada,25,22,73.275,75.406,2.131,250.51,51.15,51.04,3.12,20.38,si
+Rio Palo,8,Puente Puerto Tejada,Desembocadura a río Cauca,22,25,75.406,83.103,7.697,1006.25,443.64,442.74,27.09,44.00,si
 Rio Riofrio,1,Rio Riofrio - Rio Guayabal,Rio Riofrio - puente despues Salonica - limnigrafo CVC,18,18,0.000,25.622,25.622,6.70,0.00,0.00,0.00,0.00,no
 Rio Riofrio,2,Rio Riofrio - puente despues Salonica - limnigrafo CVC,Rio Riofrio - Bocatoma Acueducto de Riofrio,18,18,25.622,33.186,7.565,929.94,0.00,0.00,0.00,0.00,si
 Rio Riofrio,3,Rio Riofrio - Bocatoma Acueducto de Riofrio,Rio Riofrio - Antes Municipio Riofrio,18,18,33.186,38.136,4.950,632.24,119.32,119.01,23.58,18.82,si
@@ -46,7 +46,7 @@ Rio Zabaletas,1,Rio Sabaletas - Antes caserío Los Medios,Rio Sabaletas - Cruce 
 Rio Zabaletas,2,Rio Sabaletas - Cruce sector vía La Novillera,Rio Sabaletas - Puente vía Santa Elena-Ginebra,16,16,14.872,20.101,5.229,590.54,343.74,342.85,13.57,58.06,si
 Rio Zabaletas,3,Rio Sabaletas - Puente vía Santa Elena-Ginebra,Rio Sabaletas - Antes desembocadura a Rio Cauca,16,16,20.101,43.353,23.252,2751.17,2144.92,2139.40,84.66,77.76,si
 
-# generado,2026-09-29T19:24:59.027Z
+# generado,2026-09-29T19:56:23.025Z
 # metodo,corte perpendicular local + asignacion por posicion sobre el eje
 # area,turf.area geodesica WGS84 normalizada a SUM_AREA_HA (ArcGIS MAGNA-Sirgas)
-# total_normalizado_ha,25092.55
+# total_normalizado_ha,28289.57

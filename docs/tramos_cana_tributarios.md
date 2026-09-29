@@ -4,7 +4,7 @@
 *Generado el 2026-09-29 por `scripts/tramos/build_tramos_cana.mjs`*
 
 Desagregación de las hectáreas de caña dentro del buffer de 700 m, por tramo entre
-estaciones de calidad del agua. **46 tramos en 15 ríos, 25.092,55 ha.**
+estaciones de calidad del agua. **46 tramos en 15 ríos, 28.289,57 ha.**
 El Río Cauca queda fuera de este ejercicio.
 
 El objetivo es alimentar el modelo de carga difusa
@@ -104,7 +104,7 @@ indica área perdida y por encima, doble conteo.
 | Rio Guadalajara | 100,00 % | 99,98 % |
 | Rio La Paila | 100,00 % | 99,99 % |
 | Rio Nima | 100,00 % | 100,00 % |
-| Rio Palo | 99,85 % | 99,96 % |
+| Rio Palo | 99,96 % | 99,96 % |
 | Rio Riofrio | 99,99 % | 99,98 % |
 | Rio Risaralda | 99,99 % | 99,99 % |
 | Rio Tulua | 100,00 % | 99,98 % |
@@ -116,20 +116,20 @@ indica área perdida y por encima, doble conteo.
 |---|---|---|---|---|---|---|---|
 | Rio Fraile | 4 | 3 | 2 | 3 | 6.343 | **4.990,00** | 78,7 % |
 | Rio Bolo | 4 | 3 | 2 | 3 | 4.914 | **3.794,85** | 77,2 % |
+| Rio Desbaratado | 3 | 2 | 1 | 2 | 4.225 | **3.687,40** | 87,3 % |
 | Rio Amaime | 5 | 3 | 2 | 3 | 4.616 | **3.475,86** | 75,3 % |
 | Rio Zabaletas | 5 | 3 | 2 | 3 | 3.595 | **2.526,97** | 70,3 % |
 | Rio Guabas | 5 | 1 | 0 | 1 | 2.720 | **1.825,85** | 67,1 % |
-| Rio Desbaratado | 3 | 2 | 1 | 2 | 4.225 | **1.613,65** | 38,2 % |
+| Rio Palo | 9 | 8 | 7 | 8 | 3.259 | **1.634,40** | 50,2 % |
 | Rio La Paila | 4 | 4 | 2 | 3 | 5.717 | **1.438,91** | 25,2 % |
 | Rio Bugalagrande | 5 | 3 | 2 | 3 | 3.933 | **1.282,58** | 32,6 % |
 | Rio Nima | 3 | 1 | 0 | 1 | 1.415 | **896,63** | 63,4 % |
 | Rio Risaralda | 8 | 4 | 3 | 4 | 6.227 | **678,41** | 10,9 % |
 | Rio Guachal | 2 | 2 | 0 | 1 | 1.621 | **654,74** | 40,4 % |
 | Rio Tulua | 5 | 4 | 3 | 4 | 2.888 | **631,30** | 21,9 % |
-| Rio Palo | 9 | 8 | 7 | 8 | 3.259 | **511,13** | 15,7 % |
 | Rio Riofrio | 6 | 4 | 3 | 4 | 2.392 | **504,77** | 21,1 % |
 | Rio Guadalajara | 6 | 3 | 2 | 3 | 1.496 | **266,90** | 17,8 % |
-| **TOTAL** | | | | **46** | | **25.092,55** | |
+| **TOTAL** | | | | **46** | | **28.289,57** | |
 
 ## 4. Detalle por tramo
 
@@ -174,9 +174,9 @@ de esa estación de montaña.
 
 | # | Tramo | km | Long. (km) | Buffer (ha) | Caña cruda (ha) | Caña norm. (ha) | % río | Zona |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Antes de bocatoma cabecera Miranda (n=18) → Antes de porcícola (Pte. Jordán) (n=18) | 0,0–40,9 | 40,9 | 1.352 | 451,78 | **450,63** | 27,9 % | no |
-| 2 | Antes de porcícola (Pte. Jordán) (n=18) → Puente Ortigal (n=18) | 40,9–65,4 | 24,4 | 2.873 | 1.166,00 | **1.163,02** | 72,1 % | sí |
-| | **Total** | | | **4.225** | | **1.613,65** | 100,0 % | |
+| 1 | Antes de bocatoma cabecera Miranda (n=18) → Antes de porcícola (Pte. Jordán) (n=18) | 0,0–40,9 | 40,9 | 1.352 | 1.184,67 | **1.181,63** | 32,0 % | no |
+| 2 | Antes de porcícola (Pte. Jordán) (n=18) → Puente Ortigal (n=18) | 40,9–65,4 | 24,4 | 2.873 | 2.512,21 | **2.505,77** | 68,0 % | sí |
+| | **Total** | | | **4.225** | | **3.687,40** | 100,0 % | |
 
 *Estaciones fuera de la zona cañera (no utilizables como corte):* Antes de bocatoma cabecera Miranda (km 26,0).
 
@@ -251,15 +251,15 @@ de esa estación de montaña.
 
 | # | Tramo | km | Long. (km) | Buffer (ha) | Caña cruda (ha) | Caña norm. (ha) | % río | Zona |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Bocatoma corregimiento El Palo (n=20) → Antes de PTAR Guachené (n=25) | 0,0–56,3 | 56,3 | 85 | 0,20 | **0,20** | 0,0 % | no |
-| 2 | Antes de PTAR Guachené (n=25) → Después de PTAR Guachené (n=22) | 56,3–57,9 | 1,6 | 193 | 12,95 | **12,94** | 2,5 % | sí |
-| 3 | Después de PTAR Guachené (n=22) → Puente del Maíz (n=22) | 57,9–65,2 | 7,3 | 719 | 193,23 | **193,04** | 37,8 % | sí |
-| 4 | Puente del Maíz (n=22) → Antes Bocatoma Propal (n=8) | 65,2–68,7 | 3,5 | 405 | 3,21 | **3,21** | 0,6 % | sí |
-| 5 | Antes Bocatoma Propal (n=8) → Puente PICC (n=22) | 68,7–71,5 | 2,8 | 359 | 0,00 | **0,00** | 0,0 % | sí |
-| 6 | Puente PICC (n=22) → Puente Perico Negro (n=25) | 71,5–73,3 | 1,8 | 240 | 45,91 | **45,86** | 9,0 % | sí |
-| 7 | Puente Perico Negro (n=25) → Puente Puerto Tejada (n=22) | 73,3–75,4 | 2,1 | 251 | 73,80 | **73,73** | 14,4 % | sí |
-| 8 | Puente Puerto Tejada (n=22) → Desembocadura a río Cauca (n=25) | 75,4–83,1 | 7,7 | 1.006 | 182,32 | **182,15** | 35,6 % | sí |
-| | **Total** | | | **3.259** | | **511,13** | 100,0 % | |
+| 1 | Bocatoma corregimiento El Palo (n=20) → Antes de PTAR Guachené (n=25) | 0,0–56,3 | 56,3 | 85 | 40,78 | **40,69** | 2,5 % | no |
+| 2 | Antes de PTAR Guachené (n=25) → Después de PTAR Guachené (n=22) | 56,3–57,9 | 1,6 | 193 | 76,48 | **76,32** | 4,7 % | sí |
+| 3 | Después de PTAR Guachené (n=22) → Puente del Maíz (n=22) | 57,9–65,2 | 7,3 | 719 | 466,13 | **465,19** | 28,5 % | sí |
+| 4 | Puente del Maíz (n=22) → Antes Bocatoma Propal (n=8) | 65,2–68,7 | 3,5 | 405 | 310,95 | **310,31** | 19,0 % | sí |
+| 5 | Antes Bocatoma Propal (n=8) → Puente PICC (n=22) | 68,7–71,5 | 2,8 | 359 | 172,90 | **172,55** | 10,6 % | sí |
+| 6 | Puente PICC (n=22) → Puente Perico Negro (n=25) | 71,5–73,3 | 1,8 | 240 | 75,71 | **75,55** | 4,6 % | sí |
+| 7 | Puente Perico Negro (n=25) → Puente Puerto Tejada (n=22) | 73,3–75,4 | 2,1 | 251 | 51,15 | **51,04** | 3,1 % | sí |
+| 8 | Puente Puerto Tejada (n=22) → Desembocadura a río Cauca (n=25) | 75,4–83,1 | 7,7 | 1.006 | 443,64 | **442,74** | 27,1 % | sí |
+| | **Total** | | | **3.259** | | **1.634,40** | 100,0 % | |
 
 *Estaciones fuera de la zona cañera (no utilizables como corte):* Bocatoma corregimiento El Palo (km 44,2).
 

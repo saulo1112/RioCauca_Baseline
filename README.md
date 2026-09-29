@@ -106,19 +106,22 @@ picks up the output after a reload (bump `BUILD_VERSION` in
 
 ---
 
-## Diffuse load model (in development)
+## Diffuse load and prioritization
 
-**Formula:** `Load (kg/year) = Cane_area (ha) × Export_coefficient × (Runoff_mm / 1000)`
+**Formula used (Report 1, Table 5.2, median-emission scenario):**
+`Load (kg/year) = Cane_area (ha) × factor`, with **9.57 kg N/ha/year** and
+**1.38 kg P/ha/year**; daily load = annual ÷ 365. Cane area is the
+normalized cane of each segment (`docs/tramos_cana_tributarios.csv`).
 
-| Parameter | Value | Literature range | Source |
-|---|---|---|---|
-| N coef. | 10 kg N/ha/year | 8–12 kg/ha/year | Technical literature |
-| P coef. | 1.1 kg P/ha/year | 0.8–1.5 kg/ha/year | Technical literature |
-| Cane area | Pending | — | SHP CVC + ArcGIS Pro (700 m buffer) |
-| Runoff | Pending | — | IDEAM Zonal Statistics over the buffer |
+Each segment's category follows fixed N-load thresholds: ≥ 15,000 Very high ·
+≥ 5,000 High · ≥ 1,000 Medium · > 0 Low · 0 Not applicable (no cane in the
+strip). The table lives in `data/fuentes/priorizacion/Priorizacion_NP_subtramos.csv`
+and is shown in the viewer via *Study Area* (hover) → *Prioritization by load*.
 
-**Pending:**
-- Obtain average annual runoff per buffer (IDEAM)
+The Palo and Desbaratado rows were recomputed with the September 2026 cane
+update — see [docs/auditoria_actualizacion_cana.md](docs/auditoria_actualizacion_cana.md).
+
+**Pending:** runoff-weighted loads (average annual runoff per buffer, IDEAM).
 
 ---
 
@@ -193,8 +196,9 @@ one.
 [**docs/tramos_cana_tributarios.md**](docs/tramos_cana_tributarios.md) — full report
 [**docs/tramos_cana_tributarios.csv**](docs/tramos_cana_tributarios.csv) — tabular data
 
-**46 segments across 15 rivers, 25,092.55 ha.** The Cauca River itself is
-still pending.
+**46 segments across 15 rivers, 28,289.57 ha** (Palo and Desbaratado updated in
+September 2026). The Cauca River isn't segmented: its 24,414.93 ha of cane are
+reported as a whole in `data/exports/arcgis/`.
 
 Generated with:
 
@@ -239,7 +243,9 @@ Three caveats:
 
 - **The layer stops at the Valle del Cauca boundary.** Risaralda ends up
   with 0% coverage and Palo with 1.5%: both **are excluded**. Desbaratado is
-  included with the 49.8% it does have, marked as partial.
+  included with the 49.8% it does have, marked as partial. **Its land-use shares
+  still reflect the previous cane figures** (the September 2026 cane exceeds the
+  area covered by the CVC layer; pending review).
 - **Cane doesn't come from this layer.** The `area_ha` column for the CANA
   class is exactly `cana_ha_normalizada` from
   `tramos_cana_tributarios.csv` (source `Hectareas_CZ.geojson`, which has
@@ -396,19 +402,22 @@ navegador descarte la copia en caché).
 
 ---
 
-## Modelo de carga difusa (en desarrollo)
+## Carga difusa y priorización
 
-**Fórmula:** `Carga (kg/año) = Área_caña (ha) × Coef_exportación × (Escorrentía_mm / 1000)`
+**Fórmula usada (Informe 1, Tabla 5.2, escenario de mediana emisión):**
+`Carga (kg/año) = Área_caña (ha) × factor`, con **9,57 kg N/ha/año** y **1,38 kg P/ha/año**;
+carga diaria = anual ÷ 365. El área es la caña normalizada de cada tramo
+(`docs/tramos_cana_tributarios.csv`).
 
-| Parámetro | Valor | Rango bibliográfico | Fuente |
-|---|---|---|---|
-| Coef. N | 10 kg N/ha/año | 8–12 kg/ha/año | Literatura técnica |
-| Coef. P | 1.1 kg P/ha/año | 0.8–1.5 kg/ha/año | Literatura técnica |
-| Área caña | Pendiente | — | SHP CVC + ArcGIS Pro (buffer 700 m) |
-| Escorrentía | Pendiente | — | Zonal Statistics IDEAM sobre buffer |
+La categoría de cada tramo sigue umbrales fijos sobre la carga de N: ≥ 15.000 Muy alta ·
+≥ 5.000 Alta · ≥ 1.000 Media · > 0 Baja · 0 No aplica (sin caña en la franja). La tabla vive
+en `data/fuentes/priorizacion/Priorizacion_NP_subtramos.csv` y se ve en el visor desde
+*Zona de Estudio* (hover) → *Ver priorización por carga (N/P)*.
 
-**Pendientes:**
-- Obtener escorrentía anual promedio por buffer (IDEAM)
+Las filas de Palo y Desbaratado se recalcularon con la actualización de caña de septiembre
+de 2026 — ver [docs/auditoria_actualizacion_cana.md](docs/auditoria_actualizacion_cana.md).
+
+**Pendiente:** cargas ponderadas por escorrentía (escorrentía anual promedio por buffer, IDEAM).
 
 ---
 
@@ -479,7 +488,9 @@ líneas sueltas, no una sola.
 [**docs/tramos_cana_tributarios.md**](docs/tramos_cana_tributarios.md) — reporte completo
 [**docs/tramos_cana_tributarios.csv**](docs/tramos_cana_tributarios.csv) — datos tabulares
 
-**46 tramos en 15 ríos, 25.092,55 ha.** El Río Cauca queda pendiente.
+**46 tramos en 15 ríos, 28.289,57 ha** (Palo y Desbaratado actualizados en septiembre de
+2026). El Río Cauca no se divide en tramos: sus 24.414,93 ha de caña se reportan completas en
+`data/exports/arcgis/`.
 
 Se genera con:
 
@@ -523,7 +534,9 @@ Tres advertencias:
 
 - **La capa se detiene en el límite del Valle del Cauca.** Risaralda queda con 0 % de
   cobertura y Palo con 1,5 %: ambos **se excluyen**. Desbaratado se incluye con el 49,8 %
-  que sí tiene, marcado como parcial.
+  que sí tiene, marcado como parcial. **Sus porcentajes de uso del suelo todavía reflejan la
+  caña anterior** (la caña de septiembre de 2026 supera el área que cubre la capa CVC;
+  pendiente de revisión).
 - **La caña no sale de esta capa.** La columna `area_ha` de la clase CANA es exactamente
   `cana_ha_normalizada` de `tramos_cana_tributarios.csv` (fuente `Hectareas_CZ.geojson`,
   que tiene resuelto el solapamiento entre buffers vecinos). Las demás clases se reescalan
