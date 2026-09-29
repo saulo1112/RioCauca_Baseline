@@ -1,7 +1,7 @@
 # Hectáreas de caña de azúcar por tramo — tributarios del Río Cauca
 
 **Proyecto 890K | UAO × ASOCAÑA | Fase I — Corredor Biológico**  
-*Generado el 2026-08-04 por `tools/tramos/build_tramos_cana.mjs`*
+*Generado el 2026-09-19 por `tools/tramos/build_tramos_cana.mjs`*
 
 Desagregación de las hectáreas de caña dentro del buffer de 700 m, por tramo entre
 estaciones de calidad del agua. **46 tramos en 15 ríos, 25.092,55 ha.**
@@ -32,14 +32,14 @@ dentro de la zona cañera.
 | Rio Riofrio | 43,7 | 18,0 | 25,6 | 41 % | 6 | 4 |
 | Rio Guadalajara | 26,2 | 11,2 | 14,9 | 43 % | 6 | 3 |
 | Rio Guabas | 42,2 | 21,2 | 21,0 | 50 % | 5 | **1** |
-| Rio Risaralda | 107,8 | 55,5 | 52,3 | 51 % | 7 | 3 |
+| Rio Risaralda | 107,8 | 55,5 | 52,3 | 51 % | 8 | 4 |
 | Rio Desbaratado | 65,4 | 37,4 | 27,9 | 57 % | 3 | 2 |
 | Rio Amaime | 86,3 | 50,4 | 35,8 | 58 % | 5 | 3 |
 | Rio Fraile | 80,6 | 55,8 | 24,8 | 69 % | 4 | 3 |
 | Rio Zabaletas | 43,4 | 30,8 | 12,5 | 71 % | 5 | 3 |
 | Rio La Paila | 66,5 | 55,8 | 10,6 | 84 % | 4 | 4 |
 | Rio Bolo | 48,0 | 40,9 | 7,1 | 85 % | 4 | 3 |
-| Rio Guachal | 11,0 | 10,9 | 0,0 | 99 % | 3 | 3 |
+| Rio Guachal | 11,0 | 10,9 | 0,0 | 99 % | 2 | 2 |
 
 *Ordenado por cobertura ascendente. En negrita, los ríos con una sola estación en la*
 *zona cañera: no admiten ningún corte intermedio.*
@@ -100,13 +100,13 @@ indica área perdida y por encima, doble conteo.
 | Rio Desbaratado | 100,00 % | 100,00 % |
 | Rio Fraile | 100,00 % | 99,99 % |
 | Rio Guabas | 100,00 % | 100,00 % |
-| Rio Guachal | 99,99 % | 99,99 % |
+| Rio Guachal | 100,00 % | 100,00 % |
 | Rio Guadalajara | 100,00 % | 99,98 % |
 | Rio La Paila | 100,00 % | 99,99 % |
 | Rio Nima | 100,00 % | 100,00 % |
 | Rio Palo | 99,85 % | 99,96 % |
 | Rio Riofrio | 99,99 % | 99,98 % |
-| Rio Risaralda | 99,99 % | 100,00 % |
+| Rio Risaralda | 99,99 % | 99,99 % |
 | Rio Tulua | 100,00 % | 99,98 % |
 | Rio Zabaletas | 99,99 % | 99,99 % |
 
@@ -123,8 +123,8 @@ indica área perdida y por encima, doble conteo.
 | Rio La Paila | 4 | 4 | 2 | 3 | 5.717 | **1.438,91** | 25,2 % |
 | Rio Bugalagrande | 5 | 3 | 2 | 3 | 3.933 | **1.282,58** | 32,6 % |
 | Rio Nima | 3 | 1 | 0 | 1 | 1.415 | **896,63** | 63,4 % |
-| Rio Risaralda | 7 | 3 | 2 | 3 | 6.227 | **678,41** | 10,9 % |
-| Rio Guachal | 3 | 3 | 1 | 2 | 1.621 | **654,74** | 40,4 % |
+| Rio Risaralda | 8 | 4 | 3 | 4 | 6.227 | **678,41** | 10,9 % |
+| Rio Guachal | 2 | 2 | 0 | 1 | 1.621 | **654,74** | 40,4 % |
 | Rio Tulua | 5 | 4 | 3 | 4 | 2.888 | **631,30** | 21,9 % |
 | Rio Palo | 9 | 8 | 7 | 8 | 3.259 | **511,13** | 15,7 % |
 | Rio Riofrio | 6 | 4 | 3 | 4 | 2.392 | **504,77** | 21,1 % |
@@ -207,10 +207,12 @@ de esa estación de montaña.
 
 ### Rio Guachal
 
+> **Sin desagregar.** Solo hay una estación dentro de la zona cañera, así que no existe
+> ningún punto de corte intermedio. Es un vacío de monitoreo, no un error de cálculo.
+
 | # | Tramo | km | Long. (km) | Buffer (ha) | Caña cruda (ha) | Caña norm. (ha) | % río | Zona |
 |---|---|---|---|---|---|---|---|---|
-| 1 | GG1 - Después Confluencia Ríos Fraile Y Bolo (n=0) → GG2 - Puente vía Yumbo-Aeropuerto (n=0) | 0,0–6,0 | 6,0 | 882 | 442,42 | **441,40** | 67,4 % | sí |
-| 2 | GG2 - Puente vía Yumbo-Aeropuerto (n=0) → GG3 - Rio Guachal - Antes Desembocadura a Rio Cauca (n=16) | 6,0–11,0 | 5,0 | 739 | 213,84 | **213,34** | 32,6 % | sí |
+| 1 | GG1 - Después Confluencia Ríos Fraile Y Bolo (n=0) → GG3 - Rio Guachal - Antes Desembocadura a Rio Cauca (n=16) | 0,0–11,0 | 11,0 | 1.621 | 656,30 | **654,74** | 100,0 % | sí |
 | | **Total** | | | **1.621** | | **654,74** | 100,0 % | |
 
 ### Rio Guadalajara
@@ -279,12 +281,11 @@ de esa estación de montaña.
 |---|---|---|---|---|---|---|---|---|
 | 1 | Antes Descarga Municipio Mistrató (n=37) → Las Palmeras (n=61) | 0,0–64,8 | 64,8 | 1.605 | 78,57 | **78,31** | 11,5 % | no |
 | 2 | Las Palmeras (n=61) → Quebrada Chapata - Desembocadura (n=50) | 64,8–65,1 | 0,2 | 34 | 15,14 | **15,09** | 2,2 % | sí |
-| 3 | Quebrada Chapata - Desembocadura (n=50) → Puente Negro (n=50) | 65,1–107,8 | 42,8 | 4.588 | 587,00 | **585,01** | 86,2 % | sí |
+| 3 | Quebrada Chapata - Desembocadura (n=50) → Puente Negro (n=50) | 65,1–88,2 | 23,1 | 2.402 | 0,00 | **0,00** | 0,0 % | sí |
+| 4 | Puente Negro (n=50) → Antes río Risaralda (n=47) | 88,2–107,8 | 19,6 | 2.186 | 587,00 | **585,01** | 86,2 % | sí |
 | | **Total** | | | **6.227** | | **678,41** | 100,0 % | |
 
 *Estaciones fuera de la zona cañera (no utilizables como corte):* Antes Descarga Municipio Mistrató (km 28,4); Después Descarga Municipio Mistrató (km 30,3); Puente Umbría (km 40,3); Desembocadura río Risaralda (km 45,5).
-
-*Estaciones descartadas:* Antes río Risaralda — estación del Río Cauca clasificada bajo otro río.
 
 ### Rio Tulua
 

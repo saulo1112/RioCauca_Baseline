@@ -1,10 +1,10 @@
 # Uso del suelo por tramo — tributarios del Río Cauca
 
 **Proyecto 890K | UAO × ASOCAÑA | Fase I — Corredor Biológico**  
-*Generado el 2026-08-04 por `tools/tramos/build_uso_suelo_tramos.mjs`*
+*Generado el 2026-09-19 por `tools/tramos/build_uso_suelo_tramos.mjs`*
 
 Composición de coberturas dentro del buffer de 700 m, desagregada por los mismos tramos
-del análisis de caña. **35 tramos en 13 ríos.**
+del análisis de caña. **34 tramos en 13 ríos.**
 
 Datos: [uso_suelo_tramos.csv](uso_suelo_tramos.csv) (agrupado) y
 [uso_suelo_tramos_detalle.csv](uso_suelo_tramos_detalle.csv) (103 códigos de 25k).
@@ -44,7 +44,7 @@ ya sustituida.
 | Rio Desbaratado | 50 % | 76,7 | 3,4 | 1,4 | 0,6 | — | 2,1 | 1,4 | 0,1 | 4,8 | — | 2,1 | 0,0 | 0,2 | 2,4 | 0,1 | 2,7 | 1,9 |
 | Rio Fraile | 100 % | 78,7 | 0,8 | — | 0,8 | — | 5,5 | 0,4 | 0,0 | 0,8 | 0,2 | 2,5 | — | 0,0 | 3,2 | 0,3 | 4,4 | 2,3 |
 | Rio Guabas | 100 % | 67,1 | 3,7 | 0,0 | 5,2 | — | 5,1 | 2,9 | 0,0 | 4,1 | 0,1 | 3,6 | — | — | 3,2 | 0,2 | 1,4 | 3,4 |
-| Rio Guachal | 100 % | 40,4 | — | — | 0,6 | — | 18,1 | 2,3 | 2,2 | 0,9 | 0,8 | 4,3 | — | 1,1 | 19,3 | 0,1 | 0,9 | 9,1 |
+| Rio Guachal | 100 % | 40,4 | — | — | 0,6 | — | 17,6 | 2,2 | 2,3 | 1,0 | 0,7 | 4,4 | — | 1,2 | 19,0 | 0,2 | 0,9 | 9,5 |
 | Rio Guadalajara | 100 % | 17,8 | 0,2 | 0,1 | 0,3 | — | 24,9 | 0,5 | 0,7 | 5,1 | — | 12,7 | — | 1,3 | 4,1 | 0,2 | 23,4 | 8,6 |
 | Rio La Paila | 100 % | 25,2 | 0,4 | 0,0 | 0,3 | — | 40,6 | 3,5 | 1,0 | 19,1 | — | 4,9 | 0,2 | 0,1 | 1,7 | 1,5 | 0,9 | 0,7 |
 | Rio Nima | 100 % | 63,4 | 0,5 | — | 2,1 | — | 3,7 | 0,7 | 1,9 | 7,4 | — | 8,1 | — | 0,0 | 2,0 | 0,2 | 3,9 | 6,2 |
@@ -328,36 +328,23 @@ Códigos: **CANA** Caña de azúcar · **CP** Cultivos permanentes · **CSP** Cu
 
 ### Rio Guachal
 
-**Tramo 1** — GG1 - Después Confluencia Ríos Fraile Y Bolo → GG2 - Puente vía Yumbo-Aeropuerto · km 0,0–6,0 · 882 ha
+**Tramo 1** — GG1 - Después Confluencia Ríos Fraile Y Bolo → GG3 - Rio Guachal - Antes Desembocadura a Rio Cauca · km 0,0–11,0 · 1.621 ha
 
 | Grupo | ha | % |
 |---|---|---|
-| Caña de azúcar | 441,40 | 50,0 |
-| Cultivos transitorios | 9,80 | 1,1 |
-| Pastos | 183,39 | 20,8 |
-| Misceláneos de pastos / cultivos / espacios naturales | 22,40 | 2,5 |
-| Bosque plantado | 10,62 | 1,2 |
-| Rastrojo y vegetación secundaria | 18,80 | 2,1 |
-| Aguas continentales | 169,26 | 19,2 |
-| Zona urbana | 5,82 | 0,7 |
-| Infraestructura | 20,68 | 2,3 |
-
-**Tramo 2** — GG2 - Puente vía Yumbo-Aeropuerto → GG3 - Rio Guachal - Antes Desembocadura a Rio Cauca · km 6,0–11,0 · 739 ha
-
-| Grupo | ha | % |
-|---|---|---|
-| Caña de azúcar | 213,34 | 28,9 |
-| Pastos | 109,88 | 14,9 |
-| Misceláneos de pastos / cultivos / espacios naturales | 14,35 | 1,9 |
-| Cultivos cosechados o suelo desnudo | 35,27 | 4,8 |
-| Bosque natural | 15,05 | 2,0 |
-| Bosque plantado | 1,82 | 0,2 |
-| Rastrojo y vegetación secundaria | 50,60 | 6,8 |
-| Humedales y superficies pantanosas | 17,68 | 2,4 |
-| Aguas continentales | 143,00 | 19,4 |
-| Tierras eriales | 2,36 | 0,3 |
-| Zona urbana | 8,91 | 1,2 |
-| Infraestructura | 126,59 | 17,1 |
+| Caña de azúcar | 654,74 | 40,4 |
+| Cultivos transitorios | 9,02 | 0,6 |
+| Pastos | 286,02 | 17,6 |
+| Misceláneos de pastos / cultivos / espacios naturales | 35,93 | 2,2 |
+| Cultivos cosechados o suelo desnudo | 37,62 | 2,3 |
+| Bosque natural | 16,05 | 1,0 |
+| Bosque plantado | 11,73 | 0,7 |
+| Rastrojo y vegetación secundaria | 71,30 | 4,4 |
+| Humedales y superficies pantanosas | 18,86 | 1,2 |
+| Aguas continentales | 308,44 | 19,0 |
+| Tierras eriales | 2,52 | 0,2 |
+| Zona urbana | 14,87 | 0,9 |
+| Infraestructura | 154,07 | 9,5 |
 
 ### Rio Guadalajara
 

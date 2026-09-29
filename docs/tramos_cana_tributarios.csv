@@ -14,8 +14,7 @@ Rio Fraile,1,Rio Frayle - Nacimiento El Pedregal,Rio Frayle - Puente Vía a Mira
 Rio Fraile,2,Rio Frayle - Puente Vía a Miranda,Rio Frayle - Limnigrafo CVC - caserio Brisas de Frayle,16,16,28.879,52.141,23.263,2336.06,1965.52,1960.56,39.29,83.93,si
 Rio Fraile,3,Rio Frayle - Limnigrafo CVC - caserio Brisas de Frayle,Rio Frayle - Antes Desembocadura a rio Guachal Recta Cali Palmira,16,15,52.141,80.621,28.479,3531.93,2958.36,2950.90,59.14,83.55,si
 Rio Guabas,1,Rio Guabas - Antes Mina La Victoria,Rio Guabas - Antes desembocadura a Río Cauca,17,17,0.000,42.231,42.231,2720.28,1830.69,1825.85,100.00,67.12,no
-Rio Guachal,1,GG1 - Después Confluencia Ríos Fraile Y Bolo,GG2 - Puente vía Yumbo-Aeropuerto,0,0,0.000,5.964,5.964,882.16,442.42,441.40,67.42,50.04,si
-Rio Guachal,2,GG2 - Puente vía Yumbo-Aeropuerto,GG3 - Rio Guachal - Antes Desembocadura a Rio Cauca,0,16,5.964,10.984,5.020,738.87,213.84,213.34,32.58,28.87,si
+Rio Guachal,1,GG1 - Después Confluencia Ríos Fraile Y Bolo,GG3 - Rio Guachal - Antes Desembocadura a Rio Cauca,0,16,0.000,10.984,10.984,1621.17,656.30,654.74,100.00,40.39,si
 Rio Guadalajara,1,Rio Guadalajara - La Piscina - Vía a Alaska,Rio Guadalajara - Bocatoma Acueducto Buga,19,19,0.000,16.956,16.956,188.01,0.00,0.00,0.00,0.00,no
 Rio Guadalajara,2,Rio Guadalajara - Bocatoma Acueducto Buga,Rio Guadalajara - Puente Frente vía Ferrea,19,19,16.956,21.653,4.697,620.42,0.00,0.00,0.00,0.00,si
 Rio Guadalajara,3,Rio Guadalajara - Puente Frente vía Ferrea,Rio Guadalajara - antes desembocadura a Rio Cauca (El Porvenir),19,19,21.653,26.183,4.530,687.41,267.61,266.90,100.00,38.83,si
@@ -37,7 +36,8 @@ Rio Riofrio,3,Rio Riofrio - Bocatoma Acueducto de Riofrio,Rio Riofrio - Antes Mu
 Rio Riofrio,4,Rio Riofrio - Antes Municipio Riofrio,Rio Riofrio - Antes desembocadura a Río Cauca,18,16,38.136,43.686,5.550,822.30,386.76,385.76,76.42,46.91,si
 Rio Risaralda,1,Río Risaralda - Antes Descarga Municipio Mistrató,Río Risaralda - Las Palmeras,37,61,0.000,64.842,64.842,1604.61,78.57,78.31,11.54,4.88,no
 Rio Risaralda,2,Río Risaralda - Las Palmeras,Quebrada Chapata - Desembocadura,61,50,64.842,65.078,0.236,33.57,15.14,15.09,2.22,44.95,si
-Rio Risaralda,3,Quebrada Chapata - Desembocadura,Río Risaralda - Puente Negro,50,50,65.078,107.849,42.771,4588.20,587.00,585.01,86.23,12.75,si
+Rio Risaralda,3,Quebrada Chapata - Desembocadura,Río Risaralda - Puente Negro,50,50,65.078,88.207,23.129,2402.30,0.00,0.00,0.00,0.00,si
+Rio Risaralda,4,Río Risaralda - Puente Negro,Río Cauca - Antes río Risaralda,50,47,88.207,107.849,19.642,2185.75,587.00,585.01,86.23,26.76,si
 Rio Tulua,1,Rio Tulua - Antes Jardin Botanico (limnigrafo CVC),Rio Tulua - Puente Ferrocarril Barrio La Trinidad,19,19,0.000,61.522,61.522,1369.63,60.36,60.19,9.53,4.39,no
 Rio Tulua,2,Rio Tulua - Puente Ferrocarril Barrio La Trinidad,Rio Tulua - Puente Nuevo (Barrio 7 de Agosto),19,19,61.522,62.718,1.196,165.69,0.10,0.10,0.02,0.06,si
 Rio Tulua,3,Rio Tulua - Puente Nuevo (Barrio 7 de Agosto),Rio Tulua - Despues Urbanizacion Maracaibo,19,19,62.718,64.000,1.283,166.39,0.01,0.01,0.00,0.01,si
@@ -46,7 +46,7 @@ Rio Zabaletas,1,Rio Sabaletas - Antes caserío Los Medios,Rio Sabaletas - Cruce 
 Rio Zabaletas,2,Rio Sabaletas - Cruce sector vía La Novillera,Rio Sabaletas - Puente vía Santa Elena-Ginebra,16,16,14.872,20.101,5.229,590.54,343.74,342.85,13.57,58.06,si
 Rio Zabaletas,3,Rio Sabaletas - Puente vía Santa Elena-Ginebra,Rio Sabaletas - Antes desembocadura a Rio Cauca,16,16,20.101,43.353,23.252,2751.17,2144.92,2139.40,84.66,77.76,si
 
-# generado,2026-08-04T16:58:07.698Z
+# generado,2026-09-19T01:41:01.631Z
 # metodo,corte perpendicular local + asignacion por posicion sobre el eje
 # area,turf.area geodesica WGS84 normalizada a SUM_AREA_HA (ArcGIS MAGNA-Sirgas)
 # total_normalizado_ha,25092.55

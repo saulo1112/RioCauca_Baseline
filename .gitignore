@@ -8,3 +8,6 @@ __pycache__/
 
 # Temporales de Excel/Office al abrir los .xlsx de datos
 ~$*
+
+# Locks que deja ArcGIS Pro mientras tiene abierto un shapefile
+*.sr.lock

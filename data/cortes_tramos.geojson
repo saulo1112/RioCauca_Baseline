@@ -211,29 +211,6 @@
     {
       "type": "Feature",
       "properties": {
-        "rio": "Rio Guachal",
-        "estacion": "GG2 - Puente vía Yumbo-Aeropuerto",
-        "km_eje": 5.964,
-        "tipo": "auto",
-        "metodo": "perpendicular al eje, base de rumbo 250 m"
-      },
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [
-            -76.441238,
-            3.550357
-          ],
-          [
-            -76.471951,
-            3.569183
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "rio": "Rio Guadalajara",
         "estacion": "Rio Guadalajara - Bocatoma Acueducto Buga",
         "km_eje": 16.956,
@@ -595,6 +572,29 @@
           [
             -75.826032,
             5.103849
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "rio": "Rio Risaralda",
+        "estacion": "Río Risaralda - Puente Negro",
+        "km_eje": 88.207,
+        "tipo": "auto",
+        "metodo": "perpendicular al eje, base de rumbo 250 m"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -75.876569,
+            4.992064
+          ],
+          [
+            -75.841466,
+            4.983631
           ]
         ]
       }

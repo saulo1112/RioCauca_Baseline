@@ -1,0 +1,14 @@
+Estacion_IDF,Codigo_IDF,Longitud_IDF,Latitud_IDF,Rio_Asociado,Estacion_Calidad_Agua_Mas_Cercana,Latitud_Estacion,Longitud_Estacion,Distancia_km,Confiabilidad
+CENT ADMO LA UNION,26115040,-76.060,4.530,Rio Cauca,La Victoria,4.525317,-76.043628,1.89,Alta
+AEROPUERTO FARFAN,26105160,-76.224,4.090,Rio Tulua,Rio Tulua - Puente Nuevo (Barrio 7 de Agosto),4.102134,-76.196909,3.29,Alta
+ICA-BALBOA,26095110,-76.300,3.933,Rio Guadalajara,Rio Guadalajara - Puente Frente vía Ferrea,3.896775,-76.308083,4.13,Alta
+PALMIRA ICA,26075010,-76.315,3.513,Rio Bolo,Rio Bolo - Puente Bolo - San Isidro - vía a Candelaria,3.459193,-76.336200,6.43,Alta
+AEROPUERTO MATECANA,26135040,-75.740,4.820,Rio Cauca,La Virginia - Risaralda,4.884097,-75.869928,16.06,Media
+CUMBARCO,26125130,-75.832,4.185,Rio La Paila,Rio La Paila - Puente Paila arriba - vía a Sevilla,4.239842,-76.036823,23.52,Media
+VERACRUZ,26135110,-75.630,4.870,Rio Cauca,La Virginia - Risaralda,4.884097,-75.869928,26.63,Media
+AEROPUERTO GUILLERMO LEON VALENCIA,26035030,-76.610,2.450,Rio Cauca,Antes Suárez,2.951011,-76.697853,56.56,Baja
+BAJO CALIMA,54075020,-76.990,3.954,Rio Cauca,Vijes,3.727164,-76.409317,69.19,Baja
+PALETARA,26015020,-76.482,2.192,Rio Cauca,Antes Suárez,2.951011,-76.697853,87.74,Baja
+SANTA LETICIA,21055030,-76.160,2.240,Rio Palo,Bocatoma corregimiento El Palo,3.061983,-76.348686,93.77,Baja
+MISION LA,54075040,-77.271,4.223,Rio Riofrio,Rio Riofrio - Rio Valcanes,4.124056,-76.372149,100.29,Baja
+MERCADERES,52025030,-77.160,1.760,Rio Cauca,Antes Suárez,2.951011,-76.697853,142.04,Baja

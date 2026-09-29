@@ -75,10 +75,18 @@ const DEDUPE_KM = 0.15;
  * río, y la mediana no mejora con más muestra. */
 const MUESTRA_VERTICES = 200;
 
-/* Estaciones mal clasificadas: figuran bajo un río al que no pertenecen. */
-const EXCLUIR = [
-  { patron: /^r[ií]o cauca\b/i, motivo: 'estación del Río Cauca clasificada bajo otro río' },
-];
+/* Estaciones mal clasificadas: figuran bajo un río al que no pertenecen.
+ *
+ * Hasta ahora tenía una regla /^rio cauca/i pensada para atrapar estaciones
+ * del Cauca etiquetadas por error bajo un tributario. Se retiró: la única
+ * estación que coincidía era "Río Cauca - Antes río Risaralda" (Rio Risaralda,
+ * 47 registros) -- SUP-105, con su ubicación ya corregida durante la
+ * investigación de la confusión SUP-105/SUP-241 (ver docs/coordenadas_risaralda.md).
+ * Su "Rio" SÍ es Risaralda; el nombre solo describe que el punto está sobre
+ * el Cauca, justo antes de la confluencia (convención de nombres CARDER/CVC
+ * en zonas de desembocadura). Excluirla dejaba a Risaralda sin corte cerca
+ * de la boca (19,6 km de buffer sin tramo, hasta La Virginia). */
+const EXCLUIR = [];
 
 /* ── Utilidades ──────────────────────────────────────────────────────── */
 
