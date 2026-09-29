@@ -20,7 +20,7 @@ import { priorizacionColorMatchExpr } from './priorizacionColors.js';
  * que el navegador descarte la caché y descargue la versión más reciente.
  *
  * Se exporta porque CutLineTool también descarga un GeoJSON de datos
- * (data/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
+ * (data/cartografia/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
 export const BUILD_VERSION = '2.6';
@@ -31,10 +31,10 @@ const PATHS = {
   'hectareas-cz':          'data/cartografia/Hectareas_CZ.geojson',
   'rio-cauca':             'data/cartografia/Rio_cauca.geojson',
   'tributarios':           'data/cartografia/Tributarios_rios_cauca.geojson',
-  'estaciones-cauca':      'data/databases/Estaciones_Calidad_RC.geojson',
-  'estaciones-trib':       'data/geovisor/puntos_calidad_tributarios.geojson',
-  'estaciones-hidro':      'data/hydrology/estaciones_hidro.json',
-  'estaciones-hidro-trib': 'data/hydrology/estaciones_hidro_trib.json',
+  'estaciones-cauca':      'data/calidad_agua/Estaciones_Calidad_RC.geojson',
+  'estaciones-trib':       'data/calidad_agua/puntos_calidad_tributarios.geojson',
+  'estaciones-hidro':      'data/hidrologia/estaciones_hidro.json',
+  'estaciones-hidro-trib': 'data/hidrologia/estaciones_hidro_trib.json',
   'priorizacion-np':       'data/cartografia/Priorizacion_NP_tramos.geojson',
 };
 
@@ -509,7 +509,7 @@ async function _loadEstacionesHidroTrib(map) {
  * (Muy alta…Baja, más "No aplica" en gris para tramos sin caña en la
  * franja). Fuente: docs de la Tabla 5.2 del Informe 1, unida a la misma
  * geometría de tramos que ya usa el análisis de caña — ver
- * tools/tramos/build_priorizacion_tramos.mjs. Oculta por defecto: el
+ * scripts/tramos/build_priorizacion_tramos.mjs. Oculta por defecto: el
  * usuario la activa con el botón en "Zona de Estudio" (PriorizacionToggle.js),
  * que además oculta temporalmente Zona de Estudio y Caña de Azúcar para que
  * su tinte no se mezcle con la escala de color. */

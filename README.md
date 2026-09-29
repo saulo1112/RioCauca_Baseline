@@ -28,21 +28,31 @@ Rio_Cauca_Baseline/
 │   ├── tramos/geometry.js              ← Half-planes, cutting, geodesic area
 │   ├── tramos/stations.js              ← River ↔ stations, segment labels
 │   ├── data/waterQuality.js            ← CSV parser + join by station
-│   ├── utils/bounds.js, utils/format.js
-│   └── build_*.py, perfil_*.py         ← Data preparation (not served to the browser)
-├── tools/tramos/                       ← Segment analysis (Node + turf).
-│                                          Outside the site: has its own package.json
-├── docs/                               ← Versioned reports (MD + CSV)
+│   └── utils/bounds.js, utils/format.js
+├── scripts/                            ← Data pipelines (not published)
+│   ├── build_calidad_trib.py           ← Tributary quality points + CSV per point
+│   ├── build_hydro_data.py             ← Cauca River hydrometric stations
+│   ├── build_hydro_trib.py             ← Tributary hydrometric stations
+│   ├── build_caudal_consolidado.py     ← Consolidated tributary daily flow
+│   ├── perfil_longitudinal_calidad.py  ← PNG longitudinal profiles
+│   └── tramos/                         ← Segment analysis (Node + turf, own package.json)
 ├── data/
-│   ├── cartografia/                    ← 700 m buffer, cane (Hectareas_CZ),
-│   │                                      Cauca River and tributaries (WGS84)
-│   ├── cortes_tramos.geojson           ← Versioned segment cuts
-│   ├── databases/                      ← Stations and quality data (CVC source)
-│   ├── geovisor/                       ← Quality points + CSV per point
-│   ├── hydrology/                      ← Flow rates and duration curves
-│   └── water_quality/perfiles/         ← PNG longitudinal profiles
+│   ├── cartografia/                    ← Map layers: 700 m buffer, cane (Hectareas_CZ),
+│   │                                      Cauca River, tributaries, N/P prioritization,
+│   │                                      segment cuts (WGS84)
+│   ├── calidad_agua/                   ← Quality stations, CSV per point, profiles
+│   ├── hidrologia/                     ← Flow rates and duration curves per station
+│   ├── fuentes/                        ← Raw inputs read only by the scripts
+│   │   ├── calidad_agua/, hidrologia/  ← CVC/CARDER spreadsheets and station folders
+│   │   ├── cobertura/                  ← CVC land cover + Palo/Desbaratado/Risaralda covers
+│   │   └── priorizacion/               ← N/P prioritization table (Report 1, Table 5.2)
+│   └── exports/arcgis/                 ← Products for ArcGIS Pro (buffer by segment)
+├── docs/                               ← Versioned reports (MD + CSV)
 └── .github/workflows/deploy.yml        ← Auto-deploy on GitHub Pages
 ```
+
+Only `index.html`, `css/`, `src/` and `data/{cartografia,calidad_agua,hidrologia}`
+are published: that's everything the viewer loads.
 
 ---
 
@@ -80,27 +90,19 @@ python -m http.server 8000
 
 ## Data updates
 
-| Data | File to replace | Source | Status |
-|---|---|---|---|
-| Tributary water quality | `data/calidad_agua.csv` | CVC — DT02 | Pending |
-| Cauca water quality | `data/calidad_agua.csv` (Reach 1/2/3 rows) | CVC — DT02 | Pending |
-| CVC tributary flow rates | `data/hidrometria.csv` | CVC — DT02 | Pending |
-| Risaralda duration curves | `data/caudales_cdc.csv` | CARDER ERA | ✓ Available |
-| Tributary geometry | `data/rios_tributarios.geojson` | SHP CVC/IDEAM | SHP pending |
-| Station coordinates | `data/estaciones_hidrometricas.geojson` | ArcGIS Pro (MAGNA-SIRGAS) | Verification pending |
-| Cane area by buffer | New columns in the tributary GeoJSON | SHP CVC + ArcGIS Pro | Pending |
+Replace the raw input in `data/fuentes/` and rerun its pipeline; the viewer
+picks up the output after a reload (bump `BUILD_VERSION` in
+`src/layers/geojson.js` so browsers drop the cached copy).
 
-### Updating CARDER data when DT02/DT03 arrive:
-```bash
-# 1. Copy the source CSVs into the "Fase I/Derechos de petición/" folder
-# 2. Run the transformation script:
-cd Rio_Cauca_Baseline
-python scripts/prepare_data.py
-# 3. Commit the new files in data/
-git add data/
-git commit -m "Update DT02 data — CVC water quality"
-git push
-```
+| Data | Raw input (`data/fuentes/`) | Pipeline | Output read by the viewer |
+|---|---|---|---|
+| Tributary water quality | `calidad_agua/Calidad_agua_completo_v12.xlsx`, `Calidad_tributarios.geojson` | `python scripts/build_calidad_trib.py` | `data/calidad_agua/puntos_calidad_tributarios.geojson`, `csv_por_punto/` |
+| Cauca River flow | `hidrologia/Estaciones Hidroclimatológicas - Río Cauca/` | `python scripts/build_hydro_data.py` | `data/hidrologia/estaciones_hidro.json` + station folders |
+| Tributary flow | `hidrologia/Estaciones Hidroclimatológicas - Ríos tributarios/`, `Estaciones_tributarios.geojson` | `python scripts/build_hydro_trib.py` | `data/hidrologia/estaciones_hidro_trib.json`, `tributarios/` |
+| Cauca quality profiles | `data/calidad_agua/Calidad_del_agua_del_Rio_Cauca_*.csv` | `python scripts/perfil_longitudinal_calidad.py` | `data/calidad_agua/perfiles/*.png` |
+| Cane by segment | `data/cartografia/Hectareas_CZ.geojson` | `cd scripts/tramos && node build_tramos_cana.mjs` | `docs/tramos_cana_tributarios.*`, `data/cartografia/cortes_tramos.geojson` |
+| N/P prioritization | `priorizacion/Priorizacion_NP_subtramos.csv` | `node build_priorizacion_tramos.mjs` | `data/cartografia/Priorizacion_NP_tramos.geojson` |
+| Buffer by segment (ArcGIS) | — (uses the segments above) | `node build_buffer_tramos.mjs && py geojson_a_shapefile.py` | `data/exports/arcgis/` (not used by the viewer) |
 
 ---
 
@@ -122,7 +124,7 @@ git push
 
 ## Segment and sugarcane-cutting tool
 
-Side panel → *Study Area* → **Cut segments and calculate cane area**.
+Side panel → *Sugarcane* (hover) → **Cut segments and calculate cane area**.
 
 Disaggregates cane hectares by segment between monitoring stations, instead
 of by whole river. All computation happens in the browser with Turf.js;
@@ -166,7 +168,7 @@ there is no backend.
 | Bolo | 295.66 | 1,614.78 | 1,884.41 | 3,794.85 ha | 3,794.85 ha |
 | Fraile | 78.56 | 1,960.59 | 2,950.86 | 4,990.00 ha | 4,990.00 ha |
 
-Geometric closure 100.0000% on both. `data/cortes_tramos.geojson` carries
+Geometric closure 100.0000% on both. `data/cartografia/cortes_tramos.geojson` carries
 the cuts for all 15 tributaries and loads only when the tool is opened.
 
 **Limitation:** a cut behaves as an infinite line. If a river crosses that
@@ -197,10 +199,10 @@ still pending.
 Generated with:
 
 ```bash
-cd tools/tramos && npm install && node build_tramos_cana.mjs
+cd scripts/tramos && npm install && node build_tramos_cana.mjs
 ```
 
-`tools/` is a desktop tool with its own `package.json`: **the static site
+`scripts/tramos/` is a desktop tool with its own `package.json`: **the static site
 still has no build step or dependencies.**
 
 Two findings from the analysis worth keeping in mind:
@@ -222,15 +224,15 @@ Two findings from the analysis worth keeping in mind:
 [**docs/uso_suelo_tramos_detalle.csv**](docs/uso_suelo_tramos_detalle.csv) — the 103 codes at 1:25k
 
 What fraction of each segment is cane, pasture, forest, urban area, etc.,
-from CVC's land-cover layer (`data/databases/Uso_del_suelo_ZP.geojson`,
+from CVC's land-cover layer (`data/fuentes/cobertura/Uso_del_suelo_ZP.geojson`,
 1:25,000 scale).
 
 ```bash
-cd tools/tramos && node build_uso_suelo_tramos.mjs
+cd scripts/tramos && node build_uso_suelo_tramos.mjs
 ```
 
 Uses **the same segments** as the cane analysis: the buffer partition lives
-in `tools/tramos/segmentacion.mjs`, shared by both scripts, so they match by
+in `scripts/tramos/segmentacion.mjs`, shared by both scripts, so they match by
 construction, not coincidence.
 
 Three caveats:
@@ -258,7 +260,7 @@ Three caveats:
 | Google Fonts | — | DM Sans + Syne |
 | GitHub Pages | — | Static hosting |
 | GitHub Actions | v4 | Auto-deploy |
-| Python | 3.x | Data-prep scripts in `src/` (not served to the browser) |
+| Python | 3.x | Data-prep scripts in `scripts/` (not published) |
 
 No build step: native ES modules and global `<script>` tags. No
 `package.json` or bundler. Charts are pre-rendered PNGs from the Python
@@ -316,21 +318,31 @@ Rio_Cauca_Baseline/
 │   ├── tramos/geometry.js              ← Semiplanos, corte, área geodésica
 │   ├── tramos/stations.js              ← Río ↔ estaciones, etiquetas de tramo
 │   ├── data/waterQuality.js            ← Parser CSV + join por estación
-│   ├── utils/bounds.js, utils/format.js
-│   └── build_*.py, perfil_*.py         ← Preparación de datos (no se sirven)
-├── tools/tramos/                       ← Análisis de tramos (Node + turf).
-│                                         Fuera del sitio: tiene package.json propio
-├── docs/                               ← Reportes versionados (MD + CSV)
+│   └── utils/bounds.js, utils/format.js
+├── scripts/                            ← Pipelines de datos (no se publican)
+│   ├── build_calidad_trib.py           ← Puntos de calidad de tributarios + CSV por punto
+│   ├── build_hydro_data.py             ← Estaciones hidrométricas del Río Cauca
+│   ├── build_hydro_trib.py             ← Estaciones hidrométricas de tributarios
+│   ├── build_caudal_consolidado.py     ← Caudal diario consolidado de tributarios
+│   ├── perfil_longitudinal_calidad.py  ← PNG de perfiles longitudinales
+│   └── tramos/                         ← Análisis de tramos (Node + turf, package.json propio)
 ├── data/
-│   ├── cartografia/                    ← Buffer 700 m, caña (Hectareas_CZ),
-│   │                                     Río Cauca y tributarios (WGS84)
-│   ├── cortes_tramos.geojson           ← Cortes de tramo versionados
-│   ├── databases/                      ← Estaciones y calidad (fuente CVC)
-│   ├── geovisor/                       ← Puntos de calidad + CSV por punto
-│   ├── hydrology/                      ← Caudales y curvas de duración
-│   └── water_quality/perfiles/         ← PNG de perfiles longitudinales
+│   ├── cartografia/                    ← Capas del mapa: buffer 700 m, caña (Hectareas_CZ),
+│   │                                     Río Cauca, tributarios, priorización N/P,
+│   │                                     cortes de tramo (WGS84)
+│   ├── calidad_agua/                   ← Estaciones de calidad, CSV por punto, perfiles
+│   ├── hidrologia/                     ← Caudales y curvas de duración por estación
+│   ├── fuentes/                        ← Insumos crudos; solo los leen los scripts
+│   │   ├── calidad_agua/, hidrologia/  ← Excel CVC/CARDER y carpetas por estación
+│   │   ├── cobertura/                  ← Cobertura CVC + coberturas Palo/Desbaratado/Risaralda
+│   │   └── priorizacion/               ← Tabla de priorización N/P (Informe 1, Tabla 5.2)
+│   └── exports/arcgis/                 ← Productos para ArcGIS Pro (buffer por tramo)
+├── docs/                               ← Reportes versionados (MD + CSV)
 └── .github/workflows/deploy.yml        ← Auto-deploy en GitHub Pages
 ```
+
+Solo se publican `index.html`, `css/`, `src/` y `data/{cartografia,calidad_agua,hidrologia}`:
+es todo lo que carga el visor.
 
 ---
 
@@ -368,27 +380,19 @@ python -m http.server 8000
 
 ## Actualización de datos
 
-| Dato | Archivo a reemplazar | Fuente | Estado |
-|---|---|---|---|
-| Calidad agua tributarios | `data/calidad_agua.csv` | CVC — DT02 | Pendiente |
-| Calidad agua Cauca | `data/calidad_agua.csv` (filas Tramo 1/2/3) | CVC — DT02 | Pendiente |
-| Caudales CVC tributarios | `data/hidrometria.csv` | CVC — DT02 | Pendiente |
-| Curvas duración Risaralda | `data/caudales_cdc.csv` | CARDER ERA | ✓ Disponible |
-| Geometría tributarios | `data/rios_tributarios.geojson` | SHP CVC/IDEAM | Pendiente SHP |
-| Coordenadas estaciones | `data/estaciones_hidrometricas.geojson` | ArcGIS Pro (MAGNA-SIRGAS) | Pendiente verificación |
-| Área caña por buffer | Nuevas columnas en GeoJSON tributarios | SHP CVC + ArcGIS Pro | Pendiente |
+Se reemplaza el insumo crudo en `data/fuentes/` y se vuelve a correr su pipeline; el visor
+toma la salida al recargar (subir `BUILD_VERSION` en `src/layers/geojson.js` para que el
+navegador descarte la copia en caché).
 
-### Para actualizar los datos CARDER cuando lleguen DT02/DT03:
-```bash
-# 1. Copiar los CSV fuente a la carpeta Fase I/Derechos de petición/
-# 2. Ejecutar el script de transformación:
-cd Rio_Cauca_Baseline
-python scripts/prepare_data.py
-# 3. Hacer commit de los nuevos archivos en data/
-git add data/
-git commit -m "Actualización datos DT02 — calidad agua CVC"
-git push
-```
+| Dato | Insumo crudo (`data/fuentes/`) | Pipeline | Salida que carga el visor |
+|---|---|---|---|
+| Calidad agua tributarios | `calidad_agua/Calidad_agua_completo_v12.xlsx`, `Calidad_tributarios.geojson` | `python scripts/build_calidad_trib.py` | `data/calidad_agua/puntos_calidad_tributarios.geojson`, `csv_por_punto/` |
+| Caudales Río Cauca | `hidrologia/Estaciones Hidroclimatológicas - Río Cauca/` | `python scripts/build_hydro_data.py` | `data/hidrologia/estaciones_hidro.json` + carpetas por estación |
+| Caudales tributarios | `hidrologia/Estaciones Hidroclimatológicas - Ríos tributarios/`, `Estaciones_tributarios.geojson` | `python scripts/build_hydro_trib.py` | `data/hidrologia/estaciones_hidro_trib.json`, `tributarios/` |
+| Perfiles calidad Cauca | `data/calidad_agua/Calidad_del_agua_del_Rio_Cauca_*.csv` | `python scripts/perfil_longitudinal_calidad.py` | `data/calidad_agua/perfiles/*.png` |
+| Caña por tramo | `data/cartografia/Hectareas_CZ.geojson` | `cd scripts/tramos && node build_tramos_cana.mjs` | `docs/tramos_cana_tributarios.*`, `data/cartografia/cortes_tramos.geojson` |
+| Priorización N/P | `priorizacion/Priorizacion_NP_subtramos.csv` | `node build_priorizacion_tramos.mjs` | `data/cartografia/Priorizacion_NP_tramos.geojson` |
+| Buffer por tramo (ArcGIS) | — (usa los tramos de arriba) | `node build_buffer_tramos.mjs && py geojson_a_shapefile.py` | `data/exports/arcgis/` (no lo usa el visor) |
 
 ---
 
@@ -410,7 +414,7 @@ git push
 
 ## Herramienta de tramos y caña de azúcar
 
-Panel lateral → *Zona de Estudio* → **Cortar tramos y calcular caña**.
+Panel lateral → *Caña de Azúcar* (hover) → **Cortar tramos y calcular caña**.
 
 Desagrega las hectáreas de caña por tramo entre estaciones de monitoreo, en vez de
 por río completo. Todo el cálculo ocurre en el navegador con Turf.js; no hay backend.
@@ -452,7 +456,7 @@ por río completo. Todo el cálculo ocurre en el navegador con Turf.js; no hay b
 | Bolo | 295,66 | 1.614,78 | 1.884,41 | 3.794,85 ha | 3.794,85 ha |
 | Fraile | 78,56 | 1.960,59 | 2.950,86 | 4.990,00 ha | 4.990,00 ha |
 
-Cierre geométrico 100,0000 % en ambos. `data/cortes_tramos.geojson` trae los cortes de
+Cierre geométrico 100,0000 % en ambos. `data/cartografia/cortes_tramos.geojson` trae los cortes de
 los 15 tributarios y se carga solo al abrir la herramienta.
 
 **Limitación:** el corte se comporta como una recta infinita. Si un río vuelve a cruzar
@@ -480,10 +484,10 @@ líneas sueltas, no una sola.
 Se genera con:
 
 ```bash
-cd tools/tramos && npm install && node build_tramos_cana.mjs
+cd scripts/tramos && npm install && node build_tramos_cana.mjs
 ```
 
-`tools/` es una herramienta de escritorio con su propio `package.json`: **el sitio estático
+`scripts/tramos/` es una herramienta de escritorio con su propio `package.json`: **el sitio estático
 sigue sin build step ni dependencias**.
 
 Dos hallazgos del análisis que conviene tener presentes:
@@ -505,14 +509,14 @@ Dos hallazgos del análisis que conviene tener presentes:
 [**docs/uso_suelo_tramos_detalle.csv**](docs/uso_suelo_tramos_detalle.csv) — los 103 códigos de 25k
 
 Qué fracción de cada tramo es caña, pastos, bosque, zona urbana, etc., a partir de la capa
-de cobertura de la CVC (`data/databases/Uso_del_suelo_ZP.geojson`, escala 1:25.000).
+de cobertura de la CVC (`data/fuentes/cobertura/Uso_del_suelo_ZP.geojson`, escala 1:25.000).
 
 ```bash
-cd tools/tramos && node build_uso_suelo_tramos.mjs
+cd scripts/tramos && node build_uso_suelo_tramos.mjs
 ```
 
 Usa **los mismos tramos** que el análisis de caña: la partición del buffer vive en
-`tools/tramos/segmentacion.mjs`, compartida por los dos scripts, así que coinciden por
+`scripts/tramos/segmentacion.mjs`, compartida por los dos scripts, así que coinciden por
 construcción y no por coincidencia.
 
 Tres advertencias:
@@ -537,7 +541,7 @@ Tres advertencias:
 | Google Fonts | — | DM Sans + Syne |
 | GitHub Pages | — | Hosting estático |
 | GitHub Actions | v4 | Auto-deploy |
-| Python | 3.x | Scripts de preparación de datos en `src/` (no se sirven al navegador) |
+| Python | 3.x | Scripts de preparación de datos en `scripts/` (no se publican) |
 
 Sin build step: módulos ES nativos y `<script>` globales. No hay `package.json` ni bundler.
 Las gráficas son PNG pre-renderizados por los scripts de Python, no una librería de charts.

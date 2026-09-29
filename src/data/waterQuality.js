@@ -7,7 +7,7 @@
  * lectura del archivo por sesión, compartida por todos los accesores.
  */
 
-const CSV_PATH    = 'data/databases/Calidad_del_agua_del_Rio_Cauca_20260604.csv';
+const CSV_PATH    = 'data/calidad_agua/Calidad_del_agua_del_Rio_Cauca_20260604.csv';
 const DATA_VERSION = '1.5';   // incrementar junto con BUILD_VERSION en geojson.js cuando se actualice el CSV
 
 const FECHA_COL = 'FECHA DE MUESTREO';

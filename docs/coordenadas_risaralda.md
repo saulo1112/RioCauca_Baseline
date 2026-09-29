@@ -16,7 +16,7 @@ fuente de CARDER (`PUNTOS_DE_MONITOREO.xlsx`, hoja `MONITOREO`) y el abscisado
 
 ## 1. Estaciones de calidad del agua
 
-**8** puntos en el geovisor (`data/geovisor/puntos_calidad_tributarios.geojson`), verificados
+**8** puntos en el geovisor (`data/calidad_agua/puntos_calidad_tributarios.geojson`), verificados
 contra el catálogo CARDER. La columna **Δ catálogo** es la distancia entre la coordenada del
 geovisor y la del catálogo CARDER para el mismo código.
 
@@ -47,8 +47,8 @@ Chapata: `Punto_COD=47`, `Punto_Nombre="QUEBRADA CHAPATA, DESEMBOCADURA"`) en ve
 propios de SUP-241. Es un error de captura en la fuente CARDER, no algo reconstruible desde
 los archivos disponibles. Se dejó fuera de la capa por decisión explícita: solo entran
 estaciones con histórico real. Si aparece un archivo con el histórico real de SUP-241, se
-puede agregar como punto nuevo en `data/databases/Calidad_tributarios.geojson` y volver a
-correr `src/build_calidad_trib.py`.
+puede agregar como punto nuevo en `data/fuentes/calidad_agua/Calidad_tributarios.geojson` y volver a
+correr `scripts/build_calidad_trib.py`.
 
 ---
 
@@ -63,8 +63,8 @@ en la revisión anterior:
 | Rio Risaralda EHT | 5.225670 | -75.804000 | Activa | 2025–2026 | 466 | 6,88 |
 | Casa Maquinas | 5.188540 | -75.813400 | Activa | 2025–2026 | 443 | 25,51 |
 
-Fuente: `data/hydrology/estaciones_hidro_trib.json` (coordenadas heredadas de
-`data/databases/Estaciones_tributarios.geojson`).
+Fuente: `data/hidrologia/estaciones_hidro_trib.json` (coordenadas heredadas de
+`data/fuentes/hidrologia/Estaciones_tributarios.geojson`).
 
 > Los 9 puntos `SUP-*` del catálogo CARDER (8 en la capa + SUP-241) son estaciones de **calidad**, no de caudal — el
 > propio catálogo las clasifica como "Monitoreo periodico". Aparecen en `estaciones_hidro.csv`
@@ -90,8 +90,8 @@ snapeaba casi perfecto (0,6 m) sobre el eje digitalizado del Risaralda en vez de
 Esto era consistente con algo ya detectado en el análisis de tramos: esta estación se excluye
 explícitamente por ser "una estación del Río Cauca clasificada bajo otro río".
 
-**Corrección aplicada** en `data/databases/Calidad_tributarios.geojson` (fuente del pipeline
-`src/build_calidad_trib.py`): las coordenadas de "Río Cauca - Antes río Risaralda" se
+**Corrección aplicada** en `data/fuentes/calidad_agua/Calidad_tributarios.geojson` (fuente del pipeline
+`scripts/build_calidad_trib.py`): las coordenadas de "Río Cauca - Antes río Risaralda" se
 corrigieron a las de SUP-105 (4.892604, -75.888080) — el punto conserva su nombre e histórico
 (47 muestras), solo se movió a su ubicación real. SUP-241 no se agregó como punto nuevo por
 falta de histórico real (ver §1).
@@ -137,14 +137,14 @@ No se encontró nada equivalente en la capa hidrométrica del Río Cauca (`estac
 
 | Dato | Archivo |
 |---|---|
-| Estaciones de calidad, tributarios (geovisor, generado) | `Rio_Cauca_Baseline/data/geovisor/puntos_calidad_tributarios.geojson` |
-| Estaciones de calidad, tributarios (fuente, coordenadas) | `Rio_Cauca_Baseline/data/databases/Calidad_tributarios.geojson` |
-| Estaciones de calidad, tributarios (fuente, histórico de muestras) | `Rio_Cauca_Baseline/data/databases/Calidad_agua_completo_v12.xlsx`, hoja `CONSOLIDADO` |
-| Script que cruza fuente → capa del geovisor | `Rio_Cauca_Baseline/src/build_calidad_trib.py` |
-| Estaciones de calidad, Río Cauca (geovisor) | `Rio_Cauca_Baseline/data/databases/Estaciones_Calidad_RC.geojson` |
-| Estaciones hidrométricas, tributarios (geovisor) | `Rio_Cauca_Baseline/data/hydrology/estaciones_hidro_trib.json` |
-| Estaciones hidrométricas, Río Cauca (geovisor) | `Rio_Cauca_Baseline/data/hydrology/estaciones_hidro.json` |
-| Catálogo CARDER (coordenadas SUP-*) | `Perfiles tributarios/Tributarios/RIO RISARALDA/PUNTOS_DE_MONITOREO.xlsx`, hoja `MONITOREO` |
-| Catálogo CARDER (histórico por punto, con el error de SUP-241) | `Perfiles tributarios/Tributarios/RIO RISARALDA/PUNTOS_DE_MONITOREO.xlsx`, hoja `SUP-241` |
+| Estaciones de calidad, tributarios (geovisor, generado) | `Rio_Cauca_Baseline/data/calidad_agua/puntos_calidad_tributarios.geojson` |
+| Estaciones de calidad, tributarios (fuente, coordenadas) | `Rio_Cauca_Baseline/data/fuentes/calidad_agua/Calidad_tributarios.geojson` |
+| Estaciones de calidad, tributarios (fuente, histórico de muestras) | `Rio_Cauca_Baseline/data/fuentes/calidad_agua/Calidad_agua_completo_v12.xlsx`, hoja `CONSOLIDADO` |
+| Script que cruza fuente → capa del geovisor | `Rio_Cauca_Baseline/scripts/build_calidad_trib.py` |
+| Estaciones de calidad, Río Cauca (geovisor) | `Rio_Cauca_Baseline/data/calidad_agua/Estaciones_Calidad_RC.geojson` |
+| Estaciones hidrométricas, tributarios (geovisor) | `Rio_Cauca_Baseline/data/hidrologia/estaciones_hidro_trib.json` |
+| Estaciones hidrométricas, Río Cauca (geovisor) | `Rio_Cauca_Baseline/data/hidrologia/estaciones_hidro.json` |
+| Catálogo CARDER (coordenadas SUP-*) | `Rio_Cauca_Baseline/data/fuentes/hidrologia/Estaciones Hidroclimatológicas - Ríos tributarios/RIO RISARALDA/PUNTOS_DE_MONITOREO.xlsx`, hoja `MONITOREO` |
+| Catálogo CARDER (histórico por punto, con el error de SUP-241) | `Rio_Cauca_Baseline/data/fuentes/hidrologia/Estaciones Hidroclimatológicas - Ríos tributarios/RIO RISARALDA/PUNTOS_DE_MONITOREO.xlsx`, hoja `SUP-241` |
 | Abscisado / snapping sobre el eje | `Perfiles tributarios/estaciones_hidro.csv` |
 | Eje digitalizado del río | `Rio_Cauca_Baseline/data/cartografia/Tributarios_rios_cauca.geojson` |

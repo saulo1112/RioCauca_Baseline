@@ -1,7 +1,7 @@
 # Uso del suelo por tramo — tributarios del Río Cauca
 
 **Proyecto 890K | UAO × ASOCAÑA | Fase I — Corredor Biológico**  
-*Generado el 2026-09-19 por `tools/tramos/build_uso_suelo_tramos.mjs`*
+*Generado el 2026-09-29 por `scripts/tramos/build_uso_suelo_tramos.mjs`*
 
 Composición de coberturas dentro del buffer de 700 m, desagregada por los mismos tramos
 del análisis de caña. **34 tramos en 13 ríos.**
@@ -658,11 +658,11 @@ Códigos: **CANA** Caña de azúcar · **CP** Cultivos permanentes · **CSP** Cu
 
 | Capa | Archivo |
 |---|---|
-| Cobertura y uso del suelo | `data/databases/Uso_del_suelo_ZP.geojson` (CVC, 1:25.000) |
+| Cobertura y uso del suelo | `data/fuentes/cobertura/Uso_del_suelo_ZP.geojson` (CVC, 1:25.000) |
 | Buffer 700 m | `data/cartografia/Buffer_Zona_de_Estudio.geojson` |
 | Caña (autoritativa) | `data/cartografia/Hectareas_CZ.geojson` |
-| Cortes de tramo | `data/cortes_tramos.geojson` |
+| Cortes de tramo | `data/cartografia/cortes_tramos.geojson` |
 
 Clasificación según «GeoCVC — Guía rápida temática: Cobertura y uso del suelo, 2022»,
 dominios `Dom_Cob_CLC_CVC_25k` y `Dom_Cob_Int_Grupo_UA`. La tabla código → grupo está en
-`tools/tramos/clases_uso.mjs`.
+`scripts/tramos/clases_uso.mjs`.

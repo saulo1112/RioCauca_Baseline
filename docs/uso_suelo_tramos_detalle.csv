@@ -946,7 +946,7 @@ Rio Zabaletas,3,Rio Sabaletas - Puente vía Santa Elena-Ginebra,Rio Sabaletas - 
 Rio Zabaletas,3,Rio Sabaletas - Puente vía Santa Elena-Ginebra,Rio Sabaletas - Antes desembocadura a Rio Cauca,20.101,43.353,2751.17,100.0,41220,Estanques artificiales / reservorios,6.06,0.22
 Rio Zabaletas,3,Rio Sabaletas - Puente vía Santa Elena-Ginebra,Rio Sabaletas - Antes desembocadura a Rio Cauca,20.101,43.353,2751.17,100.0,41221,Canal,11.12,0.40
 
-# generado,2026-09-19T01:58:37.144Z
+# generado,2026-09-29T19:16:27.013Z
 # cobertura,capa CVC Uso_del_suelo_ZP (escala 1:25.000)
 # cana,area_ha de la clase CANA = cana_ha_normalizada de tramos_cana_tributarios.csv (fuente Hectareas_CZ)
 # resto,reescalado proporcionalmente para que el tramo cierre en 100 %

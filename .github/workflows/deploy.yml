@@ -18,8 +18,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v4
+      # Solo se publica lo que el geovisor carga en el navegador. Las fuentes
+      # crudas (data/fuentes), los productos para ArcGIS (data/exports), los
+      # scripts de datos (scripts/) y los reportes (docs/) se quedan en el repo
+      # pero no se suben a Pages (son ~250 MB que el sitio nunca pide).
+      - name: Preparar el sitio
+        run: |
+          mkdir -p _site/data
+          cp -r index.html css src _site/
+          cp -r data/cartografia data/calidad_agua data/hidrologia _site/data/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
       - id: deployment
         uses: actions/deploy-pages@v4

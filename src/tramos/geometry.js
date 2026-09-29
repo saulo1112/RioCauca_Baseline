@@ -380,7 +380,7 @@ const BEARING_BASE_KM = 0.5;
  *
  * `bearingBaseKm` permite alargar la base del rumbo cuando el corte no llega a
  * separar el polígono (ver la escalera de reintentos en
- * tools/tramos/build_tramos_cana.mjs). */
+ * scripts/tramos/build_tramos_cana.mjs). */
 export function perpendicularAt(axis, point, lengthKm = 2, bearingBaseKm = BEARING_BASE_KM) {
   const snapped = turf.nearestPointOnLine(axis, point, { units: 'kilometers' });
   const km = snapped.properties.location;

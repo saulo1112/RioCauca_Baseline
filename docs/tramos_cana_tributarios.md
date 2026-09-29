@@ -1,7 +1,7 @@
 # Hectáreas de caña de azúcar por tramo — tributarios del Río Cauca
 
 **Proyecto 890K | UAO × ASOCAÑA | Fase I — Corredor Biológico**  
-*Generado el 2026-09-19 por `tools/tramos/build_tramos_cana.mjs`*
+*Generado el 2026-09-29 por `scripts/tramos/build_tramos_cana.mjs`*
 
 Desagregación de las hectáreas de caña dentro del buffer de 700 m, por tramo entre
 estaciones de calidad del agua. **46 tramos en 15 ríos, 25.092,55 ha.**
@@ -72,7 +72,7 @@ dentro de la zona cañera.
 
 ### Cortes preservados de Bolo y Fraile
 
-Los 4 cortes de Bolo y Fraile ya estaban versionados en `data/cortes_tramos.geojson` y sus
+Los 4 cortes de Bolo y Fraile ya estaban versionados en `data/cartografia/cortes_tramos.geojson` y sus
 cifras publicadas, así que **se reutilizan tal cual en vez de regenerarlos**. No es un
 detalle menor: el corte del Fraile en Puente Vía a Miranda es oblicuo al eje, y sustituirlo
 por la perpendicular movía su tramo 1 de 78,56 a 92,77 ha. Los 13 ríos restantes usan
@@ -362,6 +362,6 @@ resolverlas en el Excel y el GeoJSON de origen.
 | Caña de azúcar | `data/cartografia/Hectareas_CZ.geojson` (campo `SUM_AREA_HA`) |
 | Ejes de tributarios | `data/cartografia/Tributarios_rios_cauca.geojson` |
 | Río Cauca (orientación) | `data/cartografia/Rio_cauca.geojson` |
-| Estaciones de calidad | `data/geovisor/puntos_calidad_tributarios.geojson` |
+| Estaciones de calidad | `data/calidad_agua/puntos_calidad_tributarios.geojson` |
 
 Todas en WGS84 (EPSG:4326). Datos tabulares en `docs/tramos_cana_tributarios.csv`.

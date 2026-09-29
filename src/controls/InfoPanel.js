@@ -329,7 +329,7 @@ function renderHistoricoTrib(p) {
 async function downloadTribCSV(csvFilename) {
   if (!csvFilename) return;
   try {
-    const resp = await fetch(`data/geovisor/csv_por_punto/${encodeURIComponent(csvFilename)}`);
+    const resp = await fetch(`data/calidad_agua/csv_por_punto/${encodeURIComponent(csvFilename)}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const csv  = await resp.text();
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
@@ -381,7 +381,7 @@ function renderHidro(p) {
   const rutaHidro = p.ruta_hidro ?? p.nombre;
   html += '<hr class="info-sep">';
   if (p.tiene_cdc) {
-    const src = `data/hydrology/${rutaHidro.split('/').map(encodeURIComponent).join('/')}/curva_duracion_caudales.png`;
+    const src = `data/hidrologia/${rutaHidro.split('/').map(encodeURIComponent).join('/')}/curva_duracion_caudales.png`;
     html += `<img class="hidro-cdc" src="${src}" alt="Curva de duración de caudales">`;
     if (p.umbral_invierno_m3s != null && p.umbral_verano_m3s != null) {
       html += `<div class="hidro-umbral">Invierno ≥ ${fmt(p.umbral_invierno_m3s, 1)} m³/s · ` +
@@ -402,7 +402,7 @@ function renderHidro(p) {
 async function downloadHidroCSV(ruta, nombre) {
   try {
     const encodedRuta = ruta.split('/').map(encodeURIComponent).join('/');
-    const resp = await fetch(`data/hydrology/${encodedRuta}/caudal_diario.csv`);
+    const resp = await fetch(`data/hidrologia/${encodedRuta}/caudal_diario.csv`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const csv  = await resp.text();
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });

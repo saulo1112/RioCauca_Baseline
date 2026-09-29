@@ -11,7 +11,7 @@
 
 import { BUILD_VERSION } from '../layers/geojson.js';
 
-const BASE = 'data/water_quality/perfiles/';
+const BASE = 'data/calidad_agua/perfiles/';
 
 const GALERIA_PERFILES = [
   { param: 'DBO',      label: 'DBO₅',            archivo: 'perfil_DBO_condicion.png'      },

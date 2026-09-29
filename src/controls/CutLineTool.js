@@ -30,7 +30,7 @@ import {
 
 /* Archivo de cortes versionado en el repo. Si existe, se carga al arrancar
  * para que los resultados publicados sean reproducibles. */
-const CORTES_PATH = 'data/cortes_tramos.geojson';
+const CORTES_PATH = 'data/cartografia/cortes_tramos.geojson';
 
 /* Paleta de los tramos, de aguas arriba a aguas abajo. */
 const TRAMO_COLORS = ['#FFB300', '#26C6DA', '#AB47BC', '#66BB6A', '#EF5350', '#5C6BC0'];
