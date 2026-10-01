@@ -3,9 +3,11 @@
 import { CLICKABLE_LAYERS, getHectareasTotalHa, flashCana } from '../layers/geojson.js';
 import { getRiverColor }                         from '../layers/registry.js';
 import { PRIORIZACION_COLORS }                   from '../layers/priorizacionColors.js';
+import { MONITOREO_COLORS }                      from '../layers/monitoreoColors.js';
 import { getStationRecords, getAvailableParams, buildStationCSV }
   from '../data/waterQuality.js';
 import * as WaterQualityGallery from './WaterQualityGallery.js';
+import { renderMonitoreo }      from './MonitoreoFicha.js';
 import { fmt, escapeHtml }      from '../utils/format.js';
 
 /* Interruptor global del panel. La herramienta de corte de tramos lo apaga
@@ -195,6 +197,35 @@ function buildInfo(layerId, p) {
       };
     }
 
+    case 'monitoreo-corredor-circle': {
+      const estado = p.estado ?? '—';
+      const chip = `<span class="mon-chip" style="background:${MONITOREO_COLORS[estado] ?? '#aaa'}"></span>`;
+      const motivo = (estado !== 'Incluida' && p.motivo_exclusion)
+        ? `<div class="mon-motivo">${escapeHtml(p.motivo_exclusion)}</div>` : '';
+      const rows = [
+        ['Río',           escapeHtml(String(p.rio_display ?? p.rio ?? '—').replace(/^R[ií]o /, ''))],
+        ['Subtramo',      `${escapeHtml(p.subtramo ?? '—')} · categoría ${escapeHtml(p.categoria ?? '—')}`],
+        ['Tramo',         escapeHtml(p.delimitacion ?? '—')],
+        ['Área de caña',  p.area_cana_ha != null ? `${fmt(p.area_cana_ha)} ha` : '—'],
+        ['Estado',        `${chip}${escapeHtml(estado)}${motivo}`],
+        ['Estación de cierre', escapeHtml(p.estacion ?? '—')],
+      ];
+      if (p.estacion_hidro) {
+        rows.push(['Caudal', `${escapeHtml(p.estacion_hidro)}<div class="mon-motivo">${
+          escapeHtml(p.relacion_hidro ?? '')}</div>`]);
+      }
+      if (p.situacion_puntual === 'con_vertimientos') {
+        rows.push(['Vertimientos (CVC)', `${p.n_vertimientos} · DBO5 ${fmt(p.carga_dbo5_kg_d, 2)} kg/d · ` +
+                   `SST ${fmt(p.carga_sst_kg_d, 2)} kg/d`]);
+      }
+      return {
+        title: `${p.rio_display ?? p.rio ?? '—'}, subtramo ${p.subtramo ?? '—'}`,
+        color: 'var(--text-primary)',
+        monitoreo: p,
+        rows,
+      };
+    }
+
     default:
       return {
         title: layerId,
@@ -210,7 +241,7 @@ function buildInfo(layerId, p) {
  * hace click en otra estación antes de que el CSV termine de procesarse). */
 let _panelToken = 0;
 
-function showPanel({ title, color, rows, station, hidro, trib }) {
+function showPanel({ title, color, rows, station, hidro, trib, monitoreo }) {
   const panel = document.getElementById('info-panel');
   if (!panel) return;
   const token = ++_panelToken;
@@ -223,11 +254,13 @@ function showPanel({ title, color, rows, station, hidro, trib }) {
 
   const extra = document.getElementById('info-extra');
   if (extra) extra.innerHTML = '';
+  panel.classList.toggle('info-panel-ficha', !!monitoreo);
   panel.classList.add('visible');
 
   if (station) renderHistorico(station, token);
   if (hidro)   renderHidro(hidro);
   if (trib)    renderHistoricoTrib(trib);
+  if (monitoreo) renderMonitoreo(monitoreo, extra);
 }
 
 function hidePanel() {

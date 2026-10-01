@@ -15,6 +15,7 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 import { normalizeRio, riverColorMatchExpr, ensureTriangleIcon, TRIANGLE_ICON_ID }
   from './riverColors.js';
 import { priorizacionColorMatchExpr } from './priorizacionColors.js';
+import { monitoreoColorMatchExpr }    from './monitoreoColors.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente.
@@ -23,7 +24,7 @@ import { priorizacionColorMatchExpr } from './priorizacionColors.js';
  * (data/cartografia/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
-export const BUILD_VERSION = '2.7';
+export const BUILD_VERSION = '2.8';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -36,6 +37,10 @@ const PATHS = {
   'estaciones-hidro':      'data/hidrologia/estaciones_hidro.json',
   'estaciones-hidro-trib': 'data/hidrologia/estaciones_hidro_trib.json',
   'priorizacion-np':       'data/cartografia/Priorizacion_NP_tramos.geojson',
+  /* Monitoreo de calidad de agua (Actividad 5): estación de cierre de cada
+   * subtramo Alta/Muy alta, con caudal por condición y estado. Generado por
+   * scripts/build_monitoreo_corredor.py (mismas cifras que el Excel). */
+  'monitoreo-corredor':    'data/cartografia/Monitoreo_corredor.geojson',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
@@ -62,10 +67,14 @@ export const CLICKABLE_LAYERS = [
   'rio-cauca-line',
   'tributarios-line',
   'priorizacion-np-fill',
+  'monitoreo-corredor-circle',
 ];
 
 /* Ids de la capa de priorización, para el toggle (ver PriorizacionToggle.js). */
 export const PRIORIZACION_LAYERS = ['priorizacion-np-fill', 'priorizacion-np-outline'];
+
+/* Ids de la capa de monitoreo, para su toggle (ver MonitoreoToggle.js). */
+export const MONITOREO_LAYERS = ['monitoreo-corredor-circle', 'monitoreo-corredor-label'];
 
 let _hectareasReady  = false;
 let _hectareasTotalHa = 0;   // suma de SUM_AREA_HA de todos los registros
@@ -135,6 +144,11 @@ export async function loadGeoJSONLayers(map) {
 
   /* 4d. Estaciones hidrométricas — Ríos tributarios */
   await _loadEstacionesHidroTrib(map);
+
+  /* 4e. Monitoreo de calidad de agua — al final para quedar encima de las
+   *     estaciones de calidad, con las que comparte coordenadas. Oculta por
+   *     defecto; se activa desde "Zona de Estudio" (MonitoreoToggle.js). */
+  await _loadMonitoreo(map);
 
   console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
 
@@ -558,6 +572,69 @@ async function _loadPriorizacion(map) {
     console.log('[geojson] Priorización N/P:', geojson.features.length, 'subtramos');
   } catch (err) {
     console.error('[geojson] Error cargando priorización N/P:', err);
+  }
+}
+
+/* ── Monitoreo de calidad de agua (Actividad 5) ───────────────────────── */
+/* Un punto por estación de cierre de los subtramos Alta/Muy alta, coloreado
+ * por estado con los escalones de la paleta de priorización (ver
+ * monitoreoColors.js). Algo más grande que las estaciones de calidad, que
+ * quedan debajo en las mismas coordenadas. */
+async function _loadMonitoreo(map) {
+  try {
+    const resp = await fetch(`${PATHS['monitoreo-corredor']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const geojson = await resp.json();
+
+    if (!map.getSource('monitoreo-corredor')) {
+      map.addSource('monitoreo-corredor', { type: 'geojson', data: geojson });
+    }
+
+    if (!map.getLayer('monitoreo-corredor-circle')) {
+      map.addLayer({
+        id:     'monitoreo-corredor-circle',
+        type:   'circle',
+        source: 'monitoreo-corredor',
+        layout: { visibility: 'none' },
+        paint: {
+          'circle-radius': [
+            'interpolate', ['linear'], ['zoom'],
+            8, 6,
+            12, 9,
+          ],
+          'circle-color':        monitoreoColorMatchExpr('estado'),
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#FFFFFF',
+          'circle-opacity':      0.95,
+        },
+      });
+    }
+
+    if (!map.getLayer('monitoreo-corredor-label')) {
+      map.addLayer({
+        id:      'monitoreo-corredor-label',
+        type:    'symbol',
+        source:  'monitoreo-corredor',
+        minzoom: 9,
+        layout: {
+          visibility:    'none',
+          'text-field':  ['get', 'etiqueta'],
+          'text-size':   11,
+          'text-font':   ['Open Sans Regular'],
+          'text-offset': [0, 1.3],
+          'text-anchor': 'top',
+        },
+        paint: {
+          'text-color':      '#1a1a1a',
+          'text-halo-color': '#FFFFFF',
+          'text-halo-width': 2,
+        },
+      });
+    }
+
+    console.log('[geojson] Monitoreo de calidad de agua:', geojson.features.length, 'puntos');
+  } catch (err) {
+    console.error('[geojson] Error cargando monitoreo de calidad de agua:', err);
   }
 }
 

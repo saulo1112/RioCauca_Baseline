@@ -1096,3 +1096,193 @@ h1, .tramo-num, .section-title, .logo-name {
 .ct-qa strong { color: var(--text-secondary); }
 .ct-ok strong   { color: var(--success); }
 .ct-warn strong { color: var(--warning); }
+
+/* ── Monitoreo de calidad de agua (Actividad 5) ─────────────── */
+/* Submenú de "Zona de Estudio" en columna: el botón nuevo va debajo del de
+ * priorización en vez de a su lado. */
+.layer-submenu-col {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.submenu-btn-monitoreo span { color: #dc9f80; }
+.submenu-btn-monitoreo:hover span { color: #f0c3aa; }
+.submenu-btn-monitoreo.active span {
+  color: #f0c3aa;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* La ficha de monitoreo lleva controles y un gráfico: algo más ancha. */
+.info-panel.info-panel-ficha { max-width: 330px; width: 330px; max-height: 78vh; }
+
+.mon-chip {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: 0;
+  border: 1px solid rgba(255,255,255,0.6);
+}
+.mon-motivo {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.35;
+}
+.mon-nota {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.mon-aviso {
+  display: flex;
+  gap: 7px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  background: rgba(255,152,0,0.08);
+  border-left: 3px solid var(--warning);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+.mon-aviso > span { color: var(--warning); }
+.mon-aviso strong { color: var(--text-primary); font-weight: 600; }
+
+.mon-ctrl { display: flex; flex-direction: column; gap: 8px; }
+.mon-field { display: flex; flex-direction: column; gap: 4px; }
+.mon-lbl { font-size: 10px; color: var(--text-muted); }
+.mon-lbl-row { display: flex; justify-content: space-between; align-items: baseline; }
+.mon-rem-val {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.mon-seg { display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.mon-seg button {
+  flex: 1;
+  background: var(--bg-card);
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 10.5px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+.mon-seg button + button { border-left: 1px solid var(--border); }
+.mon-seg button[aria-pressed="true"] {
+  background: rgba(41,182,246,0.12);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mon-cond,
+.mon-meta-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 5px 6px;
+}
+.mon-rem { width: 100%; accent-color: var(--accent); margin: 0; }
+.mon-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mon-seg button:focus-visible,
+.mon-cond:focus-visible,
+.mon-rem:focus-visible,
+.mon-meta-input:focus-visible,
+.mon-meta-ir:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.mon-res { margin: 10px 0 2px; }
+.mon-res-conc { display: flex; align-items: baseline; gap: 5px; }
+.mon-res-val {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.mon-res-unit { font-size: 11px; color: var(--text-secondary); }
+.mon-res-sub {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+
+/* Gráfico: una serie, marcas finas, grilla recesiva, texto en tinta neutra. */
+.mon-chart { width: 100%; height: auto; display: block; margin-top: 4px; }
+.mon-chart .mon-grid  { stroke: rgba(255,255,255,0.07); stroke-width: 1; }
+.mon-chart .mon-axis  { fill: var(--text-secondary); font-size: 9px; font-variant-numeric: tabular-nums; }
+.mon-chart .mon-axis-sub { fill: var(--text-muted); font-size: 8.5px; }
+.mon-chart .mon-serie { stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+.mon-chart .mon-esc   { fill: var(--bg-panel); stroke: var(--accent); stroke-width: 1.5; }
+.mon-chart .mon-actual { fill: var(--accent); stroke: var(--bg-panel); stroke-width: 2; }
+.mon-chart .mon-meta-line { stroke: var(--text-secondary); stroke-width: 1; stroke-dasharray: 4 3; }
+.mon-chart .mon-meta-lbl { fill: var(--text-secondary); }
+.mon-chart .mon-meta-pt { fill: var(--text-primary); stroke: var(--bg-panel); stroke-width: 1.5; }
+.mon-chart .mon-cross { stroke: rgba(255,255,255,0.35); stroke-width: 1; }
+.mon-chart .mon-tip   { fill: var(--text-primary); font-size: 9.5px; font-variant-numeric: tabular-nums; }
+.mon-chart .mon-hit   { fill: transparent; cursor: crosshair; }
+
+.mon-meta { margin-top: 8px; }
+.mon-meta-out {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.mon-meta-out strong { color: var(--text-primary); }
+.mon-meta-err { color: var(--warning); }
+.mon-meta-err strong { color: var(--warning); }
+.mon-meta-salvedad { color: var(--text-muted); }
+.mon-meta-ir {
+  margin-top: 6px;
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 10.5px;
+  font-family: inherit;
+  color: var(--accent);
+  background: rgba(41,182,246,0.08);
+  border: 1px solid rgba(41,182,246,0.35);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.mon-meta-ir:hover { background: rgba(41,182,246,0.16); }
+
+.mon-hist {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.mon-hist strong { color: var(--text-primary); font-weight: 600; }
+.mon-hist-nota {
+  margin-top: 4px;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .info-panel.info-panel-ficha { width: auto; max-width: calc(100vw - 24px); right: 12px; }
+}

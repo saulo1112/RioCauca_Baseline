@@ -1,0 +1,25 @@
+nutriente,campana,rio,tramo_porh,carga_vertimientos_kg_d,carga_afluentes_kg_d,carga_puntual_kg_d,carga_difusa_qual2kw_kg_d,rio_geovisor,subtramo_geovisor,correspondencia
+Nitrógeno total,C1 seca,Río Bolo,GB1 → GB2,32.17,7.26,39.43,0.00,Rio Bolo,1,exacta
+Nitrógeno total,C1 seca,Río Bolo,GB2 → GB4,0.00,120.07,120.07,185.46,Rio Bolo,2,exacta
+Nitrógeno total,C1 seca,Río Bolo,GB4 → GB5,12.58,0.00,12.58,173.52,Rio Bolo,3,exacta
+Nitrógeno total,C1 seca,Río Fraile,GF1 → GF2,362.69,0.00,362.69,152.92,Rio Fraile,1,parcial
+Nitrógeno total,C1 seca,Río Fraile,GF2 → GF3,5.95,270.83,276.77,0.00,Rio Fraile,2,parcial
+Nitrógeno total,C1 seca,Río Fraile,GF3 → GF4,695.98,171.68,867.66,247.88,Rio Fraile,3,exacta
+Nitrógeno total,C2 húmeda,Río Bolo,GB1 → GB2,32.17,13.35,45.53,1126.21,Rio Bolo,1,exacta
+Nitrógeno total,C2 húmeda,Río Bolo,GB2 → GB4,0.00,439.91,439.91,2024.71,Rio Bolo,2,exacta
+Nitrógeno total,C2 húmeda,Río Bolo,GB4 → GB5,12.58,0.00,12.58,2168.04,Rio Bolo,3,exacta
+Nitrógeno total,C2 húmeda,Río Fraile,GF1 → GF2,346.95,0.00,346.95,877.44,Rio Fraile,1,parcial
+Nitrógeno total,C2 húmeda,Río Fraile,GF2 → GF3,5.95,801.51,807.46,0.00,Rio Fraile,2,parcial
+Nitrógeno total,C2 húmeda,Río Fraile,GF3 → GF4,878.42,3559.76,4438.18,0.00,Rio Fraile,3,exacta
+Fósforo total,C1 seca,Río Bolo,GB1 → GB2,15.88,0.14,16.02,0.00,Rio Bolo,1,exacta
+Fósforo total,C1 seca,Río Bolo,GB2 → GB4,0.00,21.71,21.71,25.52,Rio Bolo,2,exacta
+Fósforo total,C1 seca,Río Bolo,GB4 → GB5,3.03,0.00,3.03,10.33,Rio Bolo,3,exacta
+Fósforo total,C1 seca,Río Fraile,GF1 → GF2,37.71,0.00,37.71,15.79,Rio Fraile,1,parcial
+Fósforo total,C1 seca,Río Fraile,GF2 → GF3,0.96,18.08,19.04,0.00,Rio Fraile,2,parcial
+Fósforo total,C1 seca,Río Fraile,GF3 → GF4,28.23,23.09,51.32,40.96,Rio Fraile,3,exacta
+Fósforo total,C2 húmeda,Río Bolo,GB1 → GB2,15.88,1.99,17.86,167.62,Rio Bolo,1,exacta
+Fósforo total,C2 húmeda,Río Bolo,GB2 → GB4,0.00,93.06,93.06,682.21,Rio Bolo,2,exacta
+Fósforo total,C2 húmeda,Río Bolo,GB4 → GB5,3.03,0.00,3.03,198.72,Rio Bolo,3,exacta
+Fósforo total,C2 húmeda,Río Fraile,GF1 → GF2,36.95,0.00,36.95,57.28,Rio Fraile,1,parcial
+Fósforo total,C2 húmeda,Río Fraile,GF2 → GF3,0.96,133.92,134.88,0.00,Rio Fraile,2,parcial
+Fósforo total,C2 húmeda,Río Fraile,GF3 → GF4,32.86,464.96,497.82,0.00,Rio Fraile,3,exacta

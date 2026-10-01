@@ -112,9 +112,13 @@
         <div class="layer-swatch" style="background:rgba(0,100,255,0.25);border:1px solid #6E6E6E"></div>
         <span class="layer-label">Zona de Estudio</span>
         <span class="layer-count">16</span>
-        <div class="layer-submenu">
+        <div class="layer-submenu layer-submenu-col">
           <button class="submenu-item submenu-btn submenu-btn-priorizacion" id="btn-priorizacion" type="button">
             <span>Ver priorización por carga (N/P)</span>
+          </button>
+          <button class="submenu-item submenu-btn submenu-btn-monitoreo" id="btn-monitoreo" type="button"
+                  aria-pressed="false">
+            <span>Monitoreo de calidad de agua</span>
           </button>
         </div>
       </div>
@@ -191,6 +195,12 @@
           <div class="legend-priorizacion-title">Priorización por carga N/P</div>
           <div id="legend-priorizacion-rios" class="legend-rios-grid legend-rios-grid-1col"></div>
           <div class="legend-priorizacion-note">Tabla 5.2, Informe 1 — 46 subtramos (caña actualizada 2026-09)</div>
+        </div>
+
+        <div id="legend-monitoreo" class="legend-priorizacion">
+          <div class="legend-priorizacion-title">Monitoreo de calidad de agua</div>
+          <div id="legend-monitoreo-estados" class="legend-rios-grid legend-rios-grid-1col"></div>
+          <div class="legend-priorizacion-note">Estación de cierre de los subtramos Alta y Muy alta (Actividad 5). Clic en un punto para proyectar la concentración.</div>
         </div>
 
         <div class="legend-note">Fuentes: IDEAM · CVC · CARDER · CRC </div>
