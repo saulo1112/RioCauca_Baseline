@@ -178,6 +178,38 @@ function buildInfo(layerId, p) {
       };
     }
 
+    case 'restauracion-fill': {
+      /* Campos de texto vacíos llegan como ' ' y las coordenadas faltantes
+       * como 0 (exportación desde shapefile): ambos se muestran como '—'. */
+      const txt   = v => (v == null || String(v).trim() === '') ? '—' : escapeHtml(v);
+      const num   = (v, d, unit = '') => (v == null || Number(v) === 0) ? '—' : `${fmt(v, d)}${unit}`;
+      const coord = (v, d) => (v == null || Number(v) === 0) ? '—' : String(Number(v).toFixed(d));
+      return {
+        title: `Hacienda ${p.Nombre_HDA ?? '—'}`,
+        color: '#A4DE02',
+        rows: [
+          ['Estado de restauración', txt(p.Estado_Res)],
+          ['Proyecto',               txt(p.Proyecto)],
+          ['Ingenio',                txt(p.Ingenio)],
+          ['Hacienda',               txt(p.Nombre_HDA)],
+          ['Tenencia',               txt(p.Tenencia)],
+          ['Observación',            txt(p.Observacio)],
+          ['Aprobado',               txt(p.Aprobado)],
+          ['Año proyectado',         txt(p['Año_proye'])],
+          ['Área',                   num(p.Area_ha, 2, ' ha')],
+          ['Long. parcela',          num(p.Long_Parl_, 2, ' m')],
+          ['Longitud H',             num(p.Longitud_H, 0, ' m')],
+          ['Perímetro',              num(p.Shape_Leng, 1, ' m')],
+          ['Cód. lote ingenio',      txt(p.Cod_Lot_In)],
+          ['Cód. lote Bonsucro',     txt(p.Cod_Lot_Bo)],
+          ['Latitud',                coord(p.CordenadaG, 6)],
+          ['Longitud',               coord(p.Coordena_2, 6)],
+          ['Coord. planas X',        num(p.Coordenada, 2)],
+          ['Coord. planas Y',        num(p.Coordena_1, 2)],
+        ],
+      };
+    }
+
     case 'priorizacion-np-fill': {
       const cat = p.categoria ?? '—';
       const longitud = (p.km_fin != null && p.km_inicio != null) ? p.km_fin - p.km_inicio : null;

@@ -3,7 +3,8 @@
  * Orden de renderizado (de fondo a frente):
  *   1. buffer-fill / buffer-outline  — zona de estudio (polígonos, fondo)
  *   2. hectareas-fill               — caña de azúcar (lazy, zoom ≥ 10)
- *   3. rio-cauca-line               — Río Cauca (línea principal)
+ *   2b. restauracion-fill/-outline  — predios en restauración (verde lima)
+ *   3. rio-cauca-line              — Río Cauca (línea principal)
  *   4. tributarios-line             — tributarios
  *   5. *-label                      — etiquetas (siempre al frente)
  *
@@ -24,7 +25,7 @@ import { monitoreoColorMatchExpr }    from './monitoreoColors.js';
  * (data/cartografia/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
-export const BUILD_VERSION = '2.8';
+export const BUILD_VERSION = '2.9';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -41,6 +42,9 @@ const PATHS = {
    * subtramo Alta/Muy alta, con caudal por condición y estado. Generado por
    * scripts/build_monitoreo_corredor.py (mismas cifras que el Excel). */
   'monitoreo-corredor':    'data/cartografia/Monitoreo_corredor.geojson',
+  /* Predios en restauración (lotes BONSUCRO, Caña Biodiversa, CAS) —
+   * entregado directamente como GeoJSON, sin script de generación. */
+  'estado-restauracion':   'data/cartografia/Estado_restauracion.geojson',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
@@ -48,6 +52,7 @@ const PATHS = {
 export const LAYER_GROUPS = {
   'lyr-buffer':                ['buffer-fill', 'buffer-outline'],
   'lyr-hectareas':             ['hectareas-fill'],
+  'lyr-restauracion':          ['restauracion-fill', 'restauracion-outline'],
   /* Un solo checkbox por tipo de estación — Río Cauca + tributarios juntos
    * (antes eran 4 filas separadas; ver ajuste de leyenda). */
   'lyr-estaciones-calidad':    ['estaciones-cauca-circle', 'estaciones-cauca-label',
@@ -64,6 +69,7 @@ export const CLICKABLE_LAYERS = [
   'estaciones-hidro-trib-circle',
   'buffer-fill',
   'hectareas-fill',
+  'restauracion-fill',
   'rio-cauca-line',
   'tributarios-line',
   'priorizacion-np-fill',
@@ -122,6 +128,11 @@ export async function loadGeoJSONLayers(map) {
   const tribBbox = await _loadSource(map, 'tributarios');
   if (tribBbox) bboxes.push(tribBbox);
   _addTributariosLayers(map);
+
+  /* 3b. Estado de restauración — se inserta debajo de los ríos, pero encima
+   *     de caña (ver _addHectareasLayers), para que el tinte de caña no tape
+   *     los predios, que suelen quedar dentro de los lotes cultivados. */
+  await _loadRestauracion(map);
 
   /* Auto-fit al corredor una vez cargadas las capas estructurales */
   if (bboxes.length > 0) {
@@ -638,6 +649,63 @@ async function _loadMonitoreo(map) {
   }
 }
 
+/* ── Estado de restauración ──────────────────────────────────────────── */
+/* 60 predios (Restaurada / Proyectada / Potencial) de los ingenios
+ * Providencia, Manuelita y Mayagüez. Verde lima uniforme; el contorno más
+ * oscuro y con ancho mínimo mantiene visibles los lotes pequeños (~1 ha) a
+ * zoom bajo. Visible por defecto. */
+async function _loadRestauracion(map) {
+  try {
+    const resp = await fetch(`${PATHS['estado-restauracion']}?v=${BUILD_VERSION}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const geojson = await resp.json();
+
+    if (!map.getSource('estado-restauracion')) {
+      map.addSource('estado-restauracion', { type: 'geojson', data: geojson });
+    }
+
+    const before = map.getLayer('rio-cauca-halo') ? 'rio-cauca-halo' : undefined;
+
+    if (!map.getLayer('restauracion-fill')) {
+      map.addLayer(
+        {
+          id:     'restauracion-fill',
+          type:   'fill',
+          source: 'estado-restauracion',
+          paint: {
+            'fill-color':   '#A4DE02',
+            'fill-opacity': 0.8,
+          },
+        },
+        before,
+      );
+    }
+
+    if (!map.getLayer('restauracion-outline')) {
+      map.addLayer(
+        {
+          id:     'restauracion-outline',
+          type:   'line',
+          source: 'estado-restauracion',
+          paint: {
+            'line-color': '#4C7A00',
+            'line-width': [
+              'interpolate', ['linear'], ['zoom'],
+              9, 1.5,
+              14, 1.0,
+            ],
+          },
+        },
+        before,
+      );
+    }
+
+    console.log('[geojson] Estado de restauración:', geojson.features.length, 'predios');
+  } catch (err) {
+    console.error('[geojson] Error cargando estado de restauración:', err);
+  }
+}
+
 /* ── Definición de capas ─────────────────────────────────────────────── */
 
 function _addBufferLayers(map) {
@@ -670,9 +738,10 @@ function _addBufferLayers(map) {
 function _addHectareasLayers(map) {
   if (map.getLayer('hectareas-fill')) return;
 
-  /* Insertar debajo del halo del Río Cauca para respetar el z-order:
-   *   buffer → hectareas → rio-cauca-halo → rio-cauca-line → tributarios */
-  const before = map.getLayer('rio-cauca-halo') ? 'rio-cauca-halo'
+  /* Insertar debajo de restauración / halo del Río Cauca para respetar el z-order:
+   *   buffer → hectareas → restauracion → rio-cauca-halo → rio-cauca-line → tributarios */
+  const before = map.getLayer('restauracion-fill') ? 'restauracion-fill'
+               : map.getLayer('rio-cauca-halo') ? 'rio-cauca-halo'
                : map.getLayer('rio-cauca-line') ? 'rio-cauca-line'
                : undefined;
 
