@@ -14,7 +14,7 @@ Procedimiento (definido por la dirección del proyecto):
      abajo del tramo, siempre que tenga registros de NT y PT.
   3. Carga = ha de caña × dosis × fracción de pérdida × factor de retención
      del corredor (1 / 0,8 / 0,6), en kg/d. El factor de emisión del Cap. 4
-     ya es dosis × fracción (9,568 kg N y 1,376 kg P /ha/año), así que la
+     ya es dosis × fracción (7,176 kg N y 1,376 kg P /ha/año), así que la
      fracción NO se aplica dos veces.
   4. Concentración = carga / (Q × 86,4), con Q = caudal de referencia de la
      estación hidrométrica más cercana sobre el eje del mismo río.
@@ -90,7 +90,7 @@ GEOJSON_OUT = ruta('data', 'cartografia', 'Monitoreo_corredor.geojson')
 CONFIG_JS_OUT = ruta('src', 'config', 'monitoreo.js')
 
 # ── Parámetros (Informe Fase 1, Cap. 4) ────────────────────────────────
-DOSIS_N   = 184.0      # kg N/ha/año — Tabla 4.6 (Narváez, 2024)
+DOSIS_N   = 138.0      # kg N/ha/año — Tabla 4.6 (Narváez, 2024; versión del informe de 2026-10)
 DOSIS_P2O5 = 46.0      # kg P2O5/ha/año — Tabla 4.6
 CONV_P2O5_P = 0.436    # 2 × 30,97 / 141,94 — Tabla 4.6
 FRAC_N    = 0.052      # 5,20 % — Tabla 4.7, escenario medio (Scarpare et al., 2023)
@@ -665,7 +665,7 @@ def hoja_parametros(wb):
         ('Fracción de pérdida por escorrentía, P (escenario medio)', FRAC_P, 'fracción', 'FracP',
          'Informe Fase 1, Tabla 4.8 (Jeong et al., 2011)', True, '0.00%'),
         ('Factor de emisión N = dosis × fracción', '=DosisN*FracN', 'kg N/ha/año', 'FE_N',
-         'Control: 9,568 (nota de la Tabla 4.22)', False, '0.000'),
+         'Control: 7,176 (nota de la Tabla 4.22)', False, '0.000'),
         ('Factor de emisión P = dosis × fracción', '=DosisP*FracP', 'kg P/ha/año', 'FE_P',
          'Control: 1,376 (nota de la Tabla 4.22)', False, '0.000'),
         None,
@@ -1156,7 +1156,7 @@ def hoja_leame(wb, fe_n, fe_p, n_ejercicio, n_previas, compartidas):
             'Carga (kg/d) = área de caña del subtramo (ha) × dosis de fertilización (kg/ha/año) × fracción de pérdida '
             'por escorrentía × factor de retención del corredor ÷ 365.',
             f'El producto dosis × fracción es el factor de emisión del escenario medio del Capítulo 4: '
-            f'{fe_n:.3f} kg N/ha/año (184 × 5,20 %) y {fe_p:.3f} kg P/ha/año (46 × 0,436 × 6,86 %). La fracción de '
+            f'{fe_n:.3f} kg N/ha/año ({DOSIS_N:g} × 5,20 %) y {fe_p:.3f} kg P/ha/año (46 × 0,436 × 6,86 %). La fracción de '
             'pérdida se aplica una sola vez; el factor de retención es adicional y no la reemplaza.',
             'Factor de retención: 1 (condición base, sin corredor), 0,8 (escenario 1, corredor joven, remoción del '
             '20 %) y 0,6 (escenario 2, corredor establecido, remoción del 40 %).',

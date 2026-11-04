@@ -110,12 +110,12 @@ picks up the output after a reload (bump `BUILD_VERSION` in
 ## Diffuse load and prioritization
 
 **Formula used (Report 1, Table 5.2, median-emission scenario):**
-`Load (kg/year) = Cane_area (ha) × factor`, with **9.57 kg N/ha/year** and
-**1.38 kg P/ha/year**; daily load = annual ÷ 365. Cane area is the
-normalized cane of each segment (`docs/tramos_cana_tributarios.csv`).
+`Load (kg/year) = Cane_area (ha) × factor`, with **7.176 kg N/ha/year**
+(138 kg N × 5.20 %) and **1.376 kg P/ha/year**; daily load = annual ÷ 365. Cane
+area is the normalized cane of each segment (`docs/tramos_cana_tributarios.csv`).
 
-Each segment's category follows fixed N-load thresholds: ≥ 15,000 Very high ·
-≥ 5,000 High · ≥ 1,000 Medium · > 0 Low · 0 Not applicable (no cane in the
+Each segment's category follows fixed N-load thresholds: ≥ 10,000 Very high ·
+≥ 4,000 High · ≥ 800 Medium · > 0 Low · 0 Not applicable (no cane in the
 strip). The table lives in `data/fuentes/priorizacion/Priorizacion_NP_subtramos.csv`
 and is shown in the viewer via *Study Area* (hover) → *Prioritization by load*.
 
@@ -423,12 +423,12 @@ navegador descarte la copia en caché).
 ## Carga difusa y priorización
 
 **Fórmula usada (Informe 1, Tabla 5.2, escenario de mediana emisión):**
-`Carga (kg/año) = Área_caña (ha) × factor`, con **9,57 kg N/ha/año** y **1,38 kg P/ha/año**;
-carga diaria = anual ÷ 365. El área es la caña normalizada de cada tramo
+`Carga (kg/año) = Área_caña (ha) × factor`, con **7,176 kg N/ha/año** (138 kg N × 5,20 %) y
+**1,376 kg P/ha/año**; carga diaria = anual ÷ 365. El área es la caña normalizada de cada tramo
 (`docs/tramos_cana_tributarios.csv`).
 
-La categoría de cada tramo sigue umbrales fijos sobre la carga de N: ≥ 15.000 Muy alta ·
-≥ 5.000 Alta · ≥ 1.000 Media · > 0 Baja · 0 No aplica (sin caña en la franja). La tabla vive
+La categoría de cada tramo sigue umbrales fijos sobre la carga de N: ≥ 10.000 Muy alta ·
+≥ 4.000 Alta · ≥ 800 Media · > 0 Baja · 0 No aplica (sin caña en la franja). La tabla vive
 en `data/fuentes/priorizacion/Priorizacion_NP_subtramos.csv` y se ve en el visor desde
 *Zona de Estudio* (hover) → *Ver priorización por carga (N/P)*.
 

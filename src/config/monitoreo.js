@@ -4,11 +4,11 @@
  * mismas cifras de la hoja Parámetros de docs/monitoreo_corredor.xlsx, de modo
  * que el geovisor y el Excel no pueden quedar con valores distintos.
  *
- *   FE_N = 184 kg N/ha/año × 0.0520 (Informe Fase 1, Tablas 4.6 y 4.7)
+ *   FE_N = 138 kg N/ha/año × 0.0520 (Informe Fase 1, Tablas 4.6 y 4.7)
  *   FE_P = 46 kg P2O5/ha/año × 0.436 × 0.0686 (Tablas 4.6 y 4.8)
  */
 
-export const FE_N = 9.568;  // kg N/ha/año
+export const FE_N = 7.176;  // kg N/ha/año
 export const FE_P = 1.3758416;  // kg P/ha/año
 export const DIAS_ANO = 365;
 export const CONV_Q = 86.4;  // C (mg/L) = carga (kg/d) / (Q (m³/s) × 86,4)
