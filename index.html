@@ -94,7 +94,6 @@
         <input type="checkbox" id="lyr-rios" checked>
         <div class="layer-swatch" style="background:linear-gradient(135deg,#004DA8 50%,#0A93FC 50%)"></div>
         <span class="layer-label">Ríos (Cauca + Tributarios)</span>
-        <span class="layer-count">60</span>
         <div class="layer-submenu">
           <label class="submenu-item">
             <input type="checkbox" id="lyr-rios-geo" checked>
@@ -112,13 +111,9 @@
         <div class="layer-swatch" style="background:rgba(0,100,255,0.25);border:1px solid #6E6E6E"></div>
         <span class="layer-label">Zona de Estudio</span>
         <span class="layer-count">16</span>
-        <div class="layer-submenu layer-submenu-col">
+        <div class="layer-submenu">
           <button class="submenu-item submenu-btn submenu-btn-priorizacion" id="btn-priorizacion" type="button">
             <span>Ver priorización por carga (N/P)</span>
-          </button>
-          <button class="submenu-item submenu-btn submenu-btn-monitoreo" id="btn-monitoreo" type="button"
-                  aria-pressed="false">
-            <span>Monitoreo de calidad de agua</span>
           </button>
         </div>
       </div>
@@ -135,13 +130,6 @@
         </div>
       </div>
 
-      <div class="layer-item">
-        <input type="checkbox" id="lyr-restauracion" checked>
-        <div class="layer-swatch" style="background:#A4DE02;border:1px solid #4C7A00"></div>
-        <span class="layer-label">Estado de restauración</span>
-        <span class="layer-count">60</span>
-      </div>
-
       <div class="layer-item has-submenu">
         <input type="checkbox" id="lyr-estaciones-calidad" checked>
         <div class="layer-swatch layer-swatch-multi" style="border-radius:50%;width:12px;height:12px"></div>
@@ -149,7 +137,7 @@
         <span class="layer-count">99</span>
         <div class="layer-submenu">
           <button class="submenu-item submenu-btn" id="btn-galeria-calidad">
-            <span>Ver perfiles de calidad</span>
+            <span>Ver perfiles de calidad del agua</span>
           </button>
         </div>
       </div>
@@ -158,10 +146,10 @@
         <input type="checkbox" id="lyr-estaciones-hidro" checked>
         <div class="layer-swatch layer-swatch-tri layer-swatch-multi"></div>
         <span class="layer-label">Estaciones hidrométricas</span>
-        <span class="layer-count">33</span>
+        <span class="layer-count">35</span>
         <div class="layer-submenu">
           <button class="submenu-item submenu-btn submenu-btn-hidro" id="btn-perfil-caudal">
-            <span>Ver perfil de caudal</span>
+            <span>Ver perfiles de caudal</span>
           </button>
         </div>
       </div>
@@ -174,11 +162,11 @@
       <div id="legend">
         <div class="legend-item">
           <div class="legend-line" style="background:#004DA8;height:3px"></div>
-          <span>Río Cauca (43 segmentos)</span>
+          <span>Río Cauca</span>
         </div>
         <div class="legend-item">
           <div class="legend-line" style="background:#0A93FC"></div>
-          <span>Tributarios (17 ríos)</span>
+          <span>Tributarios</span>
         </div>
         <div class="legend-item">
           <div class="legend-swatch" style="background:rgba(0,100,255,0.15);border:1px solid #6E6E6E"></div>
@@ -187,10 +175,6 @@
         <div class="legend-item">
           <div class="legend-swatch" style="background:#FBC4BB"></div>
           <span>Hectáreas de caña de azúcar</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-swatch" style="background:#A4DE02;border:1px solid #4C7A00"></div>
-          <span>Predios en restauración (60)</span>
         </div>
         <div class="legend-item">
           <div class="legend-swatch layer-swatch-multi" style="border-radius:50%;width:12px;height:12px;border:2px solid white"></div>
@@ -205,13 +189,7 @@
         <div id="legend-priorizacion" class="legend-priorizacion">
           <div class="legend-priorizacion-title">Priorización por carga N/P</div>
           <div id="legend-priorizacion-rios" class="legend-rios-grid legend-rios-grid-1col"></div>
-          <div class="legend-priorizacion-note">Tabla 5.2, Informe 1 (2026-11) — 46 subtramos; dosis 138 kg N/ha, caña actualizada 2026-09</div>
-        </div>
-
-        <div id="legend-monitoreo" class="legend-priorizacion">
-          <div class="legend-priorizacion-title">Monitoreo de calidad de agua</div>
-          <div id="legend-monitoreo-estados" class="legend-rios-grid legend-rios-grid-1col"></div>
-          <div class="legend-priorizacion-note">Estación de cierre de los subtramos Alta y Muy alta (Actividad 5). Clic en un punto para proyectar la concentración.</div>
+          <div class="legend-priorizacion-note">Tabla 5.2, Informe Fase 1 — 46 subtramos de los 15 tributarios, escenario de mediana emisión</div>
         </div>
 
         <div class="legend-note">Fuentes: IDEAM · CVC · CARDER · CRC </div>

@@ -11,3 +11,6 @@ __pycache__/
 
 # Locks que deja ArcGIS Pro mientras tiene abierto un shapefile
 *.sr.lock
+
+# Predios en restauración (Cenicaña): información reservada, no se publica
+data/cartografia/Estado_restauracion.geojson

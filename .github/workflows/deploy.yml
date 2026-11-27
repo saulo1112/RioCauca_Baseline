@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p _site/data
           cp -r index.html css src _site/
-          cp -r data/cartografia data/calidad_agua data/hidrologia _site/data/
+          cp -r data/cartografia data/calidad_agua data/hidrologia data/perfiles_informe _site/data/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: '_site'

@@ -3,7 +3,6 @@
  * Orden de renderizado (de fondo a frente):
  *   1. buffer-fill / buffer-outline  — zona de estudio (polígonos, fondo)
  *   2. hectareas-fill               — caña de azúcar (lazy, zoom ≥ 10)
- *   2b. restauracion-fill/-outline  — predios en restauración (verde lima)
  *   3. rio-cauca-line              — Río Cauca (línea principal)
  *   4. tributarios-line             — tributarios
  *   5. *-label                      — etiquetas (siempre al frente)
@@ -16,7 +15,6 @@ import { geojsonBbox, mergeBboxes } from '../utils/bounds.js';
 import { normalizeRio, riverColorMatchExpr, ensureTriangleIcon, TRIANGLE_ICON_ID }
   from './riverColors.js';
 import { priorizacionColorMatchExpr } from './priorizacionColors.js';
-import { monitoreoColorMatchExpr }    from './monitoreoColors.js';
 
 /* Incrementar cuando se actualice cualquier archivo GeoJSON, para forzar
  * que el navegador descarte la caché y descargue la versión más reciente.
@@ -25,7 +23,7 @@ import { monitoreoColorMatchExpr }    from './monitoreoColors.js';
  * (data/cartografia/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
-export const BUILD_VERSION = '3.0';
+export const BUILD_VERSION = '3.1';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -38,13 +36,6 @@ const PATHS = {
   'estaciones-hidro':      'data/hidrologia/estaciones_hidro.json',
   'estaciones-hidro-trib': 'data/hidrologia/estaciones_hidro_trib.json',
   'priorizacion-np':       'data/cartografia/Priorizacion_NP_tramos.geojson',
-  /* Monitoreo de calidad de agua (Actividad 5): estación de cierre de cada
-   * subtramo Alta/Muy alta, con caudal por condición y estado. Generado por
-   * scripts/build_monitoreo_corredor.py (mismas cifras que el Excel). */
-  'monitoreo-corredor':    'data/cartografia/Monitoreo_corredor.geojson',
-  /* Predios en restauración (lotes BONSUCRO, Caña Biodiversa, CAS) —
-   * entregado directamente como GeoJSON, sin script de generación. */
-  'estado-restauracion':   'data/cartografia/Estado_restauracion.geojson',
 };
 
 /* ── Grupos checkbox → capas (exportado para LayerPanel) ────────────── */
@@ -52,7 +43,6 @@ const PATHS = {
 export const LAYER_GROUPS = {
   'lyr-buffer':                ['buffer-fill', 'buffer-outline'],
   'lyr-hectareas':             ['hectareas-fill'],
-  'lyr-restauracion':          ['restauracion-fill', 'restauracion-outline'],
   /* Un solo checkbox por tipo de estación — Río Cauca + tributarios juntos
    * (antes eran 4 filas separadas; ver ajuste de leyenda). */
   'lyr-estaciones-calidad':    ['estaciones-cauca-circle', 'estaciones-cauca-label',
@@ -69,18 +59,13 @@ export const CLICKABLE_LAYERS = [
   'estaciones-hidro-trib-circle',
   'buffer-fill',
   'hectareas-fill',
-  'restauracion-fill',
   'rio-cauca-line',
   'tributarios-line',
   'priorizacion-np-fill',
-  'monitoreo-corredor-circle',
 ];
 
 /* Ids de la capa de priorización, para el toggle (ver PriorizacionToggle.js). */
 export const PRIORIZACION_LAYERS = ['priorizacion-np-fill', 'priorizacion-np-outline'];
-
-/* Ids de la capa de monitoreo, para su toggle (ver MonitoreoToggle.js). */
-export const MONITOREO_LAYERS = ['monitoreo-corredor-circle', 'monitoreo-corredor-label'];
 
 let _hectareasReady  = false;
 let _hectareasTotalHa = 0;   // suma de SUM_AREA_HA de todos los registros
@@ -103,6 +88,8 @@ export function getHectareasData()      { return _getCached('hectareas-cz');    
 export function getTributariosData()    { return _getCached('tributarios');     }
 export function getRioCaucaData()       { return _getCached('rio-cauca');       }
 export function getEstacionesTribData() { return _getCached('estaciones-trib'); }
+/* Tramos del informe (polígono + cifras de la Tabla 4.21), para la herramienta de tramos. */
+export function getPriorizacionData()   { return _getCached('priorizacion-np'); }
 
 /* ── Carga principal ─────────────────────────────────────────────────── */
 export async function loadGeoJSONLayers(map) {
@@ -129,11 +116,6 @@ export async function loadGeoJSONLayers(map) {
   if (tribBbox) bboxes.push(tribBbox);
   _addTributariosLayers(map);
 
-  /* 3b. Estado de restauración — se inserta debajo de los ríos, pero encima
-   *     de caña (ver _addHectareasLayers), para que el tinte de caña no tape
-   *     los predios, que suelen quedar dentro de los lotes cultivados. */
-  await _loadRestauracion(map);
-
   /* Auto-fit al corredor una vez cargadas las capas estructurales */
   if (bboxes.length > 0) {
     const [w, s, e, n] = mergeBboxes(bboxes);
@@ -155,11 +137,6 @@ export async function loadGeoJSONLayers(map) {
 
   /* 4d. Estaciones hidrométricas — Ríos tributarios */
   await _loadEstacionesHidroTrib(map);
-
-  /* 4e. Monitoreo de calidad de agua — al final para quedar encima de las
-   *     estaciones de calidad, con las que comparte coordenadas. Oculta por
-   *     defecto; se activa desde "Zona de Estudio" (MonitoreoToggle.js). */
-  await _loadMonitoreo(map);
 
   console.log('[geojson] Capas en estilo:', map.getStyle().layers.map(l => l.id));
 
@@ -543,6 +520,7 @@ async function _loadPriorizacion(map) {
     const resp = await fetch(`${PATHS['priorizacion-np']}?v=${BUILD_VERSION}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const geojson = await resp.json();
+    _cache['priorizacion-np'] = geojson;
 
     if (!map.getSource('priorizacion-np')) {
       map.addSource('priorizacion-np', { type: 'geojson', data: geojson });
@@ -586,126 +564,6 @@ async function _loadPriorizacion(map) {
   }
 }
 
-/* ── Monitoreo de calidad de agua (Actividad 5) ───────────────────────── */
-/* Un punto por estación de cierre de los subtramos Alta/Muy alta, coloreado
- * por estado con los escalones de la paleta de priorización (ver
- * monitoreoColors.js). Algo más grande que las estaciones de calidad, que
- * quedan debajo en las mismas coordenadas. */
-async function _loadMonitoreo(map) {
-  try {
-    const resp = await fetch(`${PATHS['monitoreo-corredor']}?v=${BUILD_VERSION}`);
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const geojson = await resp.json();
-
-    if (!map.getSource('monitoreo-corredor')) {
-      map.addSource('monitoreo-corredor', { type: 'geojson', data: geojson });
-    }
-
-    if (!map.getLayer('monitoreo-corredor-circle')) {
-      map.addLayer({
-        id:     'monitoreo-corredor-circle',
-        type:   'circle',
-        source: 'monitoreo-corredor',
-        layout: { visibility: 'none' },
-        paint: {
-          'circle-radius': [
-            'interpolate', ['linear'], ['zoom'],
-            8, 6,
-            12, 9,
-          ],
-          'circle-color':        monitoreoColorMatchExpr('estado'),
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#FFFFFF',
-          'circle-opacity':      0.95,
-        },
-      });
-    }
-
-    if (!map.getLayer('monitoreo-corredor-label')) {
-      map.addLayer({
-        id:      'monitoreo-corredor-label',
-        type:    'symbol',
-        source:  'monitoreo-corredor',
-        minzoom: 9,
-        layout: {
-          visibility:    'none',
-          'text-field':  ['get', 'etiqueta'],
-          'text-size':   11,
-          'text-font':   ['Open Sans Regular'],
-          'text-offset': [0, 1.3],
-          'text-anchor': 'top',
-        },
-        paint: {
-          'text-color':      '#1a1a1a',
-          'text-halo-color': '#FFFFFF',
-          'text-halo-width': 2,
-        },
-      });
-    }
-
-    console.log('[geojson] Monitoreo de calidad de agua:', geojson.features.length, 'puntos');
-  } catch (err) {
-    console.error('[geojson] Error cargando monitoreo de calidad de agua:', err);
-  }
-}
-
-/* ── Estado de restauración ──────────────────────────────────────────── */
-/* 60 predios (Restaurada / Proyectada / Potencial) de los ingenios
- * Providencia, Manuelita y Mayagüez. Verde lima uniforme; el contorno más
- * oscuro y con ancho mínimo mantiene visibles los lotes pequeños (~1 ha) a
- * zoom bajo. Visible por defecto. */
-async function _loadRestauracion(map) {
-  try {
-    const resp = await fetch(`${PATHS['estado-restauracion']}?v=${BUILD_VERSION}`);
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const geojson = await resp.json();
-
-    if (!map.getSource('estado-restauracion')) {
-      map.addSource('estado-restauracion', { type: 'geojson', data: geojson });
-    }
-
-    const before = map.getLayer('rio-cauca-halo') ? 'rio-cauca-halo' : undefined;
-
-    if (!map.getLayer('restauracion-fill')) {
-      map.addLayer(
-        {
-          id:     'restauracion-fill',
-          type:   'fill',
-          source: 'estado-restauracion',
-          paint: {
-            'fill-color':   '#A4DE02',
-            'fill-opacity': 0.8,
-          },
-        },
-        before,
-      );
-    }
-
-    if (!map.getLayer('restauracion-outline')) {
-      map.addLayer(
-        {
-          id:     'restauracion-outline',
-          type:   'line',
-          source: 'estado-restauracion',
-          paint: {
-            'line-color': '#4C7A00',
-            'line-width': [
-              'interpolate', ['linear'], ['zoom'],
-              9, 1.5,
-              14, 1.0,
-            ],
-          },
-        },
-        before,
-      );
-    }
-
-    console.log('[geojson] Estado de restauración:', geojson.features.length, 'predios');
-  } catch (err) {
-    console.error('[geojson] Error cargando estado de restauración:', err);
-  }
-}
-
 /* ── Definición de capas ─────────────────────────────────────────────── */
 
 function _addBufferLayers(map) {
@@ -738,10 +596,9 @@ function _addBufferLayers(map) {
 function _addHectareasLayers(map) {
   if (map.getLayer('hectareas-fill')) return;
 
-  /* Insertar debajo de restauración / halo del Río Cauca para respetar el z-order:
-   *   buffer → hectareas → restauracion → rio-cauca-halo → rio-cauca-line → tributarios */
-  const before = map.getLayer('restauracion-fill') ? 'restauracion-fill'
-               : map.getLayer('rio-cauca-halo') ? 'rio-cauca-halo'
+  /* Insertar debajo del halo del Río Cauca para respetar el z-order:
+   *   buffer → hectareas → rio-cauca-halo → rio-cauca-line → tributarios */
+  const before = map.getLayer('rio-cauca-halo') ? 'rio-cauca-halo'
                : map.getLayer('rio-cauca-line') ? 'rio-cauca-line'
                : undefined;
 

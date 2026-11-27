@@ -680,190 +680,226 @@ h1, .tramo-num, .section-title, .logo-name {
 }
 .hidro-dl:hover { background: rgba(0,63,136,0.22); }
 
-/* ── Galería lightbox de perfiles de calidad del agua ───────── */
-.wqg-overlay {
+/* ── Galería de perfiles longitudinales (Informe Fase 1, Cap. 3) ── */
+.pg-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.82);
   z-index: 2000;
   display: flex;
-  padding: 24px;
+  padding: 20px;
 }
-.wqg-container {
-  max-width: 900px;
+.pg-container {
   width: 100%;
+  max-width: 1320px;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  overflow: hidden;
 }
-.wqg-header {
+.pg-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
 }
-.wqg-title {
+.pg-title {
   font-family: 'Syne', sans-serif;
   font-size: 15px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
-.wqg-close {
+.pg-subtitle { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.pg-close {
   background: none;
   border: none;
-  color: #ccc;
-  font-size: 22px;
+  color: var(--text-secondary);
+  font-size: 20px;
   line-height: 1;
   cursor: pointer;
   padding: 2px 6px;
 }
-.wqg-close:hover { color: #fff; }
+.pg-close:hover { color: #fff; }
 
-.wqg-stage {
+.pg-body { flex: 1; min-height: 0; display: flex; }
+
+/* Lista de ríos */
+.pg-rivers {
+  flex: 0 0 190px;
+  overflow-y: auto;
+  padding: 10px 8px;
+  border-right: 1px solid var(--border);
+  background: var(--bg-dark);
+}
+.pg-group {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 8px 5px;
+}
+.pg-group:first-child { padding-top: 2px; }
+.pg-river {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 6px 9px;
+  margin-bottom: 1px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+}
+.pg-river:hover { background: var(--bg-card); color: var(--text-primary); }
+.pg-river.active {
+  background: rgba(41,182,246,0.12);
+  border-color: rgba(41,182,246,0.45);
+  color: var(--accent);
+  font-weight: 600;
+}
+.pg-count {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: 9px;
+  padding: 0 6px;
+  margin-left: 6px;
+}
+
+/* Vista de la figura */
+.pg-view {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px 12px;
+  gap: 8px;
+}
+.pg-tabs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.pg-rio-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-right: 8px;
+}
+.pg-tab {
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+}
+.pg-tab:hover:not([disabled]) { color: var(--text-primary); background: var(--bg-card-hover); }
+.pg-tab.active { color: #fff; background: var(--uao-blue); border-color: var(--accent); }
+.pg-tab[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+.pg-stage {
   position: relative;
-  background: #000;
-  border-radius: 6px;
-  height: 70vh;
+  flex: 1;
+  min-height: 0;
+  background: #fff;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-.wqg-main {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-.wqg-missing {
-  color: var(--text-secondary);
+.pg-main { max-width: 100%; max-height: 100%; object-fit: contain; }
+.pg-empty {
+  color: #5a7085;
   font-size: 13px;
   font-style: italic;
+  padding: 30px;
+  text-align: center;
 }
-.wqg-nav {
+.pg-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(15,20,25,0.55);
+  border: none;
   color: #fff;
   font-size: 26px;
   line-height: 1;
-  width: 40px;
-  height: 56px;
+  width: 38px;
+  height: 54px;
   border-radius: 6px;
   cursor: pointer;
-  z-index: 2;
 }
-.wqg-nav:hover { background: rgba(0,0,0,0.75); }
-.wqg-prev { left: 12px; }
-.wqg-next { right: 12px; }
+.pg-nav:hover { background: rgba(15,20,25,0.85); }
+.pg-prev { left: 8px; }
+.pg-next { right: 8px; }
 
-.wqg-caption {
-  text-align: center;
-  color: #e8ecf0;
-  font-size: 13px;
-}
-.wqg-caption strong { color: #FF6B35; }
-
-.wqg-thumbs {
+.pg-caption {
   display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  padding: 4px 2px 8px;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-primary);
+  min-height: 16px;
 }
-.wqg-thumbs::-webkit-scrollbar { height: 6px; }
-.wqg-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.pg-caption strong { color: var(--accent); margin-right: 4px; }
+.pg-pos { color: var(--text-muted); white-space: nowrap; }
 
-.wqg-thumb {
-  flex: 0 0 auto;
-  width: 80px;
-  height: 50px;
+.pg-thumbs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.pg-thumbs::-webkit-scrollbar { height: 6px; }
+.pg-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.pg-thumb {
+  flex: 0 0 112px;
   padding: 0;
+  background: var(--bg-card);
   border: 2px solid transparent;
-  border-radius: 4px;
-  background: #1a1a1a;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   overflow: hidden;
-  position: relative;
+  font-family: inherit;
 }
-.wqg-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.pg-thumb img { display: block; width: 100%; height: 50px; object-fit: cover; background: #fff; }
+.pg-thumb span {
   display: block;
-}
-.wqg-thumb-active { border-color: #FF6B35; }
-.wqg-thumb-ph {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  color: var(--text-muted);
-  background: #2a2a2a;
-  text-align: center;
-  padding: 2px;
-}
-
-/* ── Lightbox perfil de caudal ──────────────────────────────── */
-.cg-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 2000;
-  display: flex;
-  padding: 24px;
-}
-.cg-container {
-  max-width: 960px;
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.cg-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.cg-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #5b9bd5;
-}
-.cg-close {
-  background: none;
-  border: none;
-  color: #ccc;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 2px 6px;
-}
-.cg-close:hover { color: #fff; }
-.cg-img {
-  width: 100%;
-  object-fit: contain;
-  border-radius: 6px;
-  background: #000;
-}
-.cg-missing {
+  font-size: 10px;
   color: var(--text-secondary);
-  font-size: 13px;
-  font-style: italic;
-  text-align: center;
-  padding: 40px;
+  padding: 3px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.cg-caption {
-  text-align: center;
-  color: #8fa3b8;
-  font-size: 11px;
-  font-style: italic;
-}
+.pg-thumb:hover span { color: var(--text-primary); }
+.pg-thumb.active { border-color: var(--accent); }
+.pg-thumb.active span { color: var(--accent); }
 
+@media (max-width: 760px) {
+  .pg-overlay { padding: 0; }
+  .pg-container { border-radius: 0; }
+  .pg-body { flex-direction: column; }
+  .pg-rivers {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .pg-group { display: none; }
+  .pg-river { width: auto; white-space: nowrap; }
+}
 
 /* ── Atribución personalizada ───────────────────────────────── */
 .map-attribution-custom {
@@ -1056,46 +1092,98 @@ h1, .tramo-num, .section-title, .logo-name {
 .ct-strong { color: var(--text-primary); font-weight: 600; }
 
 .ct-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   margin-right: 6px;
   vertical-align: middle;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #111;
 }
 .ct-tramo {
-  display: inline-block;
-  max-width: 190px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: inline;
   vertical-align: middle;
   color: var(--text-primary);
+  line-height: 1.35;
 }
 .ct-km {
   display: block;
-  margin-left: 14px;
+  margin-left: 22px;
   font-size: 9.5px;
   color: var(--text-muted);
+}
+.ct-table tbody tr.ct-row-hover td { background: var(--bg-card-hover); }
+.ct-col-pct { width: 92px; }
+.ct-bar {
+  display: block;
+  height: 4px;
+  margin: 0 0 3px auto;
+  width: 70px;
+  background: var(--bg-card);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ct-bar span { display: block; height: 100%; border-radius: 2px; }
+
+/* Origen de los tramos: los del informe o editados */
+.ct-source {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 2px 0 10px;
+  min-height: 20px;
+}
+.ct-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.ct-badge-ok   { color: var(--success); background: rgba(76,175,80,0.12); border: 1px solid rgba(76,175,80,0.35); }
+.ct-badge-edit { color: var(--warning); background: rgba(255,152,0,0.12); border: 1px solid rgba(255,152,0,0.35); }
+.ct-source-note { font-size: 10px; color: var(--text-muted); }
+.ct-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 10.5px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .ct-qa {
-  margin-top: 9px;
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.ct-ok   { color: var(--success); font-weight: 700; }
+.ct-warn { color: var(--warning); font-weight: 700; }
+
+/* Edición de tramos, plegada por defecto */
+.ct-edit {
+  margin-top: 10px;
   padding-top: 8px;
   border-top: 1px solid var(--border);
-  font-size: 10px;
-  color: var(--text-muted);
-  line-height: 1.6;
 }
-.ct-qa code {
-  font-size: 9.5px;
-  background: var(--bg-card);
-  padding: 1px 4px;
-  border-radius: 3px;
+.ct-edit summary {
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-bottom: 8px;
+  user-select: none;
 }
-.ct-qa strong { color: var(--text-secondary); }
-.ct-ok strong   { color: var(--success); }
-.ct-warn strong { color: var(--warning); }
+.ct-edit summary:hover { color: var(--text-primary); }
+.ct-edit .ct-actions { margin: 6px 0 4px; }
+.ct-actions-export { margin-top: 6px; }
 
 /* ── Monitoreo de calidad de agua (Actividad 5) ─────────────── */
 /* Submenú de "Zona de Estudio" en columna: el botón nuevo va debajo del de

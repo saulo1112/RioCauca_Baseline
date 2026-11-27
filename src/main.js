@@ -8,11 +8,9 @@ import { setupLayerPanel }         from './controls/LayerPanel.js';
 import { setupTramoFilter }        from './controls/TramoFilter.js';
 import { setupInfoPanel }          from './controls/InfoPanel.js';
 import { loadWaterQualityData }    from './data/waterQuality.js';
-import * as WaterQualityGallery    from './controls/WaterQualityGallery.js';
-import * as CaudalGallery          from './controls/CaudalGallery.js';
+import * as ProfileGallery         from './controls/ProfileGallery.js';
 import * as CutLineTool            from './controls/CutLineTool.js';
 import * as PriorizacionToggle     from './controls/PriorizacionToggle.js';
-import * as MonitoreoToggle        from './controls/MonitoreoToggle.js';
 
 /* ── Inicializar mapa ─────────────────────────────────────────────────── */
 const map = initMap();
@@ -70,18 +68,16 @@ map.on('load', async () => {
   /* Controles interactivos */
   setupLayerPanel(map);
   setupInfoPanel(map);
-  WaterQualityGallery.init();
-  CaudalGallery.init();
   CutLineTool.init(map);
   PriorizacionToggle.init(map);
-  MonitoreoToggle.init(map);   // después: su listener de exclusión mutua corre tras el de priorización
 
-  /* Botones de galería en el panel lateral */
+  /* Galería de perfiles del informe: misma galería, abierta en la pestaña
+   * que corresponde a cada tipo de estación. */
   document.getElementById('btn-galeria-calidad')
-    ?.addEventListener('click', () => WaterQualityGallery.open());
+    ?.addEventListener('click', () => ProfileGallery.open({ tipo: 'calidad' }));
 
   document.getElementById('btn-perfil-caudal')
-    ?.addEventListener('click', () => CaudalGallery.open());
+    ?.addEventListener('click', () => ProfileGallery.open({ tipo: 'caudal' }));
 
   document.getElementById('btn-cortar-tramos')
     ?.addEventListener('click', () => CutLineTool.toggle());

@@ -1,0 +1,927 @@
+{
+ "fuente": "Informe Fase 1, Capítulo 3 (Informe Fase 1. v2 (2026-11-27).docx)",
+ "rios": [
+  {
+   "rio": "Río Cauca",
+   "grupo": "cauca",
+   "figuras": [
+    {
+     "figura": "3.1",
+     "leyenda": "Curva de duración de caudales de la estación Mediacanoa, río Cauca",
+     "parametro": "Curva de duración",
+     "tipo": "caudal",
+     "archivo": "rio_cauca_001.webp"
+    },
+    {
+     "figura": "3.2",
+     "leyenda": "Perfil longitudinal de caudal promedio en el río Cauca",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_cauca_002.webp"
+    },
+    {
+     "figura": "3.3",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio en el río Cauca",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_cauca_003.webp"
+    },
+    {
+     "figura": "3.4",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio en el río Cauca",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_cauca_004.webp"
+    },
+    {
+     "figura": "3.5",
+     "leyenda": "Perfil longitudinal de DQO promedio en el río Cauca",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_cauca_005.webp"
+    },
+    {
+     "figura": "3.6",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio en el río Cauca",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_cauca_006.webp"
+    },
+    {
+     "figura": "3.7",
+     "leyenda": "Perfil longitudinal de nitratos promedio en el río Cauca",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_cauca_007.webp"
+    },
+    {
+     "figura": "3.8",
+     "leyenda": "Perfil longitudinal de fósforo total promedio en el río Cauca",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_cauca_008.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Amaime",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.9",
+     "leyenda": "Perfil longitudinal de caudal promedio, río Amaime",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_amaime_009.webp"
+    },
+    {
+     "figura": "3.10",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Amaime",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_amaime_010.webp"
+    },
+    {
+     "figura": "3.11",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Amaime",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_amaime_011.webp"
+    },
+    {
+     "figura": "3.12",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Amaime",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_amaime_012.webp"
+    },
+    {
+     "figura": "3.13",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Amaime",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_amaime_013.webp"
+    },
+    {
+     "figura": "3.14",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Amaime",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_amaime_014.webp"
+    },
+    {
+     "figura": "3.15",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Amaime",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_amaime_015.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Bolo",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.16",
+     "leyenda": "Perfil longitudinal de caudal promedio, río Bolo",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_bolo_016.webp"
+    },
+    {
+     "figura": "3.17",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Bolo",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_bolo_017.webp"
+    },
+    {
+     "figura": "3.18",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Bolo",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_bolo_018.webp"
+    },
+    {
+     "figura": "3.19",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Bolo",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_bolo_019.webp"
+    },
+    {
+     "figura": "3.20",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Bolo",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_bolo_020.webp"
+    },
+    {
+     "figura": "3.21",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Bolo",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_bolo_021.webp"
+    },
+    {
+     "figura": "3.22",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Bolo",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_bolo_022.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Bugalagrande",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.23",
+     "leyenda": "Caudal promedio del río Bugalagrande por condición hidrológica",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_bugalagrande_023.webp"
+    },
+    {
+     "figura": "3.24",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Bugalagrande",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_bugalagrande_024.webp"
+    },
+    {
+     "figura": "3.25",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Bugalagrande",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_bugalagrande_025.webp"
+    },
+    {
+     "figura": "3.26",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Bugalagrande",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_bugalagrande_026.webp"
+    },
+    {
+     "figura": "3.27",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Bugalagrande",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_bugalagrande_027.webp"
+    },
+    {
+     "figura": "3.28",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Bugalagrande",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_bugalagrande_028.webp"
+    },
+    {
+     "figura": "3.29",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Bugalagrande",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_bugalagrande_029.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Desbaratado",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.30",
+     "leyenda": "Caudal promedio del río Desbaratado por condición hidrológica",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_desbaratado_030.webp"
+    },
+    {
+     "figura": "3.31",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Desbaratado",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_desbaratado_031.webp"
+    },
+    {
+     "figura": "3.32",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Desbaratado",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_desbaratado_032.webp"
+    },
+    {
+     "figura": "3.33",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Desbaratado",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_desbaratado_033.webp"
+    },
+    {
+     "figura": "3.34",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Desbaratado",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_desbaratado_034.webp"
+    },
+    {
+     "figura": "3.35",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Desbaratado",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_desbaratado_035.webp"
+    },
+    {
+     "figura": "3.36",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Desbaratado",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_desbaratado_036.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Fraile",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.37",
+     "leyenda": "Perfil longitudinal de caudal promedio, río Fraile",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_fraile_037.webp"
+    },
+    {
+     "figura": "3.38",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Fraile",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_fraile_038.webp"
+    },
+    {
+     "figura": "3.39",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Fraile",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_fraile_039.webp"
+    },
+    {
+     "figura": "3.40",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Fraile",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_fraile_040.webp"
+    },
+    {
+     "figura": "3.41",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Fraile",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_fraile_041.webp"
+    },
+    {
+     "figura": "3.42",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Fraile",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_fraile_042.webp"
+    },
+    {
+     "figura": "3.43",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Fraile",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_fraile_043.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Guabas",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.44",
+     "leyenda": "Caudal promedio por condición hidrológica del río Guabas",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_guabas_044.webp"
+    },
+    {
+     "figura": "3.45",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Guabas",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_guabas_045.webp"
+    },
+    {
+     "figura": "3.46",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Guabas",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_guabas_046.webp"
+    },
+    {
+     "figura": "3.47",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Guabas",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_guabas_047.webp"
+    },
+    {
+     "figura": "3.48",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Guabas",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_guabas_048.webp"
+    },
+    {
+     "figura": "3.49",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Guabas",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_guabas_049.webp"
+    },
+    {
+     "figura": "3.50",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Guabas",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_guabas_050.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Guachal",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.51",
+     "leyenda": "Registro promedio de oxígeno disuelto, río Guachal",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_guachal_051.webp"
+    },
+    {
+     "figura": "3.52",
+     "leyenda": "Registro promedio de DBO₅, río Guachal",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_guachal_052.webp"
+    },
+    {
+     "figura": "3.53",
+     "leyenda": "Registro promedio de DQO, río Guachal",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_guachal_053.webp"
+    },
+    {
+     "figura": "3.54",
+     "leyenda": "Registro de sólidos suspendidos totales promedio, río Guachal",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_guachal_054.webp"
+    },
+    {
+     "figura": "3.55",
+     "leyenda": "Registro promedio de nitratos, río Guachal",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_guachal_055.webp"
+    },
+    {
+     "figura": "3.56",
+     "leyenda": "Registro promedio de fósforo total, río Guachal",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_guachal_056.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Guadalajara",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.57",
+     "leyenda": "Caudal promedio por condición hidrológica para el río Guadalajara",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_guadalajara_057.webp"
+    },
+    {
+     "figura": "3.58",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Guadalajara",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_guadalajara_058.webp"
+    },
+    {
+     "figura": "3.59",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Guadalajara",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_guadalajara_059.webp"
+    },
+    {
+     "figura": "3.60",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Guadalajara",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_guadalajara_060.webp"
+    },
+    {
+     "figura": "3.61",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Guadalajara",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_guadalajara_061.webp"
+    },
+    {
+     "figura": "3.62",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Guadalajara",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_guadalajara_062.webp"
+    },
+    {
+     "figura": "3.63",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Guadalajara",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_guadalajara_063.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río La Paila",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.64",
+     "leyenda": "Caudal promedio por condición hidrológica para el río La Paila",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_la_paila_064.webp"
+    },
+    {
+     "figura": "3.65",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río La Paila",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_la_paila_065.webp"
+    },
+    {
+     "figura": "3.66",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río La Paila",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_la_paila_066.webp"
+    },
+    {
+     "figura": "3.67",
+     "leyenda": "Perfil longitudinal de DQO promedio, río La Paila",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_la_paila_067.webp"
+    },
+    {
+     "figura": "3.68",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río La Paila",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_la_paila_068.webp"
+    },
+    {
+     "figura": "3.69",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río La Paila",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_la_paila_069.webp"
+    },
+    {
+     "figura": "3.70",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río La Paila",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_la_paila_070.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Nima",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.71",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Nima",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_nima_071.webp"
+    },
+    {
+     "figura": "3.72",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Nima",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_nima_072.webp"
+    },
+    {
+     "figura": "3.73",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Nima",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_nima_073.webp"
+    },
+    {
+     "figura": "3.74",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Nima",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_nima_074.webp"
+    },
+    {
+     "figura": "3.75",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Nima",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_nima_075.webp"
+    },
+    {
+     "figura": "3.76",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Nima",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_nima_076.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Palo",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.77",
+     "leyenda": "Perfil longitudinal de caudal promedio, río Palo",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_palo_077.webp"
+    },
+    {
+     "figura": "3.78",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Palo",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_palo_078.webp"
+    },
+    {
+     "figura": "3.79",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Palo",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_palo_079.webp"
+    },
+    {
+     "figura": "3.80",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Palo",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_palo_080.webp"
+    },
+    {
+     "figura": "3.81",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Palo",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_palo_081.webp"
+    },
+    {
+     "figura": "3.82",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Palo",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_palo_082.webp"
+    },
+    {
+     "figura": "3.83",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Palo",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_palo_083.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Riofrío",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.84",
+     "leyenda": "Caudal promedio del río Riofrío por condición hidrológica",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_riofrio_084.webp"
+    },
+    {
+     "figura": "3.85",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Riofrío",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_riofrio_085.webp"
+    },
+    {
+     "figura": "3.86",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Riofrío",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_riofrio_086.webp"
+    },
+    {
+     "figura": "3.87",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Riofrío",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_riofrio_087.webp"
+    },
+    {
+     "figura": "3.88",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Riofrío",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_riofrio_088.webp"
+    },
+    {
+     "figura": "3.89",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Riofrío",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_riofrio_089.webp"
+    },
+    {
+     "figura": "3.90",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Riofrío",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_riofrio_090.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Risaralda",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.91",
+     "leyenda": "Curva de duración de caudales, estación Río Risaralda EHT",
+     "parametro": "Curva de duración",
+     "tipo": "caudal",
+     "archivo": "rio_risaralda_091.webp"
+    },
+    {
+     "figura": "3.92",
+     "leyenda": "Curva de duración de caudales, estación Casa de Máquinas",
+     "parametro": "Curva de duración",
+     "tipo": "caudal",
+     "archivo": "rio_risaralda_092.webp"
+    },
+    {
+     "figura": "3.93",
+     "leyenda": "Caudal promedio mensual, estación Río Risaralda EHT",
+     "parametro": "Caudal mensual",
+     "tipo": "caudal",
+     "archivo": "rio_risaralda_093.webp"
+    },
+    {
+     "figura": "3.94",
+     "leyenda": "Caudal promedio mensual, estación Casa de Máquinas",
+     "parametro": "Caudal mensual",
+     "tipo": "caudal",
+     "archivo": "rio_risaralda_094.webp"
+    },
+    {
+     "figura": "3.95",
+     "leyenda": "Serie mensual de caudal promedio, estación Río Risaralda EHT",
+     "parametro": "Serie de caudal",
+     "tipo": "caudal",
+     "archivo": "rio_risaralda_095.webp"
+    },
+    {
+     "figura": "3.96",
+     "leyenda": "Serie mensual de caudal promedio, estación Casa de Máquinas",
+     "parametro": "Serie de caudal",
+     "tipo": "caudal",
+     "archivo": "rio_risaralda_096.webp"
+    },
+    {
+     "figura": "3.97",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Risaralda",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_097.webp"
+    },
+    {
+     "figura": "3.98",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Risaralda",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_098.webp"
+    },
+    {
+     "figura": "3.99",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Risaralda",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_099.webp"
+    },
+    {
+     "figura": "3.100",
+     "leyenda": "Perfil longitudinal de turbiedad promedio, río Risaralda",
+     "parametro": "Turbiedad",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_100.webp"
+    },
+    {
+     "figura": "3.101",
+     "leyenda": "Perfil longitudinal de nitrógeno total promedio, río Risaralda",
+     "parametro": "Nitrógeno total",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_101.webp"
+    },
+    {
+     "figura": "3.102",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Risaralda",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_102.webp"
+    },
+    {
+     "figura": "3.103",
+     "leyenda": "Perfil longitudinal de pH promedio, río Risaralda",
+     "parametro": "pH",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_103.webp"
+    },
+    {
+     "figura": "3.104",
+     "leyenda": "Perfil longitudinal de conductividad promedio, río Risaralda",
+     "parametro": "Conductividad",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_104.webp"
+    },
+    {
+     "figura": "3.105",
+     "leyenda": "Perfil longitudinal de coliformes totales promedio, río Risaralda",
+     "parametro": "Coliformes totales",
+     "tipo": "calidad",
+     "archivo": "rio_risaralda_105.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Tuluá",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.112",
+     "leyenda": "Perfil longitudinal de caudal promedio, río Tuluá",
+     "parametro": "Caudal",
+     "tipo": "caudal",
+     "archivo": "rio_tulua_112.webp"
+    },
+    {
+     "figura": "3.113",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Tuluá",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_tulua_113.webp"
+    },
+    {
+     "figura": "3.114",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Tuluá",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_tulua_114.webp"
+    },
+    {
+     "figura": "3.115",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Tuluá",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_tulua_115.webp"
+    },
+    {
+     "figura": "3.116",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Tuluá",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_tulua_116.webp"
+    },
+    {
+     "figura": "3.117",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Tuluá",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_tulua_117.webp"
+    },
+    {
+     "figura": "3.118",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Tuluá",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_tulua_118.webp"
+    }
+   ]
+  },
+  {
+   "rio": "Río Zabaletas",
+   "grupo": "tributario",
+   "figuras": [
+    {
+     "figura": "3.106",
+     "leyenda": "Perfil longitudinal de oxígeno disuelto promedio, río Zabaletas",
+     "parametro": "Oxígeno disuelto",
+     "tipo": "calidad",
+     "archivo": "rio_zabaletas_106.webp"
+    },
+    {
+     "figura": "3.107",
+     "leyenda": "Perfil longitudinal de DBO₅ promedio, río Zabaletas",
+     "parametro": "DBO₅",
+     "tipo": "calidad",
+     "archivo": "rio_zabaletas_107.webp"
+    },
+    {
+     "figura": "3.108",
+     "leyenda": "Perfil longitudinal de DQO promedio, río Zabaletas",
+     "parametro": "DQO",
+     "tipo": "calidad",
+     "archivo": "rio_zabaletas_108.webp"
+    },
+    {
+     "figura": "3.109",
+     "leyenda": "Perfil longitudinal de sólidos suspendidos totales promedio, río Zabaletas",
+     "parametro": "SST",
+     "tipo": "calidad",
+     "archivo": "rio_zabaletas_109.webp"
+    },
+    {
+     "figura": "3.110",
+     "leyenda": "Perfil longitudinal de nitratos promedio, río Zabaletas",
+     "parametro": "Nitratos",
+     "tipo": "calidad",
+     "archivo": "rio_zabaletas_110.webp"
+    },
+    {
+     "figura": "3.111",
+     "leyenda": "Perfil longitudinal de fósforo total promedio, río Zabaletas",
+     "parametro": "Fósforo total",
+     "tipo": "calidad",
+     "archivo": "rio_zabaletas_111.webp"
+    }
+   ]
+  }
+ ]
+}
