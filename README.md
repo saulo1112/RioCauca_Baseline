@@ -83,7 +83,7 @@ git push -u origin main
 
 ```bash
 cd Rio_Cauca_Baseline
-python -m http.server 8000
+python -m http.server 8000 --bind 127.0.0.1
 # Open: http://localhost:8000
 ```
 
@@ -392,7 +392,7 @@ git push -u origin main
 
 ```bash
 cd Rio_Cauca_Baseline
-python -m http.server 8000
+python -m http.server 8000 --bind 127.0.0.1
 # Abrir: http://localhost:8000
 ```
 

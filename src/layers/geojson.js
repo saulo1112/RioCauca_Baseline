@@ -23,7 +23,7 @@ import { priorizacionColorMatchExpr } from './priorizacionColors.js';
  * (data/cartografia/cortes_tramos.geojson) y debe usar el mismo sello: sin él, el
  * navegador servía los 4 cortes viejos de Bolo y Fraile y los otros 13 ríos
  * aparecían sin tramos. */
-export const BUILD_VERSION = '3.1';
+export const BUILD_VERSION = '3.2';
 
 /* ── Rutas GeoJSON ────────────────────────────────────────────────────── */
 const PATHS = {
@@ -275,11 +275,17 @@ async function _loadEstacionesTrib(map) {
       map.addSource('estaciones-trib', { type: 'geojson', data: geojson });
     }
 
+    /* Solo se dibujan las estaciones con registros de calidad (98, como en el
+     * informe). GG1 (Guachal) no tiene registros y sigue en los datos solo
+     * como referencia del tramo GG1 → GG3 de la herramienta de tramos. */
+    const conRegistros = ['>', ['coalesce', ['get', 'N_Registros'], 0], 0];
+
     if (!map.getLayer('estaciones-trib-circle')) {
       map.addLayer({
         id:     'estaciones-trib-circle',
         type:   'circle',
         source: 'estaciones-trib',
+        filter: conRegistros,
         paint: {
           'circle-radius':       6,
           'circle-color':        riverColorMatchExpr('rio_color_key'),
@@ -295,6 +301,7 @@ async function _loadEstacionesTrib(map) {
         id:      'estaciones-trib-label',
         type:    'symbol',
         source:  'estaciones-trib',
+        filter:  conRegistros,
         minzoom: 11,
         layout: {
           'text-field': [
