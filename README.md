@@ -154,7 +154,7 @@ there is no backend.
 2. Optionally, under **Editar tramos**, add or clear cuts: **Cut at a
    station** (exact perpendicular to the axis, reproducible) or **Draw a cut**
    (two clicks, Esc cancels). A badge says whether the segments are still the
-   report's; **Volver a los tramos del informe** restores them.
+   report's; **Volver a los tramos oficiales** restores them.
 3. Export: `⬇ CSV` (table with traceability metadata) and `⬇ Cuts (GeoJSON)`
    (the lines of every river).
 
@@ -460,7 +460,7 @@ por río completo. Todo el cálculo ocurre en el navegador con Turf.js; no hay b
 2. Opcionalmente, en **Editar tramos**, añadir o borrar cortes: **Cortar en la estación**
    (perpendicular exacta al eje, reproducible) o **Dibujar corte** (dos clics, Esc cancela).
    Una etiqueta indica si los tramos siguen siendo los del informe; **Volver a los tramos
-   del informe** los restablece.
+   oficiales** los restablece.
 3. Exportar: `⬇ CSV` (tabla con metadatos de trazabilidad) y `⬇ Cortes (GeoJSON)`
    (las líneas de todos los ríos).
 

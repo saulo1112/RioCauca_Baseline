@@ -533,10 +533,10 @@ function _renderSource() {
   if (!(key in _officialByRiver)) { el.innerHTML = ''; return; }
 
   el.innerHTML = _isOfficial(key)
-    ? `<span class="ct-badge ct-badge-ok">✓ Tramos del Informe Fase 1</span>
-       <span class="ct-source-note">Tabla 4.21 · cortes en las estaciones de calidad</span>`
+    ? `<span class="ct-badge ct-badge-ok">✓ Tramos oficiales</span>
+       <span class="ct-source-note">Cortes en las estaciones de calidad del agua</span>`
     : `<span class="ct-badge ct-badge-edit">Tramos editados</span>
-       <button id="ct-restore" class="ct-link" type="button">↺ Volver a los tramos del informe</button>`;
+       <button id="ct-restore" class="ct-link" type="button">↺ Volver a los tramos oficiales</button>`;
 }
 
 function _restoreOfficial() {
@@ -585,7 +585,7 @@ function _renderTable(res) {
   const cierrePct = res.cierre * 100;
   const cierreOk = cierrePct > 99.9 && cierrePct < 100.1;
   qa.innerHTML = res.informe
-    ? 'Cifras de la Tabla 4.21 del Informe Fase 1.'
+    ? ''
     : cierreOk
       ? `<span class="ct-ok">✓</span> Calculado en el visor: la suma de los tramos reproduce el ${fmt(cierrePct, 1)} % de la caña del río.`
       : `<span class="ct-warn">⚠</span> La suma de los tramos cubre el ${fmt(cierrePct, 1)} % de la caña del río: revisa los cortes.`;
@@ -609,7 +609,7 @@ function _renderTable(res) {
   if (res.cuts.length > 0) {
     _setStatus('');
   } else if (_isOfficial(normalizeRiver(res.river))) {
-    _setStatus('En el informe este río es un solo tramo.');
+    _setStatus('Este río se analiza como un solo tramo.');
   } else {
     _setStatus('Sin cortes: el río se muestra como un solo tramo.');
   }
@@ -755,7 +755,7 @@ function _downloadCSV() {
   lines.push('');
   lines.push(`# rio,${csvCell(r.river)}`);
   if (r.informe) {
-    lines.push('# origen,Informe Fase 1 - Tabla 4.21 (tramos y caña publicados)');
+    lines.push('# origen,tramos oficiales del proyecto');
   } else {
     lines.push('# origen,tramos editados en el visor - caña calculada en el navegador');
     lines.push(`# total_oficial_arcgis_ha,${r.oficialHa ?? ''}`);

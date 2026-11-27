@@ -50,7 +50,7 @@ export async function open({ tipo = 'calidad', rio } = {}) {
       <div class="pg-header">
         <div>
           <div class="pg-title">Perfiles longitudinales</div>
-          <div class="pg-subtitle">Informe Fase 1 · Capítulo 3</div>
+          <div class="pg-subtitle">Calidad del agua y caudal por río</div>
         </div>
         <button class="pg-close" type="button" title="Cerrar (Esc)">✕</button>
       </div>
@@ -148,7 +148,7 @@ function _renderTabs() {
   tabs.innerHTML = `<span class="pg-rio-name">${escapeHtml(_rio)}</span>` + TIPOS.map(t => {
     const n = _figuras(_rio, t.id).length;
     return `<button type="button" class="pg-tab${t.id === _tipo ? ' active' : ''}" data-tipo="${t.id}"
-      ${n ? '' : 'disabled title="El informe no presenta figuras de este tipo para este río"'}>
+      ${n ? '' : 'disabled title="No hay perfiles de este tipo para este río"'}>
       ${t.label} <span class="pg-count">${n}</span></button>`;
   }).join('');
   tabs.querySelectorAll('.pg-tab:not([disabled])').forEach(b =>
@@ -171,25 +171,25 @@ function _render() {
   _renderTabs();
 
   const figs = _figuras(_rio, _tipo);
-  if (!figs.length) { _showEmpty('El informe no presenta figuras de este tipo para este río.'); return; }
+  if (!figs.length) { _showEmpty('No hay perfiles de este tipo para este río.'); return; }
 
   const fig = figs[_index];
   const main = _overlay.querySelector('.pg-main');
   const empty = _overlay.querySelector('.pg-empty');
   empty.hidden = true;
   main.hidden = false;
-  main.onerror = () => _showEmpty(`Imagen no disponible — Figura ${fig.figura}`);
+  main.onerror = () => _showEmpty(`Imagen no disponible — ${fig.leyenda}`);
   main.src = `${BASE}${fig.archivo}?v=${BUILD_VERSION}`;
-  main.alt = `Figura ${fig.figura}. ${fig.leyenda}`;
+  main.alt = fig.leyenda;
   _overlay.querySelectorAll('.pg-nav').forEach(b => { b.hidden = figs.length < 2; });
 
   _overlay.querySelector('.pg-caption').innerHTML =
-    `<strong>Figura ${escapeHtml(fig.figura)}.</strong> ${escapeHtml(fig.leyenda)}` +
+    `<span>${escapeHtml(fig.leyenda)}</span>` +
     `<span class="pg-pos">${_index + 1} / ${figs.length}</span>`;
 
   const thumbs = _overlay.querySelector('.pg-thumbs');
   thumbs.innerHTML = figs.map((f, i) => `
-    <button type="button" class="pg-thumb${i === _index ? ' active' : ''}" data-i="${i}" title="Figura ${escapeHtml(f.figura)}">
+    <button type="button" class="pg-thumb${i === _index ? ' active' : ''}" data-i="${i}" title="${escapeHtml(f.leyenda)}">
       <img src="${BASE}${f.archivo}?v=${BUILD_VERSION}" alt="" loading="lazy">
       <span>${escapeHtml(f.parametro)}</span>
     </button>`).join('');
