@@ -12,5 +12,11 @@ __pycache__/
 # Locks que deja ArcGIS Pro mientras tiene abierto un shapefile
 *.sr.lock
 
+# Estudio de turbiedad: repositorio git propio (privado), no se versiona aquí
+estudios turbiedad/
+
+# Estudios de predicción: repositorio git propio (privado), no se versiona aquí
+estudios-prediccion/
+
 # Predios en restauración (Cenicaña): información reservada, no se publica
 data/cartografia/Estado_restauracion.geojson
